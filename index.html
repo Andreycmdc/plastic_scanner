@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Plastic Scanner Pro - Tiempo Real</title>
+  <title>Plastic Scanner Pro - Cámara Trasera</title>
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -36,7 +36,7 @@
     }
     
     .container {
-      max-width: 900px;
+      max-width: 1000px;
       margin: 0 auto;
       padding: 20px;
     }
@@ -72,87 +72,122 @@
       font-size: 1.1rem;
     }
     
-    .scanner-container {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      border-radius: 16px;
-      padding: 25px;
-      margin-bottom: 30px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-    }
-    
-    .webcam-section {
+    .scanner-section {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 30px;
-      margin-bottom: 25px;
+      margin-bottom: 30px;
+    }
+    
+    .camera-container {
+      flex: 1;
+      min-width: 300px;
+      max-width: 500px;
     }
     
     .webcam-container {
       position: relative;
-      width: 300px;
-      height: 300px;
-      border: 3px solid var(--primary);
-      border-radius: 12px;
+      width: 100%;
+      border-radius: 16px;
       overflow: hidden;
-      background: rgba(0, 255, 255, 0.05);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     }
     
     #webcam {
       width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transform: scaleX(-1); /* Espejo para modo espejo como una cámara frontal */
+      height: auto;
+      border-radius: 16px;
+      display: block;
     }
     
-    .results-sidebar {
+    .scanning-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      border-radius: 16px;
+      display: none;
+    }
+    
+    .scanning-spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: var(--primary);
+      animation: spin 1s linear infinite;
+      margin-bottom: 15px;
+    }
+    
+    .results-container {
       flex: 1;
-      min-width: 250px;
+      min-width: 300px;
+      max-width: 400px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 25px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
       text-align: left;
     }
     
     .results-title {
       font-size: 1.4rem;
+      margin-bottom: 20px;
+      color: var(--primary);
+      text-align: center;
+    }
+    
+    #result {
+      font-size: 1.6rem;
+      font-weight: bold;
       margin-bottom: 15px;
+      min-height: 2.2rem;
+      text-align: center;
       color: var(--primary);
     }
     
-    #label-container {
-      margin-top: 15px;
+    .confidence {
+      margin-bottom: 25px;
     }
     
-    .prediction-item {
+    .confidence-label {
       display: flex;
       justify-content: space-between;
-      padding: 10px;
       margin-bottom: 8px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 8px;
+      font-size: 0.9rem;
+      color: var(--gray);
     }
     
-    .prediction-name {
-      font-weight: bold;
-    }
-    
-    .prediction-value {
-      color: var(--primary);
-    }
-    
-    .confidence-bar {
-      height: 6px;
+    #confidenceBar {
+      width: 100%;
+      height: 20px;
       background: rgba(255, 255, 255, 0.2);
-      border-radius: 3px;
-      margin-top: 5px;
+      border-radius: 10px;
       overflow: hidden;
     }
     
-    .confidence-fill {
+    #confidenceFill {
       height: 100%;
-      background: linear-gradient(90deg, var(--primary), #00c3ff);
-      border-radius: 3px;
       width: 0%;
-      transition: width 0.3s ease;
+      background: linear-gradient(90deg, var(--primary), #00c3ff);
+      transition: width 0.5s ease;
+      border-radius: 10px;
+    }
+    
+    .countdown {
+      font-size: 1.2rem;
+      text-align: center;
+      margin: 15px 0;
+      color: var(--primary);
     }
     
     .controls {
@@ -193,6 +228,30 @@
       background: rgba(255, 255, 255, 0.25);
     }
     
+    .plastic-info {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 25px;
+      text-align: left;
+      margin-bottom: 30px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+    
+    .info-title {
+      font-size: 1.4rem;
+      margin-bottom: 15px;
+      color: var(--primary);
+    }
+    
+    .info-content {
+      line-height: 1.6;
+    }
+    
+    .info-content p {
+      margin-bottom: 15px;
+    }
+    
     .loading {
       display: none;
       justify-content: center;
@@ -224,31 +283,6 @@
       display: none;
     }
     
-    .plastic-info {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      border-radius: 16px;
-      padding: 25px;
-      text-align: left;
-      margin-bottom: 30px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-      display: none;
-    }
-    
-    .info-title {
-      font-size: 1.4rem;
-      margin-bottom: 15px;
-      color: var(--primary);
-    }
-    
-    .info-content {
-      line-height: 1.6;
-    }
-    
-    .info-content p {
-      margin-bottom: 15px;
-    }
-    
     footer {
       margin-top: 40px;
       color: var(--gray);
@@ -256,14 +290,12 @@
     }
     
     @media (max-width: 768px) {
-      .webcam-section {
+      .scanner-section {
         flex-direction: column;
       }
       
-      .webcam-container {
-        width: 100%;
-        max-width: 300px;
-        margin: 0 auto;
+      .camera-container, .results-container {
+        max-width: 100%;
       }
     }
     
@@ -295,61 +327,90 @@
         <i class="fas fa-recycle logo-icon"></i>
         <h1>Plastic Scanner Pro</h1>
       </div>
-      <p class="subtitle">Identifica el tipo de plástico en tiempo real con tu cámara</p>
+      <p class="subtitle">Identifica el tipo de plástico con la cámara trasera</p>
     </header>
     
-    <div class="scanner-container">
-      <div class="webcam-section">
+    <div class="scanner-section">
+      <div class="camera-container">
         <div class="webcam-container">
           <div id="webcam-container"></div>
+          <div class="scanning-overlay" id="scanningOverlay">
+            <div class="scanning-spinner"></div>
+            <p>Analizando...</p>
+          </div>
         </div>
         
-        <div class="results-sidebar">
-          <h2 class="results-title">Resultados en Tiempo Real</h2>
-          <div id="label-container"></div>
+        <div class="countdown" id="countdown">Enfoca un objeto plástico para analizar</div>
+        
+        <div class="controls">
+          <button id="startBtn">
+            <i class="fas fa-play"></i> Iniciar Cámara
+          </button>
+          <button id="captureBtn" class="secondary" disabled>
+            <i class="fas fa-camera"></i> Capturar y Analizar
+          </button>
+          <button id="switchCameraBtn" class="secondary" style="display:none">
+            <i class="fas fa-sync-alt"></i> Cambiar Cámara
+          </button>
         </div>
       </div>
       
-      <div class="controls">
-        <button id="startBtn">
-          <i class="fas fa-play"></i> Iniciar Cámara
-        </button>
-        <button id="stopBtn" class="secondary">
-          <i class="fas fa-stop"></i> Detener Cámara
-        </button>
+      <div class="results-container">
+        <h2 class="results-title">Resultado del Análisis</h2>
+        <div id="result">Esperando análisis...</div>
+        
+        <div class="confidence">
+          <div class="confidence-label">
+            <span>Confianza:</span>
+            <span id="confidenceValue">0%</span>
+          </div>
+          <div id="confidenceBar">
+            <div id="confidenceFill"></div>
+          </div>
+        </div>
+        
+        <div class="plastic-info">
+          <h2 class="info-title">Información del Plástico</h2>
+          <div class="info-content" id="plasticDetails">
+            <p>Los resultados aparecerán aquí después del análisis. La aplicación identificará el tipo de plástico y proporcionará información sobre sus usos y métodos de reciclaje.</p>
+          </div>
+        </div>
       </div>
-      
-      <div class="loading" id="loading">
-        <div class="spinner"></div>
-        <p>Cargando modelo y cámara...</p>
-      </div>
-      
-      <div class="error" id="error"></div>
     </div>
     
-    <div class="plastic-info" id="plasticInfo">
-      <h2 class="info-title">Información sobre <span id="plasticName"></span></h2>
-      <div class="info-content" id="plasticDetails"></div>
+    <div class="loading" id="loading">
+      <div class="spinner"></div>
+      <p>Cargando modelo y cámara...</p>
     </div>
+    
+    <div class="error" id="error"></div>
     
     <footer>
-      <p>Plastic Scanner Pro v2.0 - Análisis en tiempo real</p>
+      <p>Plastic Scanner Pro v2.0 - Cámara Trasera | Contribuye a un planeta más limpio</p>
     </footer>
   </div>
 
   <script>
     // URL del modelo (debe apuntar a tu carpeta de modelo)
     const URL = "./model/";
-    let model, webcam, labelContainer, maxPredictions;
-    let isPredicting = false;
+    let model, webcam, maxPredictions;
+    let currentFacingMode = 'environment'; // 'environment' para cámara trasera
+    let isCameraOn = false;
+    let countdownInterval;
+    let secondsLeft = 5;
     
     // Elementos DOM
     const startBtn = document.getElementById("startBtn");
-    const stopBtn = document.getElementById("stopBtn");
+    const captureBtn = document.getElementById("captureBtn");
+    const switchCameraBtn = document.getElementById("switchCameraBtn");
+    const webcamContainer = document.getElementById("webcam-container");
+    const scanningOverlay = document.getElementById("scanningOverlay");
+    const countdownEl = document.getElementById("countdown");
+    const resultEl = document.getElementById("result");
+    const confidenceFill = document.getElementById("confidenceFill");
+    const confidenceValue = document.getElementById("confidenceValue");
     const loading = document.getElementById("loading");
     const errorDiv = document.getElementById("error");
-    const plasticInfo = document.getElementById("plasticInfo");
-    const plasticName = document.getElementById("plasticName");
     const plasticDetails = document.getElementById("plasticDetails");
     
     // Información sobre tipos de plástico
@@ -400,7 +461,8 @@
     
     // Event listeners
     startBtn.addEventListener("click", init);
-    stopBtn.addEventListener("click", stopWebcam);
+    captureBtn.addEventListener("click", captureAndAnalyze);
+    switchCameraBtn.addEventListener("click", switchCamera);
     
     // Inicializar la cámara y el modelo
     async function init() {
@@ -414,51 +476,26 @@
         model = await tmImage.load(modelURL, metadataURL);
         maxPredictions = model.getTotalClasses();
 
-        // Configurar la webcam
+        // Configurar la webcam con la cámara trasera
         const flip = true; // Voltear la cámara (modo espejo)
-        webcam = new tmImage.Webcam(300, 300, flip); // Ancho, alto, voltear
-        await webcam.setup(); // Solicitar acceso a la cámara
+        webcam = new tmImage.Webcam(400, 400, flip); // Ancho, alto, voltear
+        
+        // Configurar para usar la cámara trasera
+        webcam.setup({ facingMode: currentFacingMode });
         await webcam.play();
         
-        // Actualizar el bucle de la cámara
-        window.requestAnimationFrame(loop);
-
         // Añadir el canvas de la webcam al contenedor
-        document.getElementById("webcam-container").innerHTML = "";
-        document.getElementById("webcam-container").appendChild(webcam.canvas);
+        webcamContainer.innerHTML = "";
+        webcamContainer.appendChild(webcam.canvas);
         
-        // Crear contenedores para las etiquetas
-        labelContainer = document.getElementById("label-container");
-        labelContainer.innerHTML = "";
-        
-        for (let i = 0; i < maxPredictions; i++) {
-          const predictionItem = document.createElement("div");
-          predictionItem.className = "prediction-item";
-          
-          const predictionText = document.createElement("div");
-          predictionText.className = "prediction-name";
-          
-          const predictionValue = document.createElement("div");
-          predictionValue.className = "prediction-value";
-          
-          const confidenceBar = document.createElement("div");
-          confidenceBar.className = "confidence-bar";
-          
-          const confidenceFill = document.createElement("div");
-          confidenceFill.className = "confidence-fill";
-          confidenceFill.id = "confidence-" + i;
-          
-          confidenceBar.appendChild(confidenceFill);
-          predictionItem.appendChild(predictionText);
-          predictionItem.appendChild(predictionValue);
-          predictionItem.appendChild(confidenceBar);
-          
-          labelContainer.appendChild(predictionItem);
-        }
-        
-        isPredicting = true;
+        isCameraOn = true;
         hideLoading();
         updateButtonState(true);
+        switchCameraBtn.style.display = 'flex';
+        
+        // Iniciar el bucle de predicción
+        // predictionLoop();
+        
       } catch (err) {
         console.error("Error inicializando:", err);
         showError("Error al acceder a la cámara o cargar el modelo. Asegúrate de permitir el acceso a la cámara.");
@@ -466,61 +503,79 @@
       }
     }
     
-    // Bucle de la cámara
-    async function loop() {
-      if (isPredicting) {
-        webcam.update(); // Actualizar el fotograma de la cámara
-        await predict();
-      }
-      window.requestAnimationFrame(loop);
+    // Cambiar entre cámaras delantera y trasera
+    async function switchCamera() {
+      if (!isCameraOn) return;
+      
+      // Detener la cámara actual
+      webcam.stop();
+      
+      // Cambiar el modo de la cámara
+      currentFacingMode = currentFacingMode === 'environment' ? 'user' : 'environment';
+      
+      // Reiniciar la cámara con el nuevo modo
+      await webcam.setup({ facingMode: currentFacingMode });
+      await webcam.play();
+      
+      // Actualizar el canvas
+      webcamContainer.innerHTML = "";
+      webcamContainer.appendChild(webcam.canvas);
     }
     
-    // Ejecutar la predicción con la imagen de la webcam
-    async function predict() {
-      if (!model || !webcam.canvas) return;
+    // Capturar y analizar la imagen
+    async function captureAndAnalyze() {
+      if (!isCameraOn || !webcam.canvas) {
+        showError("Primero inicia la cámara");
+        return;
+      }
       
+      // Iniciar cuenta regresiva
+      secondsLeft = 5;
+      countdownEl.textContent = `Analizando en ${secondsLeft} segundos...`;
+      scanningOverlay.style.display = 'flex';
+      captureBtn.disabled = true;
+      
+      // Iniciar cuenta regresiva
+      clearInterval(countdownInterval);
+      countdownInterval = setInterval(() => {
+        secondsLeft--;
+        countdownEl.textContent = `Analizando en ${secondsLeft} segundos...`;
+        
+        if (secondsLeft <= 0) {
+          clearInterval(countdownInterval);
+          performAnalysis();
+        }
+      }, 1000);
+    }
+    
+    // Realizar el análisis
+    async function performAnalysis() {
       try {
+        countdownEl.textContent = "Analizando imagen...";
+        
         const prediction = await model.predict(webcam.canvas);
         
-        for (let i = 0; i < maxPredictions; i++) {
-          const classPrediction = prediction[i];
-          const predictionItem = labelContainer.childNodes[i];
-          const predictionText = predictionItem.querySelector(".prediction-name");
-          const predictionValue = predictionItem.querySelector(".prediction-value");
-          const confidenceFill = document.getElementById("confidence-" + i);
-          
-          predictionText.textContent = classPrediction.className;
-          predictionValue.textContent = (classPrediction.probability * 100).toFixed(1) + "%";
-          confidenceFill.style.width = (classPrediction.probability * 100) + "%";
-          
-          // Resaltar la predicción con mayor probabilidad
-          if (i === 0) {
-            predictionItem.style.background = "rgba(0, 255, 255, 0.2)";
-            predictionItem.style.border = "1px solid var(--primary)";
-            
-            // Mostrar información del plástico detectado
-            if (classPrediction.probability > 0.7) { // Solo si la confianza es alta
-              showPlasticInfo(classPrediction.className);
-            }
-          } else {
-            predictionItem.style.background = "rgba(255, 255, 255, 0.1)";
-            predictionItem.style.border = "1px solid transparent";
-          }
-        }
-      } catch (err) {
-        console.error("Error en predicción:", err);
-      }
-    }
-    
-    // Detener la cámara
-    function stopWebcam() {
-      if (webcam) {
-        webcam.stop();
-        isPredicting = false;
-        updateButtonState(false);
+        // Ordenar predicciones por probabilidad
+        prediction.sort((a, b) => b.probability - a.probability);
+        const best = prediction[0];
         
-        // Limpiar el contenedor de la webcam
-        document.getElementById("webcam-container").innerHTML = "<p>Cámara detenida</p>";
+        // Mostrar resultado principal
+        resultEl.innerHTML = `🔍 Detectado: <strong>${best.className}</strong>`;
+        const confidencePercent = (best.probability * 100).toFixed(1);
+        confidenceFill.style.width = confidencePercent + "%";
+        confidenceValue.textContent = confidencePercent + "%";
+        
+        // Mostrar información del plástico
+        showPlasticInfo(best.className);
+        
+        countdownEl.textContent = "Análisis completado";
+        
+      } catch (err) {
+        console.error("Error en el análisis:", err);
+        showError("Error al analizar la imagen");
+      } finally {
+        scanningOverlay.style.display = 'none';
+        captureBtn.disabled = false;
       }
     }
     
@@ -528,9 +583,10 @@
     function showPlasticInfo(plasticType) {
       const info = plasticInfoData[plasticType] || plasticInfoData["OTHER"];
       
-      plasticName.textContent = info.name;
-      plasticDetails.innerHTML = info.details;
-      plasticInfo.style.display = "block";
+      plasticDetails.innerHTML = `
+        <h3 class="info-title">${info.name}</h3>
+        ${info.details}
+      `;
     }
     
     // Actualizar estado de los botones
@@ -538,13 +594,13 @@
       if (isStarted) {
         startBtn.disabled = true;
         startBtn.style.opacity = "0.6";
-        stopBtn.disabled = false;
-        stopBtn.style.opacity = "1";
+        captureBtn.disabled = false;
+        captureBtn.style.opacity = "1";
       } else {
         startBtn.disabled = false;
         startBtn.style.opacity = "1";
-        stopBtn.disabled = true;
-        stopBtn.style.opacity = "0.6";
+        captureBtn.disabled = true;
+        captureBtn.style.opacity = "0.6";
       }
     }
     
