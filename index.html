@@ -1,166 +1,580 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Plastic Scanner Pro</title>
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    :root {
+      --primary: #0ff;
+      --primary-dark: #0cc;
+      --secondary: #2c5364;
+      --dark: #0f2027;
+      --light: #fff;
+      --gray: #8a9ba8;
+      --success: #4caf50;
+      --warning: #ff9800;
+      --danger: #f44336;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
     body {
-      font-family: "Segoe UI", Tahoma, sans-serif;
-      background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-      color:#fff;
-      text-align:center;
-      margin:0;
-      padding:20px;
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, var(--dark), #203a43, var(--secondary));
+      color: var(--light);
+      text-align: center;
+      padding: 20px;
+      min-height: 100vh;
     }
-    h1 { font-size:2rem; margin-bottom:10px; }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    header {
+      margin-bottom: 30px;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 10px;
+    }
+    
+    .logo-icon {
+      font-size: 2.5rem;
+      color: var(--primary);
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      background: linear-gradient(90deg, var(--primary), #00c3ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .subtitle {
+      color: var(--gray);
+      margin-bottom: 30px;
+      font-size: 1.1rem;
+    }
+    
+    .scanner-container {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 25px;
+      margin-bottom: 30px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+    
     #preview {
-      width:260px; height:260px;
-      border:3px solid #0ff;
-      border-radius:12px;
-      margin:20px auto;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background: rgba(0,255,255,0.05);
-      box-shadow:0 0 25px rgba(0,255,255,0.3);
-      position:relative;
-      overflow:hidden;
+      width: 280px;
+      height: 280px;
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 3px solid var(--primary);
+      border-radius: 12px;
+      overflow: hidden;
+      background: rgba(0, 255, 255, 0.05);
+      position: relative;
     }
-    #preview img { width:100%; height:100%; object-fit:cover; border-radius:12px; }
-    .scan-line {
-      position:absolute;
-      width:100%; height:4px;
-      background: rgba(0,255,255,0.8);
-      animation:scan 2s linear infinite;
-      display:none;
+    
+    #preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 12px;
+      display: block;
     }
-    @keyframes scan {0%{top:0;}100%{top:100%;}}
-    #result { margin-top:20px; font-size:1.4rem; font-weight:bold; color:#0ff; }
-    #confidenceBar { width:80%; height:20px; margin:10px auto; background: rgba(255,255,255,0.2); border-radius:10px; overflow:hidden; box-shadow:0 0 10px rgba(0,255,255,0.4); }
-    #confidenceFill { height:100%; width:0%; background: linear-gradient(90deg,#0ff,#00c3ff); transition: width 0.5s ease; }
+    
+    .placeholder-text {
+      color: var(--gray);
+      font-size: 1rem;
+    }
+    
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
+    
     button {
-      background:#0ff; border:none; color:#000;
-      font-size:1rem; padding:10px 18px; margin:10px 5px;
-      border-radius:8px; cursor:pointer; transition:0.3s;
+      background: var(--primary);
+      border: none;
+      color: #000;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 12px 22px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
-    button:hover { background:#06c4c4; }
-    #history { margin-top:30px; text-align:left; max-width:400px; margin-left:auto; margin-right:auto; }
-    .history-item {
-      background: rgba(255,255,255,0.1);
-      border-radius:8px;
-      padding:8px;
-      margin-bottom:8px;
-      display:flex;
-      align-items:center;
-      gap:10px;
+    
+    button:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 255, 255, 0.3);
     }
-    .history-item img { width:50px; height:50px; object-fit:cover; border-radius:6px; }
+    
+    button.secondary {
+      background: rgba(255, 255, 255, 0.15);
+      color: var(--light);
+    }
+    
+    button.secondary:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+    
+    .results-container {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 25px;
+      margin-bottom: 30px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+    
+    .results-title {
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+      color: var(--primary);
+    }
+    
+    #result {
+      font-size: 1.6rem;
+      font-weight: bold;
+      margin-bottom: 15px;
+      min-height: 2.2rem;
+    }
+    
+    .confidence {
+      margin-bottom: 25px;
+    }
+    
+    .confidence-label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+      color: var(--gray);
+    }
+    
+    #confidenceBar {
+      width: 100%;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    
+    #confidenceFill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--primary), #00c3ff);
+      transition: width 0.5s ease;
+      border-radius: 10px;
+    }
+    
+    .alternative-results {
+      margin-top: 25px;
+      text-align: left;
+    }
+    
+    .alternative-title {
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+      color: var(--primary);
+    }
+    
+    .alternative-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .plastic-info {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 25px;
+      text-align: left;
+      margin-bottom: 30px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      display: none;
+    }
+    
+    .info-title {
+      font-size: 1.4rem;
+      margin-bottom: 15px;
+      color: var(--primary);
+    }
+    
+    .info-content {
+      line-height: 1.6;
+    }
+    
+    .info-content p {
+      margin-bottom: 15px;
+    }
+    
+    .loading {
+      display: none;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      margin: 20px 0;
+    }
+    
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: var(--primary);
+      animation: spin 1s ease-in-out infinite;
+      margin-bottom: 15px;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    .error {
+      color: var(--danger);
+      background: rgba(244, 67, 54, 0.1);
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px 0;
+      display: none;
+    }
+    
+    footer {
+      margin-top: 40px;
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+    
+    @media (max-width: 600px) {
+      .container {
+        padding: 15px;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+      
+      #preview {
+        width: 240px;
+        height: 240px;
+      }
+      
+      .controls {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      button {
+        width: 100%;
+        justify-content: center;
+      }
+    }
   </style>
 </head>
 <body>
-  <h1>Plastic Scanner Pro</h1>
-  <p>Captura una foto para identificar el tipo de plástico</p>
-
-  <div id="preview">
-    <div class="scan-line" id="scanLine"></div>
-    <img id="photo" src="" alt="Preview" />
-  </div>
-
-  <input type="file" accept="image/*" capture="environment" id="cameraInput" style="display:none">
-  <button onclick="document.getElementById('cameraInput').click()">📷 Tomar Foto</button>
-  <button onclick="shareResult()">📤 Compartir</button>
-
-  <div id="result">Esperando foto...</div>
-  <div id="confidenceBar"><div id="confidenceFill"></div></div>
-
-  <div id="history">
-    <h3>📑 Historial</h3>
-    <div id="historyList"></div>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <i class="fas fa-recycle logo-icon"></i>
+        <h1>Plastic Scanner Pro</h1>
+      </div>
+      <p class="subtitle">Identifica el tipo de plástico para un mejor reciclaje</p>
+    </header>
+    
+    <div class="scanner-container">
+      <div id="preview">
+        <div class="placeholder-text">Selecciona o toma una foto</div>
+        <img id="photo" src="" alt="Vista previa" style="display:none;">
+      </div>
+      
+      <div class="controls">
+        <button id="uploadBtn">
+          <i class="fas fa-upload"></i> Subir Foto
+        </button>
+        <button id="cameraBtn" class="secondary">
+          <i class="fas fa-camera"></i> Usar Cámara
+        </button>
+        <input type="file" accept="image/*" id="cameraInput" style="display:none">
+        <input type="file" accept="image/*" capture="camera" id="directCameraInput" style="display:none">
+      </div>
+      
+      <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <p>Analizando imagen...</p>
+      </div>
+      
+      <div class="error" id="error"></div>
+    </div>
+    
+    <div class="results-container">
+      <h2 class="results-title">Resultado del Análisis</h2>
+      <div id="result">Esperando foto...</div>
+      
+      <div class="confidence">
+        <div class="confidence-label">
+          <span>Confianza:</span>
+          <span id="confidenceValue">0%</span>
+        </div>
+        <div id="confidenceBar">
+          <div id="confidenceFill"></div>
+        </div>
+      </div>
+      
+      <div class="alternative-results" id="alternativeResults" style="display:none;">
+        <h3 class="alternative-title">Otras posibilidades:</h3>
+        <div id="alternativeList"></div>
+      </div>
+    </div>
+    
+    <div class="plastic-info" id="plasticInfo">
+      <h2 class="info-title">Información sobre <span id="plasticName"></span></h2>
+      <div class="info-content" id="plasticDetails"></div>
+    </div>
+    
+    <footer>
+      <p>Plastic Scanner Pro v1.0 - Contribuye a un planeta más limpio</p>
+    </footer>
   </div>
 
   <canvas id="hiddenCanvas" style="display:none;"></canvas>
 
   <script>
-    const URL = "./model/"; // Carpeta donde están model.json, metadata.json y weights.bin
-    let model, maxPredictions, lastResult="";
-
+    const URL = "./model/";
+    let model, maxPredictions;
+    
+    // Elementos DOM
     const cameraInput = document.getElementById("cameraInput");
+    const directCameraInput = document.getElementById("directCameraInput");
+    const uploadBtn = document.getElementById("uploadBtn");
+    const cameraBtn = document.getElementById("cameraBtn");
     const photo = document.getElementById("photo");
+    const preview = document.getElementById("preview");
     const result = document.getElementById("result");
     const confidenceFill = document.getElementById("confidenceFill");
-    const historyList = document.getElementById("historyList");
-    const scanLine = document.getElementById("scanLine");
+    const confidenceValue = document.getElementById("confidenceValue");
     const hiddenCanvas = document.getElementById("hiddenCanvas");
+    const loading = document.getElementById("loading");
+    const errorDiv = document.getElementById("error");
+    const alternativeResults = document.getElementById("alternativeResults");
+    const alternativeList = document.getElementById("alternativeList");
+    const plasticInfo = document.getElementById("plasticInfo");
+    const plasticName = document.getElementById("plasticName");
+    const plasticDetails = document.getElementById("plasticDetails");
     const ctx = hiddenCanvas.getContext("2d");
-
+    
+    // Información sobre tipos de plástico
+    const plasticInfoData = {
+      "PET": {
+        name: "PET (Polietileno Tereftalato)",
+        details: `<p>El PET es un plástico transparente, ligero y fuerte. Es ampliamente utilizado en botellas de bebidas, envases de alimentos y productos de cuidado personal.</p>
+                  <p><strong>Reciclaje:</strong> Es uno de los plásticos más reciclados. Se puede convertir en nuevas botellas, fibras para ropa, alfombras y más.</p>
+                  <p><strong>Impacto ambiental:</strong> Es reciclable pero tarda hasta 1000 años en descomponerse si no se recicla adecuadamente.</p>`
+      },
+      "HDPE": {
+        name: "HDPE (Polietileno de Alta Densidad)",
+        details: `<p>El HDPE es un plástico versátil y resistente a productos químicos. Se utiliza en botellas de leche, detergentes, juguetes y tuberías.</p>
+                  <p><strong>Reciclaje:</strong> Es fácil de reciclar y se convierte en contenedores, madera plástica, bolígrafos y más.</p>
+                  <p><strong>Impacto ambiental:</strong> Considerado uno de los plásticos más seguros y con menor impacto ambiental.</p>`
+      },
+      "PVC": {
+        name: "PVC (Policloruro de Vinilo)",
+        details: `<p>El PVC es un plástico resistente y duradero utilizado en tuberías, tarjetas de crédito, marcos de ventanas y revestimientos.</p>
+                  <p><strong>Reciclaje:</strong> Es difícil de reciclar debido a los aditivos que contiene. No todos los centros de reciclaje aceptan PVC.</p>
+                  <p><strong>Impacto ambiental:</strong> Puede liberar toxinas dañinas durante su producción e incineración.</p>`
+      },
+      "LDPE": {
+        name: "LDPE (Polietileno de Baja Densidad)",
+        details: `<p>El LDPE es un plástico flexible y resistente. Se utiliza en bolsas de plástico, film transparente y botellas flexibles.</p>
+                  <p><strong>Reciclaje:</strong> Es reciclable pero no todos los programas de reciclaje lo aceptan. Se convierte en bolsas de basura, paneles y tuberías.</p>
+                  <p><strong>Impacto ambiental:</strong> Menos tóxico que otros plásticos, pero contribuye significativamente a la contaminación por plásticos.</p>`
+      },
+      "PP": {
+        name: "PP (Polipropileno)",
+        details: `<p>El PP es un plástico resistente al calor y flexible. Se utiliza en tapas de botellas, envases de yogur, pajitas y contenedores para alimentos.</p>
+                  <p><strong>Reciclaje:</strong> Es reciclable y se convierte en cables de batería, cepillos, bandejas y otros productos.</p>
+                  <p><strong>Impacto ambiental:</strong> Considerado seguro pero contribuye a la contaminación plástica si no se recicla.</p>`
+      },
+      "PS": {
+        name: "PS (Poliestireno)",
+        details: `<p>El PS es un plástico versátil que puede ser rígido o espumado (como el unicel). Se utiliza en envases de comida, vasos desechables y material de embalaje.</p>
+                  <p><strong>Reciclaje:</strong> Es difícil de reciclar y pocos centros lo aceptan. Se puede convertir en aislamiento y material de empaque.</p>
+                  <p><strong>Impacto ambiental:</strong> Puede liberar estireno, un posible carcinógeno, especialmente cuando se calienta.</p>`
+      },
+      "OTHER": {
+        name: "Otros Plásticos",
+        details: `<p>Esta categoría incluye otros plásticos como policarbonato, bioplásticos y plásticos compuestos.</p>
+                  <p><strong>Reciclaje:</strong> Generalmente no son reciclables a través de programas convencionales. Algunos pueden requerir procesos especializados.</p>
+                  <p><strong>Impacto ambiental:</strong> Varía según el tipo específico de plástico. Algunos pueden contener BPA u otros químicos problemáticos.</p>`
+      }
+    };
+    
+    // Event listeners
+    uploadBtn.addEventListener("click", () => cameraInput.click());
+    cameraBtn.addEventListener("click", () => directCameraInput.click());
+    cameraInput.addEventListener("change", handleImageUpload);
+    directCameraInput.addEventListener("change", handleImageUpload);
+    
+    // Cargar modelo
     async function loadModel() {
       try {
-        result.innerText = "Cargando modelo...";
+        showLoading("Cargando modelo...");
         model = await tmImage.load(URL + "model.json", URL + "metadata.json");
         maxPredictions = model.getTotalClasses();
+        hideLoading();
         result.innerText = "Modelo cargado. Listo para analizar.";
       } catch(err) {
         console.error("Error cargando modelo:", err);
-        result.innerText = "Error cargando modelo. Revisa consola y rutas.";
+        showError("Error cargando modelo. Verifica que los archivos del modelo estén en la carpeta correcta.");
       }
     }
-    loadModel();
-
-    cameraInput.addEventListener("change", async (event) => {
+    
+    // Manejar subida de imagen
+    function handleImageUpload(event) {
       const file = event.target.files[0];
-      if (!file) return;
-
+      if(!file) return;
+      
+      // Resetear inputs de archivo
+      cameraInput.value = "";
+      directCameraInput.value = "";
+      
       const reader = new FileReader();
-      reader.onload = function(e) { photo.src = e.target.result; };
+      reader.onload = function(e) { 
+        photo.src = e.target.result; 
+        photo.style.display = "block";
+        document.querySelector(".placeholder-text").style.display = "none";
+      };
       reader.readAsDataURL(file);
-
+      
       photo.onload = async () => {
-        if (!model) { alert("Modelo aún no cargado."); return; }
-
-        scanLine.style.display = "block";
-        result.innerText = "Escaneando...";
-
-        const MODEL_SIZE = model.getInputShape()[1];
-        hiddenCanvas.width = MODEL_SIZE;
-        hiddenCanvas.height = MODEL_SIZE;
-        ctx.clearRect(0,0,MODEL_SIZE,MODEL_SIZE);
-        ctx.drawImage(photo,0,0,MODEL_SIZE,MODEL_SIZE);
-
+        if(!model) {
+          showError("Modelo no cargado. Intenta de nuevo en unos momentos.");
+          return;
+        }
+        
         try {
+          showLoading("Analizando imagen...");
+          const MODEL_SIZE = model.getInputShape()[1];
+          hiddenCanvas.width = MODEL_SIZE;
+          hiddenCanvas.height = MODEL_SIZE;
+          ctx.clearRect(0, 0, MODEL_SIZE, MODEL_SIZE);
+          ctx.drawImage(photo, 0, 0, MODEL_SIZE, MODEL_SIZE);
+          
           const prediction = await model.predict(hiddenCanvas);
-          prediction.sort((a,b)=>b.probability-a.probability);
-          const best = prediction[0];
-
-          lastResult = `${best.className} (${(best.probability*100).toFixed(1)}%)`;
-          result.innerHTML = `🔍 Detectado: <span style="color:#fff">${best.className}</span>`;
-          confidenceFill.style.width = (best.probability*100).toFixed(1) + "%";
-
-          const item = document.createElement("div");
-          item.classList.add("history-item");
-          item.innerHTML = `<img src="${photo.src}"><span>${lastResult}</span>`;
-          historyList.prepend(item);
-
+          displayResults(prediction);
+          hideLoading();
         } catch(err) {
           console.error("Error prediciendo:", err);
-          result.innerText = "Error al predecir. Intenta otra vez.";
-        } finally {
-          scanLine.style.display = "none";
-          if(navigator.vibrate) navigator.vibrate(300);
-          new Audio("https://actions.google.com/sounds/v1/alarms/beep_short.ogg").play();
+          showError("Error al analizar la imagen. Intenta con otra foto.");
+          hideLoading();
         }
       };
-    });
-
-    function shareResult() {
-      if(navigator.share && lastResult){
-        navigator.share({ title:"Plastic Scanner Pro", text:"Resultado del análisis: " + lastResult });
-      } else {
-        alert("Compartir no soportado en este dispositivo.");
-      }
     }
+    
+    // Mostrar resultados
+    function displayResults(prediction) {
+      // Ordenar predicciones por probabilidad
+      prediction.sort((a, b) => b.probability - a.probability);
+      const best = prediction[0];
+      
+      // Mostrar resultado principal
+      result.innerHTML = `🔍 Detectado: <strong>${best.className}</strong>`;
+      const confidencePercent = (best.probability * 100).toFixed(1);
+      confidenceFill.style.width = confidencePercent + "%";
+      confidenceValue.textContent = confidencePercent + "%";
+      
+      // Mostrar resultados alternativos
+      if (prediction.length > 1) {
+        alternativeResults.style.display = "block";
+        alternativeList.innerHTML = "";
+        
+        for (let i = 1; i < Math.min(4, prediction.length); i++) {
+          const alt = prediction[i];
+          const altPercent = (alt.probability * 100).toFixed(1);
+          
+          const altItem = document.createElement("div");
+          altItem.className = "alternative-item";
+          altItem.innerHTML = `
+            <span>${alt.className}</span>
+            <span>${altPercent}%</span>
+          `;
+          
+          alternativeList.appendChild(altItem);
+        }
+      } else {
+        alternativeResults.style.display = "none";
+      }
+      
+      // Mostrar información del plástico
+      showPlasticInfo(best.className);
+    }
+    
+    // Mostrar información del plástico
+    function showPlasticInfo(plasticType) {
+      const info = plasticInfoData[plasticType] || plasticInfoData["OTHER"];
+      
+      plasticName.textContent = info.name;
+      plasticDetails.innerHTML = info.details;
+      plasticInfo.style.display = "block";
+      
+      // Scroll suave a la información
+      plasticInfo.scrollIntoView({ behavior: "smooth" });
+    }
+    
+    // Mostrar carga
+    function showLoading(message) {
+      loading.style.display = "flex";
+      if (message) loading.querySelector("p").textContent = message;
+    }
+    
+    // Ocultar carga
+    function hideLoading() {
+      loading.style.display = "none";
+    }
+    
+    // Mostrar error
+    function showError(message) {
+      errorDiv.textContent = message;
+      errorDiv.style.display = "block";
+      
+      // Ocultar después de 5 segundos
+      setTimeout(() => {
+        errorDiv.style.display = "none";
+      }, 5000);
+    }
+    
+    // Inicializar aplicación
+    loadModel();
   </script>
 </body>
 </html>
