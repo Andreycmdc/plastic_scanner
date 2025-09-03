@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Plastic Scanner Pro</title>
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest"></script>
+  <title>Plastic Scanner Pro - Tiempo Real</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
@@ -36,7 +36,7 @@
     }
     
     .container {
-      max-width: 800px;
+      max-width: 900px;
       margin: 0 auto;
       padding: 20px;
     }
@@ -81,31 +81,78 @@
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
     }
     
-    #preview {
-      width: 280px;
-      height: 280px;
-      margin: 0 auto 20px;
+    .webcam-section {
       display: flex;
-      align-items: center;
+      flex-wrap: wrap;
       justify-content: center;
+      gap: 30px;
+      margin-bottom: 25px;
+    }
+    
+    .webcam-container {
+      position: relative;
+      width: 300px;
+      height: 300px;
       border: 3px solid var(--primary);
       border-radius: 12px;
       overflow: hidden;
       background: rgba(0, 255, 255, 0.05);
-      position: relative;
     }
     
-    #preview img {
+    #webcam {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      border-radius: 12px;
-      display: block;
+      transform: scaleX(-1); /* Espejo para modo espejo como una cámara frontal */
     }
     
-    .placeholder-text {
-      color: var(--gray);
-      font-size: 1rem;
+    .results-sidebar {
+      flex: 1;
+      min-width: 250px;
+      text-align: left;
+    }
+    
+    .results-title {
+      font-size: 1.4rem;
+      margin-bottom: 15px;
+      color: var(--primary);
+    }
+    
+    #label-container {
+      margin-top: 15px;
+    }
+    
+    .prediction-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      margin-bottom: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+    }
+    
+    .prediction-name {
+      font-weight: bold;
+    }
+    
+    .prediction-value {
+      color: var(--primary);
+    }
+    
+    .confidence-bar {
+      height: 6px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 3px;
+      margin-top: 5px;
+      overflow: hidden;
+    }
+    
+    .confidence-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), #00c3ff);
+      border-radius: 3px;
+      width: 0%;
+      transition: width 0.3s ease;
     }
     
     .controls {
@@ -146,99 +193,6 @@
       background: rgba(255, 255, 255, 0.25);
     }
     
-    .results-container {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      border-radius: 16px;
-      padding: 25px;
-      margin-bottom: 30px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-    }
-    
-    .results-title {
-      font-size: 1.4rem;
-      margin-bottom: 20px;
-      color: var(--primary);
-    }
-    
-    #result {
-      font-size: 1.6rem;
-      font-weight: bold;
-      margin-bottom: 15px;
-      min-height: 2.2rem;
-    }
-    
-    .confidence {
-      margin-bottom: 25px;
-    }
-    
-    .confidence-label {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 8px;
-      font-size: 0.9rem;
-      color: var(--gray);
-    }
-    
-    #confidenceBar {
-      width: 100%;
-      height: 20px;
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 10px;
-      overflow: hidden;
-    }
-    
-    #confidenceFill {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, var(--primary), #00c3ff);
-      transition: width 0.5s ease;
-      border-radius: 10px;
-    }
-    
-    .alternative-results {
-      margin-top: 25px;
-      text-align: left;
-    }
-    
-    .alternative-title {
-      font-size: 1.1rem;
-      margin-bottom: 12px;
-      color: var(--primary);
-    }
-    
-    .alternative-item {
-      display: flex;
-      justify-content: space-between;
-      padding: 8px 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    
-    .plastic-info {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      border-radius: 16px;
-      padding: 25px;
-      text-align: left;
-      margin-bottom: 30px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-      display: none;
-    }
-    
-    .info-title {
-      font-size: 1.4rem;
-      margin-bottom: 15px;
-      color: var(--primary);
-    }
-    
-    .info-content {
-      line-height: 1.6;
-    }
-    
-    .info-content p {
-      margin-bottom: 15px;
-    }
-    
     .loading {
       display: none;
       justify-content: center;
@@ -270,24 +224,56 @@
       display: none;
     }
     
+    .plastic-info {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 25px;
+      text-align: left;
+      margin-bottom: 30px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      display: none;
+    }
+    
+    .info-title {
+      font-size: 1.4rem;
+      margin-bottom: 15px;
+      color: var(--primary);
+    }
+    
+    .info-content {
+      line-height: 1.6;
+    }
+    
+    .info-content p {
+      margin-bottom: 15px;
+    }
+    
     footer {
       margin-top: 40px;
       color: var(--gray);
       font-size: 0.9rem;
     }
     
-    @media (max-width: 600px) {
+    @media (max-width: 768px) {
+      .webcam-section {
+        flex-direction: column;
+      }
+      
+      .webcam-container {
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+      }
+    }
+    
+    @media (max-width: 480px) {
       .container {
         padding: 15px;
       }
       
       h1 {
         font-size: 2rem;
-      }
-      
-      #preview {
-        width: 240px;
-        height: 240px;
       }
       
       .controls {
@@ -309,52 +295,36 @@
         <i class="fas fa-recycle logo-icon"></i>
         <h1>Plastic Scanner Pro</h1>
       </div>
-      <p class="subtitle">Identifica el tipo de plástico para un mejor reciclaje</p>
+      <p class="subtitle">Identifica el tipo de plástico en tiempo real con tu cámara</p>
     </header>
     
     <div class="scanner-container">
-      <div id="preview">
-        <div class="placeholder-text">Selecciona o toma una foto</div>
-        <img id="photo" src="" alt="Vista previa" style="display:none;">
+      <div class="webcam-section">
+        <div class="webcam-container">
+          <div id="webcam-container"></div>
+        </div>
+        
+        <div class="results-sidebar">
+          <h2 class="results-title">Resultados en Tiempo Real</h2>
+          <div id="label-container"></div>
+        </div>
       </div>
       
       <div class="controls">
-        <button id="uploadBtn">
-          <i class="fas fa-upload"></i> Subir Foto
+        <button id="startBtn">
+          <i class="fas fa-play"></i> Iniciar Cámara
         </button>
-        <button id="cameraBtn" class="secondary">
-          <i class="fas fa-camera"></i> Usar Cámara
+        <button id="stopBtn" class="secondary">
+          <i class="fas fa-stop"></i> Detener Cámara
         </button>
-        <input type="file" accept="image/*" id="cameraInput" style="display:none">
-        <input type="file" accept="image/*" capture="camera" id="directCameraInput" style="display:none">
       </div>
       
       <div class="loading" id="loading">
         <div class="spinner"></div>
-        <p>Analizando imagen...</p>
+        <p>Cargando modelo y cámara...</p>
       </div>
       
       <div class="error" id="error"></div>
-    </div>
-    
-    <div class="results-container">
-      <h2 class="results-title">Resultado del Análisis</h2>
-      <div id="result">Esperando foto...</div>
-      
-      <div class="confidence">
-        <div class="confidence-label">
-          <span>Confianza:</span>
-          <span id="confidenceValue">0%</span>
-        </div>
-        <div id="confidenceBar">
-          <div id="confidenceFill"></div>
-        </div>
-      </div>
-      
-      <div class="alternative-results" id="alternativeResults" style="display:none;">
-        <h3 class="alternative-title">Otras posibilidades:</h3>
-        <div id="alternativeList"></div>
-      </div>
     </div>
     
     <div class="plastic-info" id="plasticInfo">
@@ -363,35 +333,24 @@
     </div>
     
     <footer>
-      <p>Plastic Scanner Pro v1.0 - Contribuye a un planeta más limpio</p>
+      <p>Plastic Scanner Pro v2.0 - Análisis en tiempo real</p>
     </footer>
   </div>
 
-  <canvas id="hiddenCanvas" style="display:none;"></canvas>
-
   <script>
+    // URL del modelo (debe apuntar a tu carpeta de modelo)
     const URL = "./model/";
-    let model, maxPredictions;
+    let model, webcam, labelContainer, maxPredictions;
+    let isPredicting = false;
     
     // Elementos DOM
-    const cameraInput = document.getElementById("cameraInput");
-    const directCameraInput = document.getElementById("directCameraInput");
-    const uploadBtn = document.getElementById("uploadBtn");
-    const cameraBtn = document.getElementById("cameraBtn");
-    const photo = document.getElementById("photo");
-    const preview = document.getElementById("preview");
-    const result = document.getElementById("result");
-    const confidenceFill = document.getElementById("confidenceFill");
-    const confidenceValue = document.getElementById("confidenceValue");
-    const hiddenCanvas = document.getElementById("hiddenCanvas");
+    const startBtn = document.getElementById("startBtn");
+    const stopBtn = document.getElementById("stopBtn");
     const loading = document.getElementById("loading");
     const errorDiv = document.getElementById("error");
-    const alternativeResults = document.getElementById("alternativeResults");
-    const alternativeList = document.getElementById("alternativeList");
     const plasticInfo = document.getElementById("plasticInfo");
     const plasticName = document.getElementById("plasticName");
     const plasticDetails = document.getElementById("plasticDetails");
-    const ctx = hiddenCanvas.getContext("2d");
     
     // Información sobre tipos de plástico
     const plasticInfoData = {
@@ -440,103 +399,129 @@
     };
     
     // Event listeners
-    uploadBtn.addEventListener("click", () => cameraInput.click());
-    cameraBtn.addEventListener("click", () => directCameraInput.click());
-    cameraInput.addEventListener("change", handleImageUpload);
-    directCameraInput.addEventListener("change", handleImageUpload);
+    startBtn.addEventListener("click", init);
+    stopBtn.addEventListener("click", stopWebcam);
     
-    // Cargar modelo
-    async function loadModel() {
+    // Inicializar la cámara y el modelo
+    async function init() {
       try {
-        showLoading("Cargando modelo...");
-        model = await tmImage.load(URL + "model.json", URL + "metadata.json");
+        showLoading("Iniciando cámara y cargando modelo...");
+        
+        const modelURL = URL + "model.json";
+        const metadataURL = URL + "metadata.json";
+
+        // Cargar el modelo
+        model = await tmImage.load(modelURL, metadataURL);
         maxPredictions = model.getTotalClasses();
+
+        // Configurar la webcam
+        const flip = true; // Voltear la cámara (modo espejo)
+        webcam = new tmImage.Webcam(300, 300, flip); // Ancho, alto, voltear
+        await webcam.setup(); // Solicitar acceso a la cámara
+        await webcam.play();
+        
+        // Actualizar el bucle de la cámara
+        window.requestAnimationFrame(loop);
+
+        // Añadir el canvas de la webcam al contenedor
+        document.getElementById("webcam-container").innerHTML = "";
+        document.getElementById("webcam-container").appendChild(webcam.canvas);
+        
+        // Crear contenedores para las etiquetas
+        labelContainer = document.getElementById("label-container");
+        labelContainer.innerHTML = "";
+        
+        for (let i = 0; i < maxPredictions; i++) {
+          const predictionItem = document.createElement("div");
+          predictionItem.className = "prediction-item";
+          
+          const predictionText = document.createElement("div");
+          predictionText.className = "prediction-name";
+          
+          const predictionValue = document.createElement("div");
+          predictionValue.className = "prediction-value";
+          
+          const confidenceBar = document.createElement("div");
+          confidenceBar.className = "confidence-bar";
+          
+          const confidenceFill = document.createElement("div");
+          confidenceFill.className = "confidence-fill";
+          confidenceFill.id = "confidence-" + i;
+          
+          confidenceBar.appendChild(confidenceFill);
+          predictionItem.appendChild(predictionText);
+          predictionItem.appendChild(predictionValue);
+          predictionItem.appendChild(confidenceBar);
+          
+          labelContainer.appendChild(predictionItem);
+        }
+        
+        isPredicting = true;
         hideLoading();
-        result.innerText = "Modelo cargado. Listo para analizar.";
-      } catch(err) {
-        console.error("Error cargando modelo:", err);
-        showError("Error cargando modelo. Verifica que los archivos del modelo estén en la carpeta correcta.");
+        updateButtonState(true);
+      } catch (err) {
+        console.error("Error inicializando:", err);
+        showError("Error al acceder a la cámara o cargar el modelo. Asegúrate de permitir el acceso a la cámara.");
+        hideLoading();
       }
     }
     
-    // Manejar subida de imagen
-    function handleImageUpload(event) {
-      const file = event.target.files[0];
-      if(!file) return;
-      
-      // Resetear inputs de archivo
-      cameraInput.value = "";
-      directCameraInput.value = "";
-      
-      const reader = new FileReader();
-      reader.onload = function(e) { 
-        photo.src = e.target.result; 
-        photo.style.display = "block";
-        document.querySelector(".placeholder-text").style.display = "none";
-      };
-      reader.readAsDataURL(file);
-      
-      photo.onload = async () => {
-        if(!model) {
-          showError("Modelo no cargado. Intenta de nuevo en unos momentos.");
-          return;
-        }
-        
-        try {
-          showLoading("Analizando imagen...");
-          const MODEL_SIZE = model.getInputShape()[1];
-          hiddenCanvas.width = MODEL_SIZE;
-          hiddenCanvas.height = MODEL_SIZE;
-          ctx.clearRect(0, 0, MODEL_SIZE, MODEL_SIZE);
-          ctx.drawImage(photo, 0, 0, MODEL_SIZE, MODEL_SIZE);
-          
-          const prediction = await model.predict(hiddenCanvas);
-          displayResults(prediction);
-          hideLoading();
-        } catch(err) {
-          console.error("Error prediciendo:", err);
-          showError("Error al analizar la imagen. Intenta con otra foto.");
-          hideLoading();
-        }
-      };
+    // Bucle de la cámara
+    async function loop() {
+      if (isPredicting) {
+        webcam.update(); // Actualizar el fotograma de la cámara
+        await predict();
+      }
+      window.requestAnimationFrame(loop);
     }
     
-    // Mostrar resultados
-    function displayResults(prediction) {
-      // Ordenar predicciones por probabilidad
-      prediction.sort((a, b) => b.probability - a.probability);
-      const best = prediction[0];
+    // Ejecutar la predicción con la imagen de la webcam
+    async function predict() {
+      if (!model || !webcam.canvas) return;
       
-      // Mostrar resultado principal
-      result.innerHTML = `🔍 Detectado: <strong>${best.className}</strong>`;
-      const confidencePercent = (best.probability * 100).toFixed(1);
-      confidenceFill.style.width = confidencePercent + "%";
-      confidenceValue.textContent = confidencePercent + "%";
-      
-      // Mostrar resultados alternativos
-      if (prediction.length > 1) {
-        alternativeResults.style.display = "block";
-        alternativeList.innerHTML = "";
+      try {
+        const prediction = await model.predict(webcam.canvas);
         
-        for (let i = 1; i < Math.min(4, prediction.length); i++) {
-          const alt = prediction[i];
-          const altPercent = (alt.probability * 100).toFixed(1);
+        for (let i = 0; i < maxPredictions; i++) {
+          const classPrediction = prediction[i];
+          const predictionItem = labelContainer.childNodes[i];
+          const predictionText = predictionItem.querySelector(".prediction-name");
+          const predictionValue = predictionItem.querySelector(".prediction-value");
+          const confidenceFill = document.getElementById("confidence-" + i);
           
-          const altItem = document.createElement("div");
-          altItem.className = "alternative-item";
-          altItem.innerHTML = `
-            <span>${alt.className}</span>
-            <span>${altPercent}%</span>
-          `;
+          predictionText.textContent = classPrediction.className;
+          predictionValue.textContent = (classPrediction.probability * 100).toFixed(1) + "%";
+          confidenceFill.style.width = (classPrediction.probability * 100) + "%";
           
-          alternativeList.appendChild(altItem);
+          // Resaltar la predicción con mayor probabilidad
+          if (i === 0) {
+            predictionItem.style.background = "rgba(0, 255, 255, 0.2)";
+            predictionItem.style.border = "1px solid var(--primary)";
+            
+            // Mostrar información del plástico detectado
+            if (classPrediction.probability > 0.7) { // Solo si la confianza es alta
+              showPlasticInfo(classPrediction.className);
+            }
+          } else {
+            predictionItem.style.background = "rgba(255, 255, 255, 0.1)";
+            predictionItem.style.border = "1px solid transparent";
+          }
         }
-      } else {
-        alternativeResults.style.display = "none";
+      } catch (err) {
+        console.error("Error en predicción:", err);
       }
-      
-      // Mostrar información del plástico
-      showPlasticInfo(best.className);
+    }
+    
+    // Detener la cámara
+    function stopWebcam() {
+      if (webcam) {
+        webcam.stop();
+        isPredicting = false;
+        updateButtonState(false);
+        
+        // Limpiar el contenedor de la webcam
+        document.getElementById("webcam-container").innerHTML = "<p>Cámara detenida</p>";
+      }
     }
     
     // Mostrar información del plástico
@@ -546,9 +531,21 @@
       plasticName.textContent = info.name;
       plasticDetails.innerHTML = info.details;
       plasticInfo.style.display = "block";
-      
-      // Scroll suave a la información
-      plasticInfo.scrollIntoView({ behavior: "smooth" });
+    }
+    
+    // Actualizar estado de los botones
+    function updateButtonState(isStarted) {
+      if (isStarted) {
+        startBtn.disabled = true;
+        startBtn.style.opacity = "0.6";
+        stopBtn.disabled = false;
+        stopBtn.style.opacity = "1";
+      } else {
+        startBtn.disabled = false;
+        startBtn.style.opacity = "1";
+        stopBtn.disabled = true;
+        stopBtn.style.opacity = "0.6";
+      }
     }
     
     // Mostrar carga
@@ -572,9 +569,6 @@
         errorDiv.style.display = "none";
       }, 5000);
     }
-    
-    // Inicializar aplicación
-    loadModel();
   </script>
 </body>
 </html>
