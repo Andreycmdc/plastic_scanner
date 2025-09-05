@@ -4,128 +4,54 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Plastic Scanner Pro - Cámara Trasera</title>
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest"></script>
   <style>
-    :root {
-      --primary: #0ff;
-      --primary-dark: #0cc;
-      --secondary: #2c5364;
-      --dark: #0f2027;
-      --light: #fff;
-      --gray: #8a9ba8;
-      --danger: #f44336;
-    }
-    body {
-      font-family: "Segoe UI", sans-serif;
-      background: linear-gradient(135deg, var(--dark), #203a43, var(--secondary));
-      color: var(--light);
-      text-align: center;
-      padding: 20px;
-      min-height: 100vh;
-    }
-    h1 {
-      font-size: 2.2rem;
-      margin: 10px 0;
-      background: linear-gradient(90deg, var(--primary), #00c3ff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .webcam-container {
-      width: 100%;
-      max-width: 400px;
-      margin: auto;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    }
-    #webcam {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-    .controls {
-      margin: 15px 0;
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    button {
-      background: var(--primary);
-      border: none;
-      color: #000;
-      font-weight: 600;
-      padding: 10px 18px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    button:hover { background: var(--primary-dark); }
-    button.secondary {
-      background: rgba(255, 255, 255, 0.15);
-      color: var(--light);
-    }
-    #result {
-      font-size: 1.4rem;
-      font-weight: bold;
-      margin: 15px 0;
-      color: var(--primary);
-    }
-    .error {
-      color: var(--danger);
-      background: rgba(244, 67, 54, 0.1);
-      padding: 10px;
-      border-radius: 8px;
-      margin-top: 15px;
-      display: none;
-    }
+    body { background:#0f2027; color:white; font-family:sans-serif; text-align:center; }
+    #webcam-container { margin:20px auto; width:400px; height:400px; background:#111; }
+    canvas { border-radius:10px; width:100%; height:100%; }
+    button { margin:10px; padding:10px 20px; border:none; border-radius:6px; cursor:pointer; }
   </style>
 </head>
 <body>
-  <h1><i class="fas fa-recycle"></i> Plastic Scanner Pro</h1>
+  <h1>Plastic Scanner Pro</h1>
   <p>Identifica el tipo de plástico con la cámara trasera</p>
 
-  <div class="webcam-container" id="webcam-container"></div>
-  <div class="controls">
-    <button id="startBtn"><i class="fas fa-play"></i> Iniciar Cámara</button>
-    <button id="captureBtn" class="secondary" disabled><i class="fas fa-camera"></i> Capturar</button>
-    <button id="switchCameraBtn" class="secondary" style="display:none"><i class="fas fa-sync-alt"></i> Cambiar</button>
+  <div id="webcam-container"></div>
+  <div>
+    <button id="startBtn">Iniciar Cámara</button>
+    <button id="switchCameraBtn">Cambiar Cámara</button>
+    <button id="captureBtn" disabled>Capturar</button>
   </div>
 
   <div id="result">Esperando análisis...</div>
-  <div class="error" id="error"></div>
+  <div id="error" style="color:red;"></div>
 
   <script>
-    const URL = "./model/"; // Cambia a tu carpeta del modelo exportado de Teachable Machine
-    let model, webcam, maxPredictions;
-    let currentFacingMode = "environment"; // environment = trasera
+    const URL = "./model/"; // carpeta de tu modelo
+    let model, webcam, maxPredictions, rafId;
+    let currentFacingMode = "environment"; 
     let isCameraOn = false;
 
     const startBtn = document.getElementById("startBtn");
-    const captureBtn = document.getElementById("captureBtn");
     const switchCameraBtn = document.getElementById("switchCameraBtn");
+    const captureBtn = document.getElementById("captureBtn");
     const webcamContainer = document.getElementById("webcam-container");
     const resultEl = document.getElementById("result");
     const errorDiv = document.getElementById("error");
 
     startBtn.addEventListener("click", init);
-    captureBtn.addEventListener("click", captureAndAnalyze);
     switchCameraBtn.addEventListener("click", switchCamera);
+    captureBtn.addEventListener("click", captureAndAnalyze);
 
     async function init() {
       try {
         const modelURL = URL + "model.json";
         const metadataURL = URL + "metadata.json";
-
         model = await tmImage.load(modelURL, metadataURL);
         maxPredictions = model.getTotalClasses();
 
-        const flip = false; // no espejar la cámara trasera
-        webcam = new tmImage.Webcam(400, 400, flip);
-
-        // Aquí es donde fallaba: falta el await
+        webcam = new tmImage.Webcam(400, 400, false);
         await webcam.setup({ facingMode: currentFacingMode });
         await webcam.play();
 
@@ -135,47 +61,50 @@
         isCameraOn = true;
         startBtn.disabled = true;
         captureBtn.disabled = false;
-        switchCameraBtn.style.display = "inline-block";
 
+        loop(); // 🔥 IMPORTANTE: inicia el bucle de render
       } catch (err) {
-        console.error("Error inicializando:", err);
-        showError("Error al acceder a la cámara. Permite el acceso en el navegador.");
+        console.error(err);
+        showError("No se pudo iniciar la cámara. Dale permisos o prueba en HTTPS.");
       }
     }
 
     async function switchCamera() {
       if (!isCameraOn) return;
       webcam.stop();
+      cancelAnimationFrame(rafId);
 
       currentFacingMode = currentFacingMode === "environment" ? "user" : "environment";
-
       await webcam.setup({ facingMode: currentFacingMode });
       await webcam.play();
 
       webcamContainer.innerHTML = "";
       webcamContainer.appendChild(webcam.canvas);
+
+      loop(); // reiniciar el bucle
+    }
+
+    function loop() {
+      webcam.update(); // 🔥 actualiza el frame en el canvas
+      rafId = requestAnimationFrame(loop);
     }
 
     async function captureAndAnalyze() {
-      if (!isCameraOn || !webcam.canvas) {
-        showError("Primero inicia la cámara.");
-        return;
-      }
+      if (!isCameraOn) return;
       try {
         const prediction = await model.predict(webcam.canvas);
         prediction.sort((a, b) => b.probability - a.probability);
         const best = prediction[0];
-        resultEl.innerHTML = `🔍 Detectado: <strong>${best.className}</strong> (${(best.probability * 100).toFixed(1)}%)`;
+        resultEl.innerHTML = `🔍 Detectado: <b>${best.className}</b> (${(best.probability*100).toFixed(1)}%)`;
       } catch (err) {
-        console.error("Error en el análisis:", err);
+        console.error(err);
         showError("Error al analizar la imagen.");
       }
     }
 
-    function showError(message) {
-      errorDiv.textContent = message;
-      errorDiv.style.display = "block";
-      setTimeout(() => errorDiv.style.display = "none", 5000);
+    function showError(msg) {
+      errorDiv.textContent = msg;
+      setTimeout(()=> errorDiv.textContent="", 5000);
     }
   </script>
 </body>
