@@ -1,191 +1,653 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Plastic Scanner Pro - Cámara Trasera</title>
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>EXIF Forensic Dashboard — Visor avanzado</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Leaflet (map) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <!-- Feather icons -->
+  <script src="https://unpkg.com/feather-icons"></script>
+
+  <!-- exifr (full build) -->
+  <script src="https://unpkg.com/exifr/dist/full.umd.js"></script>
+
+  <!-- Leaflet -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
   <style>
-    :root {
-      --primary: #0ff;
-      --primary-dark: #0cc;
-      --secondary: #2c5364;
-      --dark: #0f2027;
-      --light: #fff;
-      --gray: #8a9ba8;
-      --danger: #f44336;
+    :root{
+      --brand:#0d6efd;
+      --muted:#6c757d;
+      --panel-bg:#ffffff;
     }
-    body {
-      font-family: "Segoe UI", sans-serif;
-      background: linear-gradient(135deg, var(--dark), #203a43, var(--secondary));
-      color: var(--light);
-      text-align: center;
-      padding: 20px;
-      min-height: 100vh;
+    body { background:#f4f6f9; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+    .topbar { background: linear-gradient(90deg, rgba(13,110,253,0.06), rgba(13,110,253,0.02)); padding: 18px 14px; border-bottom: 1px solid rgba(13,110,253,0.04); }
+    .dropzone {
+      border: 2px dashed rgba(0,0,0,0.08);
+      background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.95));
+      border-radius: 12px;
+      padding: 28px;
+      text-align:center;
+      transition: border-color .15s, background .15s;
     }
-    h1 {
-      font-size: 2.2rem;
-      margin: 10px 0;
-      background: linear-gradient(90deg, var(--primary), #00c3ff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .webcam-container {
-      width: 100%;
-      max-width: 400px;
-      margin: auto;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    }
-    #webcam {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-    .controls {
-      margin: 15px 0;
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    button {
-      background: var(--primary);
-      border: none;
-      color: #000;
-      font-weight: 600;
-      padding: 10px 18px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    button:hover { background: var(--primary-dark); }
-    button.secondary {
-      background: rgba(255, 255, 255, 0.15);
-      color: var(--light);
-    }
-    #result {
-      font-size: 1.4rem;
-      font-weight: bold;
-      margin: 15px 0;
-      color: var(--primary);
-    }
-    .error {
-      color: var(--danger);
-      background: rgba(244, 67, 54, 0.1);
-      padding: 10px;
-      border-radius: 8px;
-      margin-top: 15px;
-      display: none;
-    }
+    .dropzone.drag { border-color: var(--brand); box-shadow: 0 6px 18px rgba(13,110,253,0.06); }
+    .thumb { max-width:140px; max-height:110px; object-fit:cover; border-radius:8px; border:1px solid rgba(0,0,0,0.04); }
+    .meta-key { color:var(--muted); width:36%; font-weight:600; }
+    .meta-val { width:64%; word-break:break-word; }
+    .table-fixed { height:340px; overflow:auto; display:block; }
+    .file-row { display:flex; gap:12px; align-items:center; padding:8px 6px; border-bottom:1px solid #f0f0f0; }
+    .btn-small { padding:.25rem .5rem; font-size:.85rem; }
+    .badge-loc { background:linear-gradient(90deg,#e9f2ff,#f4fbff); color:#084298; border:1px solid rgba(13,110,253,0.08); }
+    footer { padding:14px 0; color:#7a7a7a; text-align:center; font-size:.85rem; }
   </style>
 </head>
 <body>
-  <h1><i class="fas fa-recycle"></i> Plastic Scanner Pro</h1>
-  <p>Identifica el tipo de plástico con la cámara trasera</p>
-
-  <div class="webcam-container" id="webcam-container"></div>
-  <div class="controls">
-    <button id="startBtn"><i class="fas fa-play"></i> Iniciar Cámara</button>
-    <button id="captureBtn" class="secondary" disabled><i class="fas fa-camera"></i> Capturar</button>
-    <button id="switchCameraBtn" class="secondary" style="display:none"><i class="fas fa-sync-alt"></i> Cambiar</button>
+  <div class="topbar d-flex justify-content-between align-items-center container-fluid">
+    <div>
+      <h4 class="mb-0">EXIF Forensic Dashboard</h4>
+      <small class="text-muted">Analizador avanzado de metadatos — procesamiento local / multi-imagen</small>
+    </div>
+    <div>
+      <button id="exportCsvBtn" class="btn btn-outline-primary btn-sm me-2"><i data-feather="download"></i> Exportar CSV</button>
+      <button id="exportJsonBtn" class="btn btn-outline-secondary btn-sm"><i data-feather="file-text"></i> Exportar JSON</button>
+    </div>
   </div>
 
-  <div id="result">Esperando análisis...</div>
-  <div class="error" id="error"></div>
+  <main class="container my-4">
+    <div class="row g-4">
+      <!-- left: Upload + list -->
+      <div class="col-xl-4">
+        <div class="card p-3 mb-3">
+          <div class="dropzone" id="dropzone">
+            <input id="fileInput" type="file" accept="image/*" multiple style="display:none">
+            <div id="dropText">
+              <h5>Arrastra y suelta imágenes aquí</h5>
+              <p class="text-muted">O haz click para seleccionar — soporta JPG/PNG. Las imágenes no se suben a ningún servidor, todo se procesa localmente.</p>
+              <div class="d-flex justify-content-center gap-2">
+                <button id="chooseBtn" class="btn btn-primary btn-sm">Seleccionar imágenes</button>
+                <button id="pasteBtn" class="btn btn-outline-secondary btn-sm">Pegar desde portapapeles</button>
+              </div>
+            </div>
+          </div>
 
-  <script>
-    const URL = "./model/"; // Cambia a tu carpeta del modelo exportado de Teachable Machine
-    let model, webcam, maxPredictions;
-    let currentFacingMode = "environment"; // environment = trasera
-    let isCameraOn = false;
-    let rafId;
+          <hr>
 
-    const startBtn = document.getElementById("startBtn");
-    const captureBtn = document.getElementById("captureBtn");
-    const switchCameraBtn = document.getElementById("switchCameraBtn");
-    const webcamContainer = document.getElementById("webcam-container");
-    const resultEl = document.getElementById("result");
-    const errorDiv = document.getElementById("error");
+          <div class="mb-2 d-flex justify-content-between align-items-center">
+            <small class="text-muted">Imágenes cargadas</small>
+            <small id="countLabel" class="text-muted">0</small>
+          </div>
 
-    startBtn.addEventListener("click", init);
-    captureBtn.addEventListener("click", captureAndAnalyze);
-    switchCameraBtn.addEventListener("click", switchCamera);
+          <div id="fileList" class="list-group" style="max-height:390px; overflow:auto;"></div>
+        </div>
 
-    async function init() {
+        <div class="card p-3">
+          <h6>Acciones rápidas</h6>
+          <div class="d-flex gap-2 mt-2">
+            <button id="downloadAllSanitized" class="btn btn-outline-success btn-sm">Descargar todas saneadas</button>
+            <button id="copyReport" class="btn btn-outline-secondary btn-sm">Copiar reporte (JSON)</button>
+          </div>
+          <p class="small text-muted mt-2 mb-0">
+            Nota: la función "saneada" re-codifica la imagen en canvas y elimina EXIF. Si necesitas una eliminación completa conservando todos los bytes originales, usa herramientas forenses específicas.
+          </p>
+        </div>
+      </div>
+
+      <!-- right: Preview + metadata -->
+      <div class="col-xl-8">
+        <div class="card p-3 mb-3">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <div class="d-flex align-items-start gap-3">
+                <img id="previewImg" class="thumb" alt="Preview" src="" style="display:none">
+                <div>
+                  <h5 id="fileName">Ninguna imagen seleccionada</h5>
+                  <p id="fileInfo" class="text-muted small">Sube una imagen para ver metadatos detallados</p>
+                  <div class="mt-2">
+                    <button id="downloadSanitizedBtn" class="btn btn-primary btn-small" disabled><i data-feather="download"></i> Descargar saneada</button>
+                    <button id="openMapBtn" class="btn btn-outline-primary btn-small" disabled><i data-feather="map"></i> Ver mapa</button>
+                    <button id="stripBtn" class="btn btn-outline-danger btn-small" disabled><i data-feather="trash-2"></i> Eliminar EXIF (saneada)</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div id="metaOverview" class="small text-muted">
+                <div><strong>Camara:</strong> <span id="metaCamera">—</span></div>
+                <div><strong>Fecha:</strong> <span id="metaDate">—</span></div>
+                <div><strong>Resolución:</strong> <span id="metaRes">—</span></div>
+                <div><strong>GPS:</strong> <span id="metaGPS">—</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card p-3">
+          <ul class="nav nav-tabs" id="tabs" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="tab-data" data-bs-toggle="tab" data-bs-target="#tabData" type="button" role="tab">Metadatos (detallado)</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="tab-raw" data-bs-toggle="tab" data-bs-target="#tabRaw" type="button" role="tab">RAW (JSON)</button>
+            </li>
+          </ul>
+
+          <div class="tab-content mt-3">
+            <div class="tab-pane fade show active" id="tabData" role="tabpanel">
+              <div id="metadataTable" class="row gy-2"></div>
+            </div>
+
+            <div class="tab-pane fade" id="tabRaw" role="tabpanel">
+              <pre id="rawJson" style="max-height:420px; overflow:auto; background:#0f1724; color:#cfe8ff; padding:12px; border-radius:8px;"></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mt-3 p-2">
+          <small class="text-muted">Map Preview (GPS):</small>
+          <div id="map" style="height:300px; border-radius:8px; margin-top:8px;"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <footer class="mt-4">
+      Hecho para análisis forense rápido — maneja con cuidado las imágenes que contengan datos sensibles.
+    </footer>
+  </main>
+
+  <!-- Modal: Reverse geocode info / warnings -->
+  <div class="modal fade" id="reverseModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Reverse geocoding</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <p id="reverseText" class="mb-0 small text-muted"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  // Globals
+  const exifrLib = window.exifr;
+  const fileListEl = document.getElementById('fileList');
+  const dropzone = document.getElementById('dropzone');
+  const fileInput = document.getElementById('fileInput');
+  const chooseBtn = document.getElementById('chooseBtn');
+  const pasteBtn = document.getElementById('pasteBtn');
+
+  const previewImg = document.getElementById('previewImg');
+  const fileNameEl = document.getElementById('fileName');
+  const fileInfoEl = document.getElementById('fileInfo');
+  const metaCamera = document.getElementById('metaCamera');
+  const metaDate = document.getElementById('metaDate');
+  const metaRes = document.getElementById('metaRes');
+  const metaGPS = document.getElementById('metaGPS');
+  const metadataTable = document.getElementById('metadataTable');
+  const rawJson = document.getElementById('rawJson');
+
+  const openMapBtn = document.getElementById('openMapBtn');
+  const downloadSanitizedBtn = document.getElementById('downloadSanitizedBtn');
+  const stripBtn = document.getElementById('stripBtn');
+  const exportCsvBtn = document.getElementById('exportCsvBtn');
+  const exportJsonBtn = document.getElementById('exportJsonBtn');
+  const downloadAllSanitized = document.getElementById('downloadAllSanitized');
+  const copyReport = document.getElementById('copyReport');
+
+  let items = []; // {file, metadata, gps, sanitizedBlob}
+  let selectedIndex = -1;
+
+  // Map init
+  const map = L.map('map', {center:[0,0], zoom:2, attributionControl:false});
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+  }).addTo(map);
+  let mapMarker = null;
+
+  // Utilities
+  function fmt(val){ return val===undefined ? '—' : val; }
+  function toDMS(decimal) {
+    if (decimal === null || decimal === undefined) return null;
+    const sign = decimal < 0 ? -1 : 1;
+    const abs = Math.abs(decimal);
+    const deg = Math.floor(abs);
+    const minf = (abs - deg) * 60;
+    const min = Math.floor(minf);
+    const sec = Math.round((minf - min) * 60 * 100) / 100;
+    return `${sign < 0?'-':''}${deg}°${min}'${sec}"`;
+  }
+
+  // Drag & drop
+  dropzone.addEventListener('dragenter', e => { dropzone.classList.add('drag'); e.preventDefault(); });
+  dropzone.addEventListener('dragover', e => { e.preventDefault(); });
+  dropzone.addEventListener('dragleave', e => { dropzone.classList.remove('drag'); });
+  dropzone.addEventListener('drop', e => {
+    e.preventDefault(); dropzone.classList.remove('drag');
+    const files = Array.from(e.dataTransfer.files || []);
+    handleFiles(files);
+  });
+
+  chooseBtn.addEventListener('click', () => fileInput.click());
+  fileInput.addEventListener('change', e => {
+    const files = Array.from(e.target.files);
+    handleFiles(files);
+    fileInput.value = '';
+  });
+
+  // Paste from clipboard (images)
+  pasteBtn.addEventListener('click', async () => {
+    try {
+      const clipboardItems = await navigator.clipboard.read();
+      for (const ci of clipboardItems) {
+        for (const type of ci.types) {
+          if (type.startsWith('image/')) {
+            const blob = await ci.getType(type);
+            const f = new File([blob], `clipboard-${Date.now()}.png`, {type: blob.type});
+            handleFiles([f]);
+          }
+        }
+      }
+    } catch (err) {
+      alert('Pegar desde portapapeles requiere permiso o no está soportado en este navegador.');
+    }
+  });
+
+  // Handle files (multi)
+  async function handleFiles(files){
+    if(!files || files.length===0) return;
+    for(const file of files){
+      if(!file.type.startsWith('image/')) continue;
+      const index = items.length;
+      items.push({file, metadata:null, gps:null, sanitized:null});
+      renderFileList();
+      await processFile(index);
+    }
+    document.getElementById('countLabel').innerText = items.length;
+  }
+
+  // Render list of loaded files
+  function renderFileList(){
+    fileListEl.innerHTML = '';
+    items.forEach((it, i) => {
+      const name = it.file.name;
+      const sizeKb = Math.round(it.file.size/1024);
+      const meta = it.metadata;
+      const gpsBadge = meta && meta.gps ? `<span class="badge badge-loc">GPS</span>` : '';
+      const row = document.createElement('div');
+      row.className = 'file-row';
+      row.innerHTML = `
+        <img src="${URL.createObjectURL(it.file)}" class="thumb" />
+        <div style="flex:1">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div><strong>${name}</strong> <small class="text-muted">· ${sizeKb} KB</small></div>
+            <div>
+              <button class="btn btn-sm btn-light btn-select" data-i="${i}">Ver</button>
+              <button class="btn btn-sm btn-outline-secondary btn-small btn-download" data-i="${i}">Desc</button>
+            </div>
+          </div>
+          <div><small class="text-muted">${meta ? (fmt(meta.camera) + ' · ' + fmt(meta.date)) : 'Procesando...'}</small></div>
+        </div>
+      `;
+      fileListEl.appendChild(row);
+
+      row.querySelector('.btn-select').addEventListener('click', () => selectFile(i));
+      row.querySelector('.btn-download').addEventListener('click', () => downloadSanitized(i));
+    });
+  }
+
+  // Process single file: extract metadata using exifr
+  async function processFile(index){
+    const entry = items[index];
+    const file = entry.file;
+    try {
+      // exifr.parse returns many fields (Exif, IPTC, XMP, etc.)
+      const parsed = await exifrLib.parse(file, {iptc:true, xmp:true, exif:true, tiff:true, ifd0:true, ifd1:true, icc:true});
+      entry.metadata = {};
+      // camera
+      entry.metadata.camera = parsed.Make ? `${parsed.Make} ${parsed.Model || ''}`.trim() : parsed.Model || null;
+      // date
+      entry.metadata.date = parsed.DateTimeOriginal ? parsed.DateTimeOriginal.toString() : parsed.CreateDate ? parsed.CreateDate.toString() : null;
+      // resolution
+      entry.metadata.resolution = `${parsed.ExifImageWidth || parsed.ImageWidth || parsed.PixelXDimension || file.width || '—'} x ${parsed.ExifImageLength || parsed.ImageHeight || parsed.PixelYDimension || file.height || '—'}`;
+      // exposure data (if available)
+      entry.metadata.exposure = {
+        shutter: parsed.ExposureTime || parsed.ShutterSpeedValue || null,
+        aperture: parsed.FNumber || parsed.ApertureValue || null,
+        iso: parsed.ISO || parsed.ISOSpeedRatings || null,
+        focal: parsed.FocalLength || null
+      };
+      // store raw parse for raw tab
+      entry.metadata.raw = parsed;
+
+      // GPS: try exifr.gps shortcut or parsed fields
+      let gps = null;
       try {
-        const modelURL = URL + "model.json";
-        const metadataURL = URL + "metadata.json";
-
-        model = await tmImage.load(modelURL, metadataURL);
-        maxPredictions = model.getTotalClasses();
-
-        const flip = false; // no espejar la cámara trasera
-        webcam = new tmImage.Webcam(400, 400, flip);
-
-        await webcam.setup({ facingMode: currentFacingMode });
-        await webcam.play();
-
-        webcamContainer.innerHTML = "";
-        webcamContainer.appendChild(webcam.canvas);
-
-        isCameraOn = true;
-        startBtn.disabled = true;
-        captureBtn.disabled = false;
-        switchCameraBtn.style.display = "inline-block";
-
-        loop(); // 🔥 inicia el bucle de actualización
-
-      } catch (err) {
-        console.error("Error inicializando:", err);
-        showError("Error al acceder a la cámara. Permite el acceso en el navegador.");
+        gps = await exifrLib.gps(file); // returns {latitude, longitude, altitude, ...} or null
+      } catch(e){ gps = null; }
+      if(!gps){
+        // fallback: check common fields
+        const lat = parsed.latitude || parsed.GPSLatitude || parsed.GPSLatitudeRef ? null : null;
+        // we'll parse different names conservatively
+        // exifr usually returns latitude/longitude as numbers: parsed.latitude, parsed.longitude
+        if(parsed.latitude && parsed.longitude){
+          gps = {latitude: parsed.latitude, longitude: parsed.longitude, altitude: parsed.GPSAltitude || parsed.Altitude || null};
+        } else if(parsed.GPSLatitude && parsed.GPSLongitude){
+          // exifr sometimes returns rationals; try converting
+          // but exifr.parse usually normalizes; so this branch likely isn't needed
+          gps = {latitude: parsed.GPSLatitude, longitude: parsed.GPSLongitude, altitude: parsed.GPSAltitude};
+        }
       }
+      entry.gps = gps || null;
+
+      // produce friendly fields
+      const camera = entry.metadata.camera || '—';
+      const date = entry.metadata.date || '—';
+      const resolution = entry.metadata.resolution || '—';
+      entry.metadata.camera = camera; entry.metadata.date = date; entry.metadata.resolution = resolution;
+
+      // create sanitized blob placeholder (lazy)
+      entry.sanitized = null;
+
+      // if currently selected, refresh UI
+      if(selectedIndex === index) showDetails(index);
+      renderFileList();
+    } catch (err) {
+      console.error('Error parsing EXIF', err);
+      items[index].metadata = {camera:null, date:null, resolution:null, raw:{}};
+      renderFileList();
     }
+  }
 
-    async function switchCamera() {
-      if (!isCameraOn) return;
-      webcam.stop();
-      cancelAnimationFrame(rafId);
+  function selectFile(i){
+    selectedIndex = i;
+    showDetails(i);
+    // highlight selection visually (skipped for brevity)
+  }
 
-      currentFacingMode = currentFacingMode === "environment" ? "user" : "environment";
-      await webcam.setup({ facingMode: currentFacingMode });
-      await webcam.play();
+  function showDetails(i){
+    const entry = items[i];
+    if(!entry) return;
+    const file = entry.file;
+    fileNameEl.textContent = file.name;
+    fileInfoEl.textContent = `${Math.round(file.size/1024)} KB — ${file.type}`;
+    previewImg.src = URL.createObjectURL(file);
+    previewImg.style.display = 'inline-block';
 
-      webcamContainer.innerHTML = "";
-      webcamContainer.appendChild(webcam.canvas);
+    const meta = entry.metadata || {};
+    metaCamera.innerText = fmt(meta.camera);
+    metaDate.innerText = fmt(meta.date);
+    metaRes.innerText = fmt(meta.resolution);
+    if(entry.gps){
+      metaGPS.innerHTML = `<span class="badge badge-loc">${entry.gps.latitude.toFixed(6)}, ${entry.gps.longitude.toFixed(6)}</span>`;
+    } else metaGPS.innerText = '—';
 
-      loop(); // reinicia el bucle
-    }
+    // build metadata table grouped
+    metadataTable.innerHTML = '';
+    const raw = meta.raw || {};
 
-    function loop() {
-      webcam.update(); // actualiza el frame en el canvas
-      rafId = requestAnimationFrame(loop);
-    }
-
-    async function captureAndAnalyze() {
-      if (!isCameraOn || !webcam.canvas) {
-        showError("Primero inicia la cámara.");
-        return;
+    const groups = {
+      'General': {
+        'File name': file.name,
+        'File size (KB)': Math.round(file.size/1024),
+        'MIME type': file.type
+      },
+      'Camera / Exif': {
+        'Make': raw.Make || raw.ImageMake || '-',
+        'Model': raw.Model || raw.ImageModel || '-',
+        'Software': raw.Software || '-',
+        'Orientation': raw.Orientation || '-',
+      },
+      'Capture settings': {
+        'DateTimeOriginal': raw.DateTimeOriginal || '-',
+        'ExposureTime': raw.ExposureTime || raw.ExposureTimeOriginal || '-',
+        'FNumber / Aperture': raw.FNumber || raw.ApertureValue || '-',
+        'ISO': raw.ISO || raw.ISOSpeedRatings || '-',
+        'FocalLength': raw.FocalLength || '-'
+      },
+      'GPS': {
+        'Latitude (dec)': entry.gps ? (entry.gps.latitude || '-') : '-',
+        'Longitude (dec)': entry.gps ? (entry.gps.longitude || '-') : '-',
+        'Latitude (DMS)': entry.gps ? toDMS(entry.gps.latitude) : '-',
+        'Longitude (DMS)': entry.gps ? toDMS(entry.gps.longitude) : '-',
+        'Altitude (m)': entry.gps ? (entry.gps.altitude || '-') : '-'
       }
-      try {
-        const prediction = await model.predict(webcam.canvas);
-        prediction.sort((a, b) => b.probability - a.probability);
-        const best = prediction[0];
-        resultEl.innerHTML = `🔍 Detectado: <strong>${best.className}</strong> (${(best.probability * 100).toFixed(1)}%)`;
-      } catch (err) {
-        console.error("Error en el análisis:", err);
-        showError("Error al analizar la imagen.");
+    };
+
+    for(const [section, kv] of Object.entries(groups)){
+      const sect = document.createElement('div');
+      sect.className = 'col-12';
+      sect.innerHTML = `<h6 style="margin-top:6px">${section}</h6>`;
+      const tbl = document.createElement('div');
+      tbl.className = 'row';
+      for(const [k,v] of Object.entries(kv)){
+        const el = document.createElement('div');
+        el.className = 'col-12 d-flex';
+        el.innerHTML = `<div class="meta-key">${k}</div><div class="meta-val">${fmt(v)}</div>`;
+        tbl.appendChild(el);
       }
+      sect.appendChild(tbl);
+      metadataTable.appendChild(sect);
     }
 
-    function showError(message) {
-      errorDiv.textContent = message;
-      errorDiv.style.display = "block";
-      setTimeout(() => errorDiv.style.display = "none", 5000);
+    // RAW JSON
+    rawJson.textContent = JSON.stringify(raw, null, 2);
+
+    // enable actions
+    downloadSanitizedBtn.disabled = false;
+    openMapBtn.disabled = !entry.gps;
+    stripBtn.disabled = false;
+  }
+
+  // Download sanitized: re-draw on canvas and export (removes EXIF)
+  async function sanitizeImageBlob(file){
+    // return blob sanitized (jpeg) — re-encode using canvas
+    // loads image to canvas and re-encodes at quality 0.92
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => {
+        // create canvas sized to image
+        let w = img.naturalWidth, h = img.naturalHeight;
+        // adjust orientation if necessary (if EXIF orientation exists)
+        // we rely on exifr to have read orientation; fallback = 1 (normal)
+        exifrLib.orientation(file).then((orient) => {
+          orient = orient || 1;
+          let canvas = document.createElement('canvas');
+          let ctx = canvas.getContext('2d');
+
+          if([5,6,7,8].includes(orient)){
+            canvas.width = h; canvas.height = w;
+          } else {
+            canvas.width = w; canvas.height = h;
+          }
+
+          // apply transforms
+          switch(orient){
+            case 2: ctx.transform(-1, 0, 0, 1, canvas.width, 0); break;
+            case 3: ctx.transform(-1, 0, 0, -1, canvas.width, canvas.height); break;
+            case 4: ctx.transform(1, 0, 0, -1, 0, canvas.height); break;
+            case 5: ctx.transform(0, 1, 1, 0, 0, 0); break;
+            case 6: ctx.transform(0, 1, -1, 0, canvas.height, 0); break;
+            case 7: ctx.transform(0, -1, -1, 0, canvas.height, canvas.width); break;
+            case 8: ctx.transform(0, -1, 1, 0, 0, canvas.width); break;
+            default: break;
+          }
+          ctx.drawImage(img, 0, 0, w, h);
+          canvas.toBlob((blob) => {
+            resolve(blob);
+          }, 'image/jpeg', 0.92);
+        }).catch((e) => {
+          console.warn('orientation read failed', e);
+          // fallback no orientation
+          let canvas = document.createElement('canvas');
+          canvas.width = img.naturalWidth; canvas.height = img.naturalHeight;
+          canvas.getContext('2d').drawImage(img,0,0);
+          canvas.toBlob((blob) => resolve(blob),'image/jpeg',0.92);
+        });
+      };
+      img.onerror = (e)=> reject(e);
+      img.src = URL.createObjectURL(file);
+    });
+  }
+
+  async function downloadSanitized(i){
+    const entry = items[i];
+    if(!entry) return;
+    if(!entry.sanitized){
+      entry.sanitized = await sanitizeImageBlob(entry.file);
     }
-  </script>
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(entry.sanitized);
+    a.download = entry.file.name.replace(/\.(\w+)$/, '_sane.jpg');
+    a.click();
+  }
+
+  // Download sanitized currently selected
+  downloadSanitizedBtn.addEventListener('click', async () => {
+    if(selectedIndex<0) return alert('Selecciona una imagen primero');
+    await downloadSanitized(selectedIndex);
+  });
+
+  // download sanitized for i-th row helper used in list
+  async function downloadSanitizedByIndex(i){
+    await downloadSanitized(i);
+  }
+
+  // downloadAllSanitized (zip not included to avoid dependencies) -> downloads sequentially
+  downloadAllSanitized.addEventListener('click', async () => {
+    if(items.length===0) return alert('No hay imágenes cargadas');
+    for(let i=0;i<items.length;i++){
+      await downloadSanitized(i);
+      // small pause to avoid overwhelming the browser
+      await new Promise(r => setTimeout(r, 300));
+    }
+  });
+
+  // stripBtn: triggers sanitized download and warns
+  stripBtn.addEventListener('click', async () => {
+    if(selectedIndex<0) return;
+    const ok = confirm('Esto crea una versión "saneada" (sin EXIF). ¿Deseas descargarla ahora?');
+    if(!ok) return;
+    await downloadSanitized(selectedIndex);
+  });
+
+  // Map button
+  openMapBtn.addEventListener('click', () => {
+    if(selectedIndex<0) return;
+    const entry = items[selectedIndex];
+    if(!entry.gps) return alert('No hay GPS en esta imagen');
+    const lat = entry.gps.latitude, lon = entry.gps.longitude;
+    map.setView([lat, lon], 15);
+    if(mapMarker) map.removeLayer(mapMarker);
+    mapMarker = L.marker([lat, lon]).addTo(map).bindPopup(`<b>${lat.toFixed(6)}, ${lon.toFixed(6)}</b>`).openPopup();
+
+    // try reverse geocoding (Nominatim) - optional, may be rate-limited
+    const nomUrl = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`;
+    fetch(nomUrl, {method:'GET', headers:{'Accept':'application/json'}}).then(r=>r.json()).then(j=>{
+      const info = j.display_name || 'No se encontró dirección';
+      const el = document.getElementById('reverseText');
+      el.textContent = `Dirección (reverse geocoding): ${info}`;
+      const modal = new bootstrap.Modal(document.getElementById('reverseModal')); modal.show();
+    }).catch(err=>{
+      console.warn('reverse geocode failed',err);
+      const el = document.getElementById('reverseText');
+      el.textContent = 'Reverse geocoding falló o está limitado por CORS/rate-limit.';
+      const modal = new bootstrap.Modal(document.getElementById('reverseModal')); modal.show();
+    });
+  });
+
+  // Export CSV / JSON
+  exportJsonBtn.addEventListener('click', () => {
+    if(items.length===0) return alert('No hay datos');
+    const data = items.map(it => {
+      const m = it.metadata || {};
+      return {
+        filename: it.file.name,
+        size: it.file.size,
+        mime: it.file.type,
+        camera: m.camera || '',
+        date: m.date || '',
+        resolution: m.resolution || '',
+        latitude: it.gps ? it.gps.latitude : '',
+        longitude: it.gps ? it.gps.longitude : ''
+      };
+    });
+    const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'exif_report.json';
+    a.click();
+  });
+
+  exportCsvBtn.addEventListener('click', () => {
+    if(items.length===0) return alert('No hay datos');
+    const headers = ['filename','size','mime','camera','date','resolution','latitude','longitude'];
+    let csv = headers.join(',') + '\n';
+    items.forEach(it => {
+      const m = it.metadata || {};
+      const row = [
+        `"${it.file.name.replace(/"/g,'""')}"`,
+        it.file.size,
+        it.file.type,
+        `"${(m.camera||'').toString().replace(/"/g,'""')}"`,
+        `"${(m.date||'').toString().replace(/"/g,'""')}"`,
+        `"${(m.resolution||'').toString().replace(/"/g,'""')}"`,
+        it.gps ? it.gps.latitude : '',
+        it.gps ? it.gps.longitude : ''
+      ];
+      csv += row.join(',') + '\n';
+    });
+    const blob = new Blob([csv], {type:'text/csv'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'exif_report.csv';
+    a.click();
+  });
+
+  // copy report JSON to clipboard
+  copyReport.addEventListener('click', async () => {
+    if(items.length===0) return alert('No hay datos');
+    const data = items.map(it=>{
+      const m = it.metadata || {};
+      return {
+        filename: it.file.name,
+        size: it.file.size,
+        mime: it.file.type,
+        camera: m.camera || '',
+        date: m.date || '',
+        resolution: m.resolution || '',
+        latitude: it.gps ? it.gps.latitude : null,
+        longitude: it.gps ? it.gps.longitude : null,
+        raw: m.raw || {}
+      };
+    });
+    try {
+      await navigator.clipboard.writeText(JSON.stringify(data, null, 2));
+      alert('Reporte copiado al portapapeles');
+    } catch (e) {
+      alert('No se pudo copiar al portapapeles (ver permisos).');
+    }
+  });
+
+  // Small helpers to download sanitized quickly
+  function downloadSanitized(i){
+    return downloadSanitizedByIndex(i);
+  }
+
+  // initialize feather icons
+  feather.replace();
+</script>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
