@@ -91,6 +91,64 @@
 
     .small-muted { color:var(--muted); font-size:.9rem; }
     footer { text-align:center; margin-top:18px; color:var(--muted); font-size:.85rem; }
+    
+    /* Nuevos estilos para mejoras */
+    .toast-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+    }
+    
+    .no-exif-warning {
+      border-left: 4px solid #ffc107;
+      background-color: rgba(255,193,7,0.1);
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 4px;
+    }
+    
+    .stats-panel {
+      display: flex;
+      justify-content: space-around;
+      padding: 10px;
+      margin-top: 10px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    
+    .stat-item {
+      text-align: center;
+    }
+    
+    .stat-value {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: var(--accent);
+    }
+    
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    
+    .processing-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 14px;
+      z-index: 10;
+    }
+    
+    .spinner-border-sm {
+      width: 1rem;
+      height: 1rem;
+    }
 
     /* Responsive tweaks */
     @media (max-width:1000px){
@@ -137,6 +195,22 @@
           </div>
 
           <div id="fileList" style="max-height:480px; overflow:auto; display:flex; flex-direction:column; gap:8px;"></div>
+          
+          <!-- Panel de estadísticas -->
+          <div class="stats-panel">
+            <div class="stat-item">
+              <div class="stat-value" id="statImages">0</div>
+              <div class="stat-label">Imágenes</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value" id="statGPS">0</div>
+              <div class="stat-label">Con GPS</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value" id="statNoEXIF">0</div>
+              <div class="stat-label">Sin EXIF</div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -200,6 +274,9 @@
       </div>
     </div>
   </div>
+  
+  <!-- Contenedor para notificaciones toast -->
+  <div class="toast-container"></div>
 
 <script>
 /* =========== Globals & DOM =========== */
@@ -227,6 +304,11 @@ const btnShowAll = document.getElementById('btnShowAll');
 const fitAllBtn = document.getElementById('fitAllBtn');
 const zoomToMarkerBtn = document.getElementById('zoomToMarkerBtn');
 
+// Elementos de estadísticas
+const statImages = document.getElementById('statImages');
+const statGPS = document.getElementById('statGPS');
+const statNoEXIF = document.getElementById('statNoEXIF');
+
 let items = []; // {file, metadata, gps, sanitizedBlob, sha256}
 let selectedIndex = -1;
 
@@ -237,7 +319,7 @@ const markers = L.markerClusterGroup();
 map.addLayer(markers);
 let openPopup = null;
 
-/* =========== Utilities =========== */
+/* =========== Funciones de utilidad mejoradas =========== */
 function fmt(v){ return v === undefined || v === null ? '—' : v; }
 function toDMS(dec){
   if(dec===undefined||dec===null) return '—';
@@ -270,6 +352,38 @@ function sanitizeImageBlob(file){
   });
 }
 
+// Función para mostrar notificaciones toast
+function showToast(message, type = 'info') {
+  const toast = document.createElement('div');
+  toast.className = `toast align-items-center text-white bg-${type} border-0`;
+  toast.setAttribute('role', 'alert');
+  toast.innerHTML = `
+    <div class="d-flex">
+      <div class="toast-body">${message}</div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+  `;
+  
+  document.querySelector('.toast-container').appendChild(toast);
+  new bootstrap.Toast(toast).show();
+  
+  // Eliminar el toast después de que se oculte
+  toast.addEventListener('hidden.bs.toast', () => {
+    toast.remove();
+  });
+}
+
+// Función para actualizar estadísticas
+function updateStats() {
+  statImages.textContent = items.length;
+  
+  const withGPS = items.filter(item => item.gps).length;
+  statGPS.textContent = withGPS;
+  
+  const noEXIF = items.filter(item => item.metadata && Object.keys(item.metadata).length === 0).length;
+  statNoEXIF.textContent = noEXIF;
+}
+
 /* =========== File handling UI =========== */
 chooseBtn.addEventListener('click', ()=>fileInput.click());
 fileInput.addEventListener('change', e=>{
@@ -295,33 +409,61 @@ pasteBtn.addEventListener('click', async ()=>{
       }
     }
   } catch (err){
-    alert('Pegar desde portapapeles requiere permisos o no está soportado en este navegador.');
+    showToast('Pegar desde portapapeles requiere permisos o no está soportado en este navegador.', 'warning');
   }
 });
 
 async function handleFiles(files){
   if(!files || files.length===0) return;
+  
+  // Mostrar notificación de inicio de procesamiento
+  if (files.length > 1) {
+    showToast(`Procesando ${files.length} imágenes...`, 'info');
+  }
+  
   for(const f of files){
-    if(!f.type.startsWith('image/')) continue;
+    if(!f.type.startsWith('image/')) {
+      showToast(`El archivo ${f.name} no es una imagen válida`, 'warning');
+      continue;
+    }
+    
     const idx = items.length;
     items.push({file:f, metadata:null, gps:null, sanitized:null, sha256:null, marker:null});
     renderList();
     await processFile(idx);
   }
   countLabel.textContent = items.length;
+  updateStats();
 }
 
 /* =========== EXIF processing =========== */
 async function processFile(index){
   const entry = items[index];
   const f = entry.file;
+  
+  // Añadir indicador de procesamiento
+  const processingIndicator = document.createElement('div');
+  processingIndicator.className = 'processing-overlay';
+  processingIndicator.innerHTML = '<div class="spinner-border text-light" role="status"><span class="visually-hidden">Procesando...</span></div>';
+  
+  const fileRow = fileListEl.children[index];
+  if (fileRow) {
+    fileRow.style.position = 'relative';
+    fileRow.appendChild(processingIndicator);
+  }
+  
   try {
     // parse exif, iptc, xmp
     const parsed = await exifrLib.parse(f, {iptc:true, xmp:true, exif:true, tiff:true, ifd0:true, ifd1:true, icc:true});
     entry.metadata = parsed || {};
+    
+    // Verificar si realmente hay metadatos
+    const hasMetadata = parsed && Object.keys(parsed).length > 0;
+    
     // camera & date friendly
     entry.metadata.cameraFriendly = parsed ? ((parsed.Make?parsed.Make+' ':'') + (parsed.Model||'')).trim() : null;
     entry.metadata.dateFriendly = parsed && parsed.DateTimeOriginal ? parsed.DateTimeOriginal.toString() : (parsed && parsed.CreateDate ? parsed.CreateDate.toString() : null);
+    
     // gps
     try {
       const gp = await exifrLib.gps(f);
@@ -333,8 +475,10 @@ async function processFile(index){
     } catch(e){
       entry.gps = null;
     }
+    
     // compute sha256 lazily only on demand
     entry.sanitized = null;
+    
     // create marker if gps exists
     if(entry.gps){
       const m = L.marker([entry.gps.latitude, entry.gps.longitude]);
@@ -342,12 +486,24 @@ async function processFile(index){
       markers.addLayer(m);
       entry.marker = m;
     }
+    
+    // Mostrar advertencia si no hay metadatos
+    if (!hasMetadata) {
+      showToast(`"${f.name}" no contiene metadatos EXIF. Puede haber sido procesada por una red social.`, 'warning');
+    }
+    
     renderList();
     if(selectedIndex === index) showDetails(index);
   } catch (err){
     console.error('parse error', err);
     entry.metadata = {};
+    showToast(`Error al procesar los metadatos de "${f.name}"`, 'danger');
     renderList();
+  } finally {
+    // Eliminar indicador de procesamiento
+    if (fileRow && fileRow.contains(processingIndicator)) {
+      fileRow.removeChild(processingIndicator);
+    }
   }
 }
 
@@ -358,17 +514,23 @@ function renderList(){
     const row = document.createElement('div');
     row.className = 'file-row';
     row.setAttribute('role','button');
+    
+    // Determinar si hay metadatos
+    const hasMetadata = it.metadata && Object.keys(it.metadata).length > 0;
+    const metadataIndicator = hasMetadata ? '' : '<span class="badge bg-warning ms-1" title="Sin metadatos EXIF">!</span>';
+    const gpsIndicator = it.gps ? '<span class="badge bg-success ms-1" title="Contiene datos GPS">GPS</span>' : '';
+    
     row.innerHTML = `
       <img class="thumb" src="${URL.createObjectURL(it.file)}" alt="">
       <div style="flex:1;">
         <div style="display:flex;justify-content:space-between;align-items:center">
-          <div><strong style="font-size:.95rem">${it.file.name}</strong><div class="small-muted">${Math.round(it.file.size/1024)} KB</div></div>
+          <div><strong style="font-size:.95rem">${it.file.name}</strong>${metadataIndicator}${gpsIndicator}<div class="small-muted">${Math.round(it.file.size/1024)} KB</div></div>
           <div style="display:flex;gap:6px">
             <button class="btn btn-sm btn-light btn-select" data-i="${i}">Ver</button>
             <button class="btn btn-sm btn-outline-light btn-download" data-i="${i}">Saneada</button>
           </div>
         </div>
-        <div class="small-muted" style="margin-top:6px">${it.metadata ? (fmt(it.metadata.cameraFriendly) + ' · ' + fmt(it.metadata.dateFriendly)) : 'Procesando...'}</div>
+        <div class="small-muted" style="margin-top:6px">${it.metadata ? (fmt(it.metadata.cameraFriendly) + ' · ' + fmt(it.metadata.dateFriendly)) : 'Sin metadatos'}</div>
       </div>
     `;
     fileListEl.appendChild(row);
@@ -393,28 +555,44 @@ async function showDetails(i){
   previewImg.src = URL.createObjectURL(f); previewImg.style.display = 'inline-block';
   metaCamera.textContent = fmt(entry.metadata.cameraFriendly);
   metaDate.textContent = fmt(entry.metadata.dateFriendly);
+  
   // build metadata table
   metadataTable.innerHTML = '';
-  const raw = entry.metadata || {};
-  const groups = {
-    'General': {'File name': f.name, 'Size (KB)': Math.round(f.size/1024), 'MIME': f.type},
-    'Camera/Exif': {'Make': raw.Make||'-', 'Model': raw.Model||'-', 'Software': raw.Software||'-', 'Orientation': raw.Orientation||'-'},
-    'Capture': {'DateTimeOriginal': raw.DateTimeOriginal||'-', 'ExposureTime': raw.ExposureTime||'-', 'FNumber': raw.FNumber||'-', 'ISO': raw.ISO||raw.ISOSpeedRatings||'-'},
-    'GPS': {'Latitude (dec)': entry.gps ? entry.gps.latitude : '-', 'Longitude (dec)': entry.gps ? entry.gps.longitude : '-', 'Latitude (DMS)': entry.gps ? toDMS(entry.gps.latitude) : '-', 'Longitude (DMS)': entry.gps ? toDMS(entry.gps.longitude) : '-', 'Altitude (m)': entry.gps ? entry.gps.altitude||'-' : '-'}
-  };
-  for(const [sec, kv] of Object.entries(groups)){
-    const h = document.createElement('h6'); h.textContent = sec; h.style.marginTop='10px';
-    metadataTable.appendChild(h);
-    const tbl = document.createElement('div');
-    for(const [k,v] of Object.entries(kv)){
-      const row = document.createElement('div'); row.style.display='flex'; row.style.gap='8px'; row.style.marginBottom='6px';
-      const kEl = document.createElement('div'); kEl.className='meta-key'; kEl.textContent=k;
-      const vEl = document.createElement('div'); vEl.className='meta-val'; vEl.textContent=fmt(v);
-      row.appendChild(kEl); row.appendChild(vEl); tbl.appendChild(row);
+  
+  // Mostrar advertencia si no hay metadatos
+  if (!entry.metadata || Object.keys(entry.metadata).length === 0) {
+    const warning = document.createElement('div');
+    warning.className = 'no-exif-warning';
+    warning.innerHTML = `
+      <strong>Advertencia:</strong> Esta imagen no contiene metadatos EXIF útiles. 
+      Puede haber sido procesada por una red social o aplicación que elimina estos datos.
+    `;
+    metadataTable.appendChild(warning);
+  } else {
+    const raw = entry.metadata || {};
+    const groups = {
+      'General': {'File name': f.name, 'Size (KB)': Math.round(f.size/1024), 'MIME': f.type},
+      'Camera/Exif': {'Make': raw.Make||'-', 'Model': raw.Model||'-', 'Software': raw.Software||'-', 'Orientation': raw.Orientation||'-'},
+      'Capture': {'DateTimeOriginal': raw.DateTimeOriginal||'-', 'ExposureTime': raw.ExposureTime||'-', 'FNumber': raw.FNumber||'-', 'ISO': raw.ISO||raw.ISOSpeedRatings||'-'},
+      'GPS': {'Latitude (dec)': entry.gps ? entry.gps.latitude : '-', 'Longitude (dec)': entry.gps ? entry.gps.longitude : '-', 'Latitude (DMS)': entry.gps ? toDMS(entry.gps.latitude) : '-', 'Longitude (DMS)': entry.gps ? toDMS(entry.gps.longitude) : '-', 'Altitude (m)': entry.gps ? entry.gps.altitude||'-' : '-'}
+    };
+    
+    for(const [sec, kv] of Object.entries(groups)){
+      const h = document.createElement('h6'); h.textContent = sec; h.style.marginTop='10px';
+      metadataTable.appendChild(h);
+      const tbl = document.createElement('div');
+      for(const [k,v] of Object.entries(kv)){
+        const row = document.createElement('div'); row.style.display='flex'; row.style.gap='8px'; row.style.marginBottom='6px';
+        const kEl = document.createElement('div'); kEl.className='meta-key'; kEl.textContent=k;
+        const vEl = document.createElement('div'); vEl.className='meta-val'; vEl.textContent=fmt(v);
+        row.appendChild(kEl); row.appendChild(vEl); tbl.appendChild(row);
+      }
+      metadataTable.appendChild(tbl);
     }
-    metadataTable.appendChild(tbl);
   }
+  
   rawJson.textContent = JSON.stringify(entry.metadata || {}, null, 2);
+  
   // enable buttons
   downloadSanitizedBtn.disabled = false;
   stripBtn.disabled = false;
@@ -427,7 +605,7 @@ async function showDetails(i){
     map.flyTo([lat,lon], 16, {duration:1.6});
     // create popup with thumbnail + info
     if(entry.marker){
-      entry.marker.bindPopup(`<div style="max-width:240px"><img src="${URL.createObjectURL(f)}" style="width:100%; border-radius:8px; margin-bottom:6px"><b>${f.name}</b><div style="font-size:.85rem; color:#bfcfe0; margin-top:6px">${lat.toFixed(6)}, ${lon.toFixed(6)}</div><div style="margin-top:6px"><a target="_blank" href="https://www.google.com/maps?q=${lat},${lon}" class="btn btn-sm btn-outline-light">Abrir en Google Maps</a></div></div>`).openPopup();
+      entry.marker.bindPopup(`<div style="max-width:240px"><img src="${URL.createObjectURL(f)}" style="width:100%; border-radius:8px; margin-bottom:6px"><b>${f.name}</b><div style="font-size:.85rem;color:#bfcfe0; margin-top:6px">${lat.toFixed(6)}, ${lon.toFixed(6)}</div><div style="margin-top:6px"><a target="_blank" href="https://www.google.com/maps?q=${lat},${lon}" class="btn btn-sm btn-outline-light">Abrir en Google Maps</a></div></div>`).openPopup();
       // center marker in cluster context
       try{ entry.marker.openPopup(); }catch(e){}
     } else {
@@ -454,13 +632,18 @@ async function showDetails(i){
 
 /* =========== Sanitized download, hash, export =========== */
 downloadSanitizedBtn.addEventListener('click', async ()=>{
-  if(selectedIndex<0) return alert('Selecciona una imagen.');
+  if(selectedIndex<0) return showToast('Selecciona una imagen primero.', 'warning');
   await downloadSanitized(selectedIndex);
 });
 async function downloadSanitized(i){
   const entry = items[i]; if(!entry) return;
+  
+  showToast(`Generando versión saneada de "${entry.file.name}"...`, 'info');
+  
   if(!entry.sanitized) entry.sanitized = await sanitizeImageBlob(entry.file);
   const a = document.createElement('a'); a.href = URL.createObjectURL(entry.sanitized); a.download = entry.file.name.replace(/\.(\w+)$/,'_sane.jpg'); a.click();
+  
+  showToast(`"${entry.file.name}" saneada descargada.`, 'success');
 }
 
 stripBtn.addEventListener('click', async ()=>{
@@ -473,13 +656,53 @@ stripBtn.addEventListener('click', async ()=>{
 calcHashBtn.addEventListener('click', async ()=>{
   if(selectedIndex<0) return;
   const entry = items[selectedIndex];
+  
+  showToast(`Calculando hash SHA-256 para "${entry.file.name}"...`, 'info');
+  
   if(!entry.sha256) entry.sha256 = await sha256File(entry.file);
-  alert(`SHA-256: ${entry.sha256}`);
+  
+  // Crear un modal para mostrar el hash de forma más elegante
+  const hashModal = new bootstrap.Modal(document.createElement('div'));
+  const modalElement = document.createElement('div');
+  modalElement.className = 'modal fade';
+  modalElement.innerHTML = `
+    <div class="modal-dialog">
+      <div class="modal-content" style="background:linear-gradient(180deg,#071125,#0b1622); color:var(--fg); border:1px solid rgba(255,255,255,0.03);">
+        <div class="modal-header">
+          <h5 class="modal-title">SHA-256 Hash</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <p class="small-muted">Hash para: ${entry.file.name}</p>
+          <pre style="background:rgba(0,0,0,0.2); padding:10px; border-radius:5px; overflow:auto;">${entry.sha256}</pre>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-primary btn-sm" id="copyHashBtn">Copiar</button>
+        </div>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modalElement);
+  
+  hashModal._element = modalElement;
+  hashModal.show();
+  
+  // Agregar funcionalidad de copia
+  modalElement.querySelector('#copyHashBtn').addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(entry.sha256);
+      showToast('Hash copiado al portapapeles', 'success');
+      hashModal.hide();
+    } catch (err) {
+      showToast('No se pudo copiar el hash', 'danger');
+    }
+  });
 });
 
 /* Export CSV/JSON */
 exportJsonBtn.addEventListener('click', ()=>{
-  if(items.length===0) return alert('No hay datos');
+  if(items.length===0) return showToast('No hay datos para exportar.', 'warning');
   const out = items.map(it=>({
     filename: it.file.name,
     size: it.file.size,
@@ -492,9 +715,10 @@ exportJsonBtn.addEventListener('click', ()=>{
   }));
   const blob = new Blob([JSON.stringify(out,null,2)], {type:'application/json'});
   const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'exif_report.json'; a.click();
+  showToast('Reporte JSON exportado correctamente.', 'success');
 });
 exportCsvBtn.addEventListener('click', ()=>{
-  if(items.length===0) return alert('No hay datos');
+  if(items.length===0) return showToast('No hay datos para exportar.', 'warning');
   const headers = ['filename','size','mime','camera','date','resolution','latitude','longitude'];
   let csv = headers.join(',') + '\n';
   items.forEach(it=>{
@@ -511,32 +735,43 @@ exportCsvBtn.addEventListener('click', ()=>{
     csv += row.join(',') + '\n';
   });
   const blob = new Blob([csv], {type:'text/csv'}); const a=document.createElement('a'); a.href = URL.createObjectURL(blob); a.download='exif_report.csv'; a.click();
+  showToast('Reporte CSV exportado correctamente.', 'success');
 });
 
 /* ZIP (images sanitized + JSON) */
 exportZipBtn.addEventListener('click', async ()=>{
-  if(items.length===0) return alert('No hay datos');
+  if(items.length===0) return showToast('No hay datos para exportar.', 'warning');
+  
+  showToast('Generando archivo ZIP, esto puede tardar unos momentos...', 'info');
+  
   const zip = new JSZip();
   const metaArr = [];
-  for(let i=0;i<items.length;i++){
-    const it = items[i];
-    // ensure sanitized blob
-    if(!it.sanitized) it.sanitized = await sanitizeImageBlob(it.file);
-    const blob = it.sanitized;
-    const buf = await blob.arrayBuffer();
-    zip.file(it.file.name.replace(/\.(\w+)$/,'_sane.jpg'), buf);
-    metaArr.push({
-      filename: it.file.name,
-      size: it.file.size,
-      camera: it.metadata?.cameraFriendly||'',
-      date: it.metadata?.dateFriendly||'',
-      latitude: it.gps?.latitude || '',
-      longitude: it.gps?.longitude || ''
-    });
+  
+  try {
+    for(let i=0;i<items.length;i++){
+      const it = items[i];
+      // ensure sanitized blob
+      if(!it.sanitized) it.sanitized = await sanitizeImageBlob(it.file);
+      const blob = it.sanitized;
+      const buf = await blob.arrayBuffer();
+      zip.file(it.file.name.replace(/\.(\w+)$/,'_sane.jpg'), buf);
+      metaArr.push({
+        filename: it.file.name,
+        size: it.file.size,
+        camera: it.metadata?.cameraFriendly||'',
+        date: it.metadata?.dateFriendly||'',
+        latitude: it.gps?.latitude || '',
+        longitude: it.gps?.longitude || ''
+      });
+    }
+    zip.file('exif_report.json', JSON.stringify(metaArr,null,2));
+    const content = await zip.generateAsync({type:'blob'});
+    const a=document.createElement('a'); a.href = URL.createObjectURL(content); a.download='exif_export.zip'; a.click();
+    showToast('Archivo ZIP exportado correctamente.', 'success');
+  } catch (error) {
+    console.error('Error generating ZIP:', error);
+    showToast('Error al generar el archivo ZIP.', 'danger');
   }
-  zip.file('exif_report.json', JSON.stringify(metaArr,null,2));
-  const content = await zip.generateAsync({type:'blob'});
-  const a=document.createElement('a'); a.href = URL.createObjectURL(content); a.download='exif_export.zip'; a.click();
 });
 
 /* =========== Map helpers: show all / fit / zoom =========== */
@@ -552,13 +787,13 @@ btnShowAll.addEventListener('click', ()=>{
   map.fitBounds(markers.getBounds().isValid() ? markers.getBounds() : [[0,0],[0,0]], {maxZoom:16});
 });
 fitAllBtn.addEventListener('click', ()=>{
-  if(markers.getLayers().length===0) return alert('No hay marcadores');
+  if(markers.getLayers().length===0) return showToast('No hay marcadores en el mapa.', 'warning');
   map.fitBounds(markers.getBounds(), {padding:[40,40]});
 });
 zoomToMarkerBtn.addEventListener('click', ()=>{
   if(selectedIndex<0) return;
   const e = items[selectedIndex];
-  if(!e.gps) return alert('La imagen no contiene GPS');
+  if(!e.gps) return showToast('La imagen seleccionada no contiene datos GPS.', 'warning');
   map.flyTo([e.gps.latitude,e.gps.longitude], 17, {duration:1.2});
 });
 
