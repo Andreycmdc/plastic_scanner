@@ -1,811 +1,207 @@
- <!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>EXIF Forensic Dashboard — Advanced</title>
-
-  <!-- Bootstrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- Leaflet + MarkerCluster -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
-
-  <!-- Feather icons -->
-  <script src="https://unpkg.com/feather-icons"></script>
-
-  <!-- exifr (full) -->
-  <script src="https://unpkg.com/exifr/dist/full.umd.js"></script>
-
-  <!-- Leaflet & MarkerCluster -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster-src.js"></script>
-
-  <!-- JSZip for ZIP export -->
-  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
-
-  <style>
-    :root{
-      --glass-bg: rgba(255,255,255,0.06);
-      --glass-border: rgba(255,255,255,0.08);
-      --accent: #6ee7b7;
-      --muted: #9aa4b2;
-      --fg: #e6eef6;
-    }
-    body{
-      margin:0;
-      min-height:100vh;
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background: radial-gradient(1000px 600px at 10% 10%, rgba(20,32,50,0.65), transparent),
-                  radial-gradient(800px 500px at 90% 90%, rgba(10,24,44,0.55), transparent),
-                  linear-gradient(180deg,#0b1220,#0f1b2a 50%, #102430);
-      color:var(--fg);
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      padding-bottom:48px;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💌 Para Guinny 💙</title>
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        background: linear-gradient(135deg, #ffb6c1, #87ceeb);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        font-family: "Poppins", sans-serif;
     }
 
-    .container-outer { padding:28px; max-width:1300px; margin:0 auto; }
-
-    .topbar {
-      display:flex; align-items:center; justify-content:space-between;
-      gap:12px; padding:18px; border-radius:14px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-      border: 1px solid var(--glass-border);
-      box-shadow: 0 8px 30px rgba(2,6,23,0.6);
-      margin-bottom:18px;
-      backdrop-filter: blur(8px) saturate(120%);
-    }
-    .title h3{ margin:0; font-weight:600; letter-spacing:.2px; }
-    .subtitle{ color:var(--muted); font-size:.92rem; }
-
-    .panel {
-      border-radius:14px;
-      background: var(--glass-bg);
-      border:1px solid var(--glass-border);
-      padding:16px;
-      box-shadow: 0 6px 18px rgba(2,6,23,0.5);
-      transition: transform .22s ease, box-shadow .22s ease;
-    }
-    .panel:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(2,6,23,0.65); }
-
-    .dropzone {
-      border-radius:12px; padding:18px;
-      border:2px dashed rgba(255,255,255,0.04);
-      display:flex; flex-direction:column; align-items:center; gap:10px;
-      text-align:center; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
-    }
-    .dropzone.drag { border-color: rgba(110,231,183,0.6); box-shadow: 0 10px 30px rgba(14,56,64,0.2); transform:translateY(-3px); }
-
-    .thumb { width:120px; height:90px; object-fit:cover; border-radius:10px; border:1px solid rgba(255,255,255,0.04); box-shadow: 0 8px 20px rgba(2,6,23,0.6); }
-
-    .file-row { display:flex; gap:12px; align-items:center; padding:10px; border-radius:10px; transition: background .15s; }
-    .file-row:hover { background: linear-gradient(90deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01)); }
-
-    .meta-key { color:var(--muted); width:35%; font-weight:600; }
-    .meta-val { color:var(--fg); width:65%; word-break:break-word; }
-
-    #map { height:360px; border-radius:12px; overflow:hidden; border:1px solid rgba(255,255,255,0.03); }
-
-    .small-muted { color:var(--muted); font-size:.9rem; }
-    footer { text-align:center; margin-top:18px; color:var(--muted); font-size:.85rem; }
-    
-    /* Nuevos estilos para mejoras */
-    .toast-container {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 9999;
-    }
-    
-    .no-exif-warning {
-      border-left: 4px solid #ffc107;
-      background-color: rgba(255,193,7,0.1);
-      padding: 10px;
-      margin-bottom: 15px;
-      border-radius: 4px;
-    }
-    
-    .stats-panel {
-      display: flex;
-      justify-content: space-around;
-      padding: 10px;
-      margin-top: 10px;
-      border-top: 1px solid rgba(255,255,255,0.05);
-    }
-    
-    .stat-item {
-      text-align: center;
-    }
-    
-    .stat-value {
-      font-size: 1.2rem;
-      font-weight: bold;
-      color: var(--accent);
-    }
-    
-    .stat-label {
-      font-size: 0.8rem;
-      color: var(--muted);
-    }
-    
-    .processing-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0,0,0,0.7);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 14px;
-      z-index: 10;
-    }
-    
-    .spinner-border-sm {
-      width: 1rem;
-      height: 1rem;
+    .hearts {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        overflow: hidden;
+        z-index: 0;
     }
 
-    /* Responsive tweaks */
-    @media (max-width:1000px){
-      .row-main { flex-direction:column-reverse; gap:12px; }
+    .heart {
+        position: absolute;
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 24px;
+        animation: float 6s infinite;
     }
-  </style>
+
+    @keyframes float {
+        0% { transform: translateY(100vh) scale(1); opacity: 1; }
+        100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+    }
+
+    .envelope {
+        position: relative;
+        width: 300px;
+        height: 200px;
+        background: #ffc0cb;
+        cursor: pointer;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.2);
+        transition: transform 0.5s;
+        z-index: 1;
+    }
+
+    .envelope:hover {
+        transform: scale(1.05);
+    }
+
+    .flap {
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-left: 150px solid transparent;
+        border-right: 150px solid transparent;
+        border-bottom: 100px solid #ff69b4;
+        top: 0;
+        left: 0;
+        transition: transform 0.8s ease-in-out;
+        transform-origin: top;
+        border-radius: 10px;
+    }
+
+    .message {
+        position: absolute;
+        width: 90%;
+        left: 5%;
+        top: 25%;
+        background: white;
+        color: #333;
+        border-radius: 10px;
+        padding: 20px;
+        font-size: 15px;
+        line-height: 1.5;
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        max-height: 60%;
+        overflow-y: auto;
+    }
+
+    .open .flap {
+        transform: rotateX(180deg);
+    }
+
+    .open .message {
+        opacity: 1;
+    }
+
+    .tap-text {
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        top: 85%;
+        color: white;
+        font-size: 18px;
+        font-weight: bold;
+        text-shadow: 1px 1px 4px #000;
+        animation: blink 1.5s infinite;
+    }
+
+    @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.4; }
+    }
+
+    .typed {
+        white-space: pre-line;
+        overflow: hidden;
+        border-right: 2px solid #87ceeb;
+        width: 0;
+        animation: typing 10s steps(200, end) forwards, blink-caret 0.8s step-end infinite;
+    }
+
+    @keyframes typing {
+        from { width: 0 }
+        to { width: 100% }
+    }
+
+    @keyframes blink-caret {
+        from, to { border-color: transparent }
+        50% { border-color: #87ceeb }
+    }
+</style>
 </head>
 <body>
-  <div class="container-outer">
-    <div class="topbar">
-      <div class="title">
-        <h3>EXIF Forensic Dashboard</h3>
-        <div class="subtitle">Análisis forense de metadatos — procesamiento local y seguro</div>
-      </div>
-      <div class="actions d-flex gap-2">
-        <button id="btnShowAll" class="btn btn-outline-light btn-sm"><i data-feather="map"></i> Mostrar todos</button>
-        <button id="exportCsvBtn" class="btn btn-outline-light btn-sm"><i data-feather="download"></i> CSV</button>
-        <button id="exportJsonBtn" class="btn btn-outline-light btn-sm"><i data-feather="file-text"></i> JSON</button>
-        <button id="exportZipBtn" class="btn btn-light btn-sm"><i data-feather="archive"></i> ZIP</button>
-      </div>
+
+<div class="hearts"></div>
+
+<div class="envelope" id="envelope">
+    <div class="flap"></div>
+    <div class="message" id="message">
+        <div id="typedText"></div>
     </div>
+    <div class="tap-text">💌 Toca para abrir 💙</div>
+</div>
 
-    <div class="d-flex gap-3 row-main">
-      <!-- LEFT: upload + list -->
-      <div style="flex:0 1 380px;">
-        <div class="panel">
-          <div id="dropzone" class="dropzone" tabindex="0" role="button">
-            <input id="fileInput" type="file" accept="image/*" multiple style="display:none">
-            <div>
-              <strong>Arrastra y suelta imágenes</strong>
-              <div class="small-muted">o haz clic para seleccionar — también puedes pegar desde el portapapeles</div>
-            </div>
-            <div style="margin-top:10px; display:flex; gap:8px; justify-content:center;">
-              <button id="chooseBtn" class="btn btn-sm btn-light">Seleccionar</button>
-              <button id="pasteBtn" class="btn btn-sm btn-outline-light">Pegar</button>
-            </div>
-          </div>
-
-          <hr style="border-color:rgba(255,255,255,0.03)">
-
-          <div class="d-flex justify-content-between align-items-center mb-2">
-            <div class="small-muted">Imágenes cargadas</div>
-            <div id="countLabel" class="small-muted">0</div>
-          </div>
-
-          <div id="fileList" style="max-height:480px; overflow:auto; display:flex; flex-direction:column; gap:8px;"></div>
-          
-          <!-- Panel de estadísticas -->
-          <div class="stats-panel">
-            <div class="stat-item">
-              <div class="stat-value" id="statImages">0</div>
-              <div class="stat-label">Imágenes</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-value" id="statGPS">0</div>
-              <div class="stat-label">Con GPS</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-value" id="statNoEXIF">0</div>
-              <div class="stat-label">Sin EXIF</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- RIGHT: preview + metadata + map -->
-      <div style="flex:1;">
-        <div class="panel mb-3">
-          <div style="display:flex; gap:16px; align-items:center;">
-            <img id="previewImg" class="thumb" style="display:none" alt="preview">
-            <div style="flex:1">
-              <h5 id="fileName" style="margin:0">Ninguna imagen seleccionada</h5>
-              <div id="fileInfo" class="small-muted">Sube una imagen para ver sus metadatos</div>
-              <div style="margin-top:10px; display:flex; gap:8px;">
-                <button id="downloadSanitizedBtn" class="btn btn-success btn-sm" disabled><i data-feather="download"></i> Descargar saneada</button>
-                <button id="stripBtn" class="btn btn-outline-danger btn-sm" disabled><i data-feather="trash-2"></i> Eliminar EXIF</button>
-                <button id="calcHashBtn" class="btn btn-outline-light btn-sm" disabled><i data-feather="hash"></i> Calcular SHA-256</button>
-              </div>
-            </div>
-            <div style="text-align:right; min-width:180px;">
-              <div class="small-muted">Camara</div><div id="metaCamera">—</div>
-              <div class="small-muted mt-1">Fecha</div><div id="metaDate">—</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="panel mb-3">
-          <div class="row g-3">
-            <div class="col-md-7">
-              <h6 style="margin-top:0">Metadatos (detallado)</h6>
-              <div id="metadataTable" style="max-height:300px; overflow:auto;"></div>
-            </div>
-            <div class="col-md-5">
-              <h6 style="margin-top:0">Mapa (GPS)</h6>
-              <div id="map"></div>
-              <div style="display:flex; gap:8px; margin-top:8px; justify-content:flex-end;">
-                <button id="zoomToMarkerBtn" class="btn btn-sm btn-outline-light" disabled><i data-feather="map-pin"></i> Ir al punto</button>
-                <button id="fitAllBtn" class="btn btn-sm btn-outline-light"><i data-feather="layers"></i> Ajustar todos</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="panel">
-          <h6 style="margin-top:0">RAW JSON</h6>
-          <pre id="rawJson" style="max-height:160px; overflow:auto; background:rgba(0,0,0,0.18); padding:10px; border-radius:8px;"></pre>
-        </div>
-      </div>
-    </div>
-
-    <footer>Procesamiento local · Reverse geocoding opcional (Nominatim) · Maneja con responsabilidad datos sensibles</footer>
-  </div>
-
-  <!-- Modal: reverse geocode errors -->
-  <div class="modal fade" id="reverseModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content" style="background:linear-gradient(180deg,#071125,#0b1622); color:var(--fg); border:1px solid rgba(255,255,255,0.03);">
-        <div class="modal-header">
-          <h5 class="modal-title">Reverse geocoding</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body"><div id="reverseText" class="small-muted"></div></div>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Contenedor para notificaciones toast -->
-  <div class="toast-container"></div>
+<audio id="music" src="https://cdn.pixabay.com/download/audio/2023/03/05/audio_d2fa1f9a12.mp3?filename=soft-piano-ambient-14293.mp3" preload="auto"></audio>
 
 <script>
-/* =========== Globals & DOM =========== */
-const exifrLib = window.exifr;
-const fileInput = document.getElementById('fileInput');
-const dropzone = document.getElementById('dropzone');
-const chooseBtn = document.getElementById('chooseBtn');
-const pasteBtn = document.getElementById('pasteBtn');
-const fileListEl = document.getElementById('fileList');
-const countLabel = document.getElementById('countLabel');
-const previewImg = document.getElementById('previewImg');
-const fileNameEl = document.getElementById('fileName');
-const fileInfoEl = document.getElementById('fileInfo');
-const metaCamera = document.getElementById('metaCamera');
-const metaDate = document.getElementById('metaDate');
-const metadataTable = document.getElementById('metadataTable');
-const rawJson = document.getElementById('rawJson');
-const downloadSanitizedBtn = document.getElementById('downloadSanitizedBtn');
-const stripBtn = document.getElementById('stripBtn');
-const calcHashBtn = document.getElementById('calcHashBtn');
-const exportCsvBtn = document.getElementById('exportCsvBtn');
-const exportJsonBtn = document.getElementById('exportJsonBtn');
-const exportZipBtn = document.getElementById('exportZipBtn');
-const btnShowAll = document.getElementById('btnShowAll');
-const fitAllBtn = document.getElementById('fitAllBtn');
-const zoomToMarkerBtn = document.getElementById('zoomToMarkerBtn');
+    const envelope = document.getElementById('envelope');
+    const message = document.getElementById('message');
+    const typedText = document.getElementById('typedText');
+    const music = document.getElementById('music');
 
-// Elementos de estadísticas
-const statImages = document.getElementById('statImages');
-const statGPS = document.getElementById('statGPS');
-const statNoEXIF = document.getElementById('statNoEXIF');
+    const text = `Guinny 💙
 
-let items = []; // {file, metadata, gps, sanitizedBlob, sha256}
-let selectedIndex = -1;
+No sé si esto cuenta como una carta o un intento fallido de decir algo bonito,
+pero aquí va mi intento 😅.
 
-/* =========== Map init + cluster =========== */
-const map = L.map('map', {center:[0,0], zoom:2, attributionControl:false});
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom:19}).addTo(map);
-const markers = L.markerClusterGroup();
-map.addLayer(markers);
-let openPopup = null;
+Si cada sonrisa tuya fuera una notificación, 
+tendría el celular en modo vibrar todo el día 😂.
 
-/* =========== Funciones de utilidad mejoradas =========== */
-function fmt(v){ return v === undefined || v === null ? '—' : v; }
-function toDMS(dec){
-  if(dec===undefined||dec===null) return '—';
-  const sign = dec<0 ? -1:1; const abs=Math.abs(dec);
-  const deg = Math.floor(abs);
-  const minf = (abs-deg)*60; const min = Math.floor(minf);
-  const sec = Math.round((minf-min)*60*100)/100;
-  return `${sign<0?'-':''}${deg}°${min}'${sec}"`;
-}
-async function sha256File(file){
-  const array = await file.arrayBuffer();
-  const hash = await crypto.subtle.digest('SHA-256', array);
-  const hex = Array.from(new Uint8Array(hash)).map(b=>b.toString(16).padStart(2,'0')).join('');
-  return hex;
-}
-/* sanitize by drawing to canvas (removes EXIF) */
-function sanitizeImageBlob(file){
-  return new Promise((resolve,reject)=>{
-    const img = new Image();
-    img.onload = async () => {
-      const canvas = document.createElement('canvas');
-      const w = img.naturalWidth, h = img.naturalHeight;
-      canvas.width = w; canvas.height = h;
-      const ctx = canvas.getContext('2d');
-      ctx.drawImage(img,0,0);
-      canvas.toBlob(blob=>resolve(blob||null),'image/jpeg',0.92);
-    };
-    img.onerror = reject;
-    img.src = URL.createObjectURL(file);
-  });
-}
+Dicen que nadie es perfecto, 
+pero claramente esa frase la inventó alguien que no te había visto sonreír.
 
-// Función para mostrar notificaciones toast
-function showToast(message, type = 'info') {
-  const toast = document.createElement('div');
-  toast.className = `toast align-items-center text-white bg-${type} border-0`;
-  toast.setAttribute('role', 'alert');
-  toast.innerHTML = `
-    <div class="d-flex">
-      <div class="toast-body">${message}</div>
-      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-    </div>
-  `;
-  
-  document.querySelector('.toast-container').appendChild(toast);
-  new bootstrap.Toast(toast).show();
-  
-  // Eliminar el toast después de que se oculte
-  toast.addEventListener('hidden.bs.toast', () => {
-    toast.remove();
-  });
-}
+Y bueno, no te voy a mentir…
+cada vez que hablo contigo, el WiFi de mi vida se activa al 100%.
 
-// Función para actualizar estadísticas
-function updateStats() {
-  statImages.textContent = items.length;
-  
-  const withGPS = items.filter(item => item.gps).length;
-  statGPS.textContent = withGPS;
-  
-  const noEXIF = items.filter(item => item.metadata && Object.keys(item.metadata).length === 0).length;
-  statNoEXIF.textContent = noEXIF;
-}
+Tal vez no tenga súper poderes (todavía 😎), 
+pero si existiera una forma de hacerte reír todos los días, 
+créeme que me inscribiría sin pensarlo.
 
-/* =========== File handling UI =========== */
-chooseBtn.addEventListener('click', ()=>fileInput.click());
-fileInput.addEventListener('change', e=>{
-  handleFiles(Array.from(e.target.files));
-  fileInput.value='';
-});
+Así que nada, esta carta no tiene GPS, 
+pero espero que llegue directo a tu sonrisa 💌
 
-dropzone.addEventListener('dragenter', e=>{ dropzone.classList.add('drag'); e.preventDefault(); });
-dropzone.addEventListener('dragover', e=> e.preventDefault());
-dropzone.addEventListener('dragleave', e=>{ dropzone.classList.remove('drag'); });
-dropzone.addEventListener('drop', e=>{ e.preventDefault(); dropzone.classList.remove('drag'); handleFiles(Array.from(e.dataTransfer.files || [])); });
+— Con buena vibra y un toque de ternura,  
+Andrey 😉`;
 
-pasteBtn.addEventListener('click', async ()=>{
-  try {
-    const itemsClipboard = await navigator.clipboard.read();
-    for(const ci of itemsClipboard){
-      for(const type of ci.types){
-        if(type.startsWith('image/')){
-          const blob = await ci.getType(type);
-          const f = new File([blob], `clipboard-${Date.now()}.png`, {type});
-          handleFiles([f]);
+    let heartsContainer = document.querySelector('.hearts');
+    for (let i = 0; i < 20; i++) {
+        let heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.innerHTML = '💖';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDuration = (4 + Math.random() * 4) + 's';
+        heartsContainer.appendChild(heart);
+    }
+
+    envelope.addEventListener('click', () => {
+        envelope.classList.toggle('open');
+        music.play();
+        typeWriter();
+    });
+
+    function typeWriter() {
+        let i = 0;
+        typedText.classList.add('typed');
+        function typing() {
+            if (i < text.length) {
+                typedText.textContent += text.charAt(i);
+                i++;
+                setTimeout(typing, 40);
+            }
         }
-      }
+        typing();
     }
-  } catch (err){
-    showToast('Pegar desde portapapeles requiere permisos o no está soportado en este navegador.', 'warning');
-  }
-});
-
-async function handleFiles(files){
-  if(!files || files.length===0) return;
-  
-  // Mostrar notificación de inicio de procesamiento
-  if (files.length > 1) {
-    showToast(`Procesando ${files.length} imágenes...`, 'info');
-  }
-  
-  for(const f of files){
-    if(!f.type.startsWith('image/')) {
-      showToast(`El archivo ${f.name} no es una imagen válida`, 'warning');
-      continue;
-    }
-    
-    const idx = items.length;
-    items.push({file:f, metadata:null, gps:null, sanitized:null, sha256:null, marker:null});
-    renderList();
-    await processFile(idx);
-  }
-  countLabel.textContent = items.length;
-  updateStats();
-}
-
-/* =========== EXIF processing =========== */
-async function processFile(index){
-  const entry = items[index];
-  const f = entry.file;
-  
-  // Añadir indicador de procesamiento
-  const processingIndicator = document.createElement('div');
-  processingIndicator.className = 'processing-overlay';
-  processingIndicator.innerHTML = '<div class="spinner-border text-light" role="status"><span class="visually-hidden">Procesando...</span></div>';
-  
-  const fileRow = fileListEl.children[index];
-  if (fileRow) {
-    fileRow.style.position = 'relative';
-    fileRow.appendChild(processingIndicator);
-  }
-  
-  try {
-    // parse exif, iptc, xmp
-    const parsed = await exifrLib.parse(f, {iptc:true, xmp:true, exif:true, tiff:true, ifd0:true, ifd1:true, icc:true});
-    entry.metadata = parsed || {};
-    
-    // Verificar si realmente hay metadatos
-    const hasMetadata = parsed && Object.keys(parsed).length > 0;
-    
-    // camera & date friendly
-    entry.metadata.cameraFriendly = parsed ? ((parsed.Make?parsed.Make+' ':'') + (parsed.Model||'')).trim() : null;
-    entry.metadata.dateFriendly = parsed && parsed.DateTimeOriginal ? parsed.DateTimeOriginal.toString() : (parsed && parsed.CreateDate ? parsed.CreateDate.toString() : null);
-    
-    // gps
-    try {
-      const gp = await exifrLib.gps(f);
-      if(gp && gp.latitude && gp.longitude) {
-        entry.gps = {latitude:gp.latitude, longitude:gp.longitude, altitude:gp.altitude||null};
-      } else if(parsed && parsed.latitude && parsed.longitude){
-        entry.gps = {latitude:parsed.latitude, longitude:parsed.longitude, altitude: parsed.GPSAltitude || parsed.Altitude || null};
-      } else entry.gps = null;
-    } catch(e){
-      entry.gps = null;
-    }
-    
-    // compute sha256 lazily only on demand
-    entry.sanitized = null;
-    
-    // create marker if gps exists
-    if(entry.gps){
-      const m = L.marker([entry.gps.latitude, entry.gps.longitude]);
-      m.bindTooltip(`${f.name}`, {direction:'top', offset:[0,-6]});
-      markers.addLayer(m);
-      entry.marker = m;
-    }
-    
-    // Mostrar advertencia si no hay metadatos
-    if (!hasMetadata) {
-      showToast(`"${f.name}" no contiene metadatos EXIF. Puede haber sido procesada por una red social.`, 'warning');
-    }
-    
-    renderList();
-    if(selectedIndex === index) showDetails(index);
-  } catch (err){
-    console.error('parse error', err);
-    entry.metadata = {};
-    showToast(`Error al procesar los metadatos de "${f.name}"`, 'danger');
-    renderList();
-  } finally {
-    // Eliminar indicador de procesamiento
-    if (fileRow && fileRow.contains(processingIndicator)) {
-      fileRow.removeChild(processingIndicator);
-    }
-  }
-}
-
-/* Render file list */
-function renderList(){
-  fileListEl.innerHTML = '';
-  items.forEach((it, i) => {
-    const row = document.createElement('div');
-    row.className = 'file-row';
-    row.setAttribute('role','button');
-    
-    // Determinar si hay metadatos
-    const hasMetadata = it.metadata && Object.keys(it.metadata).length > 0;
-    const metadataIndicator = hasMetadata ? '' : '<span class="badge bg-warning ms-1" title="Sin metadatos EXIF">!</span>';
-    const gpsIndicator = it.gps ? '<span class="badge bg-success ms-1" title="Contiene datos GPS">GPS</span>' : '';
-    
-    row.innerHTML = `
-      <img class="thumb" src="${URL.createObjectURL(it.file)}" alt="">
-      <div style="flex:1;">
-        <div style="display:flex;justify-content:space-between;align-items:center">
-          <div><strong style="font-size:.95rem">${it.file.name}</strong>${metadataIndicator}${gpsIndicator}<div class="small-muted">${Math.round(it.file.size/1024)} KB</div></div>
-          <div style="display:flex;gap:6px">
-            <button class="btn btn-sm btn-light btn-select" data-i="${i}">Ver</button>
-            <button class="btn btn-sm btn-outline-light btn-download" data-i="${i}">Saneada</button>
-          </div>
-        </div>
-        <div class="small-muted" style="margin-top:6px">${it.metadata ? (fmt(it.metadata.cameraFriendly) + ' · ' + fmt(it.metadata.dateFriendly)) : 'Sin metadatos'}</div>
-      </div>
-    `;
-    fileListEl.appendChild(row);
-    row.querySelector('.btn-select').addEventListener('click', ()=>selectFile(i));
-    row.querySelector('.btn-download').addEventListener('click', ()=>downloadSanitized(i));
-  });
-}
-
-/* Select & show details (auto map fly-to & popup) */
-async function selectFile(i){
-  selectedIndex = i;
-  showDetails(i);
-  // set focus for accessibility
-  fileListEl.children[i]?.focus?.();
-}
-
-async function showDetails(i){
-  const entry = items[i]; if(!entry) return;
-  const f = entry.file;
-  fileNameEl.textContent = f.name;
-  fileInfoEl.textContent = `${Math.round(f.size/1024)} KB — ${f.type}`;
-  previewImg.src = URL.createObjectURL(f); previewImg.style.display = 'inline-block';
-  metaCamera.textContent = fmt(entry.metadata.cameraFriendly);
-  metaDate.textContent = fmt(entry.metadata.dateFriendly);
-  
-  // build metadata table
-  metadataTable.innerHTML = '';
-  
-  // Mostrar advertencia si no hay metadatos
-  if (!entry.metadata || Object.keys(entry.metadata).length === 0) {
-    const warning = document.createElement('div');
-    warning.className = 'no-exif-warning';
-    warning.innerHTML = `
-      <strong>Advertencia:</strong> Esta imagen no contiene metadatos EXIF útiles. 
-      Puede haber sido procesada por una red social o aplicación que elimina estos datos.
-    `;
-    metadataTable.appendChild(warning);
-  } else {
-    const raw = entry.metadata || {};
-    const groups = {
-      'General': {'File name': f.name, 'Size (KB)': Math.round(f.size/1024), 'MIME': f.type},
-      'Camera/Exif': {'Make': raw.Make||'-', 'Model': raw.Model||'-', 'Software': raw.Software||'-', 'Orientation': raw.Orientation||'-'},
-      'Capture': {'DateTimeOriginal': raw.DateTimeOriginal||'-', 'ExposureTime': raw.ExposureTime||'-', 'FNumber': raw.FNumber||'-', 'ISO': raw.ISO||raw.ISOSpeedRatings||'-'},
-      'GPS': {'Latitude (dec)': entry.gps ? entry.gps.latitude : '-', 'Longitude (dec)': entry.gps ? entry.gps.longitude : '-', 'Latitude (DMS)': entry.gps ? toDMS(entry.gps.latitude) : '-', 'Longitude (DMS)': entry.gps ? toDMS(entry.gps.longitude) : '-', 'Altitude (m)': entry.gps ? entry.gps.altitude||'-' : '-'}
-    };
-    
-    for(const [sec, kv] of Object.entries(groups)){
-      const h = document.createElement('h6'); h.textContent = sec; h.style.marginTop='10px';
-      metadataTable.appendChild(h);
-      const tbl = document.createElement('div');
-      for(const [k,v] of Object.entries(kv)){
-        const row = document.createElement('div'); row.style.display='flex'; row.style.gap='8px'; row.style.marginBottom='6px';
-        const kEl = document.createElement('div'); kEl.className='meta-key'; kEl.textContent=k;
-        const vEl = document.createElement('div'); vEl.className='meta-val'; vEl.textContent=fmt(v);
-        row.appendChild(kEl); row.appendChild(vEl); tbl.appendChild(row);
-      }
-      metadataTable.appendChild(tbl);
-    }
-  }
-  
-  rawJson.textContent = JSON.stringify(entry.metadata || {}, null, 2);
-  
-  // enable buttons
-  downloadSanitizedBtn.disabled = false;
-  stripBtn.disabled = false;
-  calcHashBtn.disabled = false;
-  zoomToMarkerBtn.disabled = !entry.gps;
-
-  // Auto map
-  if(entry.gps){
-    const lat = entry.gps.latitude, lon = entry.gps.longitude;
-    map.flyTo([lat,lon], 16, {duration:1.6});
-    // create popup with thumbnail + info
-    if(entry.marker){
-      entry.marker.bindPopup(`<div style="max-width:240px"><img src="${URL.createObjectURL(f)}" style="width:100%; border-radius:8px; margin-bottom:6px"><b>${f.name}</b><div style="font-size:.85rem;color:#bfcfe0; margin-top:6px">${lat.toFixed(6)}, ${lon.toFixed(6)}</div><div style="margin-top:6px"><a target="_blank" href="https://www.google.com/maps?q=${lat},${lon}" class="btn btn-sm btn-outline-light">Abrir en Google Maps</a></div></div>`).openPopup();
-      // center marker in cluster context
-      try{ entry.marker.openPopup(); }catch(e){}
-    } else {
-      // create temporary marker
-      const tmp = L.marker([lat,lon]).addTo(map);
-      tmp.bindPopup(`<div style="max-width:220px"><b>${f.name}</b><div style="font-size:.85rem;color:#bfcfe0">${lat.toFixed(6)}, ${lon.toFixed(6)}</div></div>`).openPopup();
-      setTimeout(()=>{map.removeLayer(tmp);}, 5500);
-    }
-    // reverse geocode (Nominatim) - note rate limits
-    try {
-      const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`);
-      if(res.ok){
-        const j = await res.json();
-        const info = j.display_name || 'No address';
-        const el = document.getElementById('reverseText'); if(el) el.textContent = `Dirección: ${info}`;
-        // show modal small
-        const modal = new bootstrap.Modal(document.getElementById('reverseModal')); modal.show();
-      }
-    } catch(e){
-      console.warn('reverse geocode failed', e);
-    }
-  }
-}
-
-/* =========== Sanitized download, hash, export =========== */
-downloadSanitizedBtn.addEventListener('click', async ()=>{
-  if(selectedIndex<0) return showToast('Selecciona una imagen primero.', 'warning');
-  await downloadSanitized(selectedIndex);
-});
-async function downloadSanitized(i){
-  const entry = items[i]; if(!entry) return;
-  
-  showToast(`Generando versión saneada de "${entry.file.name}"...`, 'info');
-  
-  if(!entry.sanitized) entry.sanitized = await sanitizeImageBlob(entry.file);
-  const a = document.createElement('a'); a.href = URL.createObjectURL(entry.sanitized); a.download = entry.file.name.replace(/\.(\w+)$/,'_sane.jpg'); a.click();
-  
-  showToast(`"${entry.file.name}" saneada descargada.`, 'success');
-}
-
-stripBtn.addEventListener('click', async ()=>{
-  if(selectedIndex<0) return;
-  const ok = confirm('Descargarás una versión saneada (EXIF eliminado). ¿Continuar?');
-  if(!ok) return;
-  await downloadSanitized(selectedIndex);
-});
-
-calcHashBtn.addEventListener('click', async ()=>{
-  if(selectedIndex<0) return;
-  const entry = items[selectedIndex];
-  
-  showToast(`Calculando hash SHA-256 para "${entry.file.name}"...`, 'info');
-  
-  if(!entry.sha256) entry.sha256 = await sha256File(entry.file);
-  
-  // Crear un modal para mostrar el hash de forma más elegante
-  const hashModal = new bootstrap.Modal(document.createElement('div'));
-  const modalElement = document.createElement('div');
-  modalElement.className = 'modal fade';
-  modalElement.innerHTML = `
-    <div class="modal-dialog">
-      <div class="modal-content" style="background:linear-gradient(180deg,#071125,#0b1622); color:var(--fg); border:1px solid rgba(255,255,255,0.03);">
-        <div class="modal-header">
-          <h5 class="modal-title">SHA-256 Hash</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body">
-          <p class="small-muted">Hash para: ${entry.file.name}</p>
-          <pre style="background:rgba(0,0,0,0.2); padding:10px; border-radius:5px; overflow:auto;">${entry.sha256}</pre>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cerrar</button>
-          <button type="button" class="btn btn-primary btn-sm" id="copyHashBtn">Copiar</button>
-        </div>
-      </div>
-    </div>
-  `;
-  document.body.appendChild(modalElement);
-  
-  hashModal._element = modalElement;
-  hashModal.show();
-  
-  // Agregar funcionalidad de copia
-  modalElement.querySelector('#copyHashBtn').addEventListener('click', async () => {
-    try {
-      await navigator.clipboard.writeText(entry.sha256);
-      showToast('Hash copiado al portapapeles', 'success');
-      hashModal.hide();
-    } catch (err) {
-      showToast('No se pudo copiar el hash', 'danger');
-    }
-  });
-});
-
-/* Export CSV/JSON */
-exportJsonBtn.addEventListener('click', ()=>{
-  if(items.length===0) return showToast('No hay datos para exportar.', 'warning');
-  const out = items.map(it=>({
-    filename: it.file.name,
-    size: it.file.size,
-    mime: it.file.type,
-    camera: it.metadata ? (it.metadata.cameraFriendly||'') : '',
-    date: it.metadata ? (it.metadata.dateFriendly||'') : '',
-    resolution: `${it.metadata?.ExifImageWidth||'-'} x ${it.metadata?.ExifImageLength||'-'}`,
-    latitude: it.gps ? it.gps.latitude : '',
-    longitude: it.gps ? it.gps.longitude : ''
-  }));
-  const blob = new Blob([JSON.stringify(out,null,2)], {type:'application/json'});
-  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'exif_report.json'; a.click();
-  showToast('Reporte JSON exportado correctamente.', 'success');
-});
-exportCsvBtn.addEventListener('click', ()=>{
-  if(items.length===0) return showToast('No hay datos para exportar.', 'warning');
-  const headers = ['filename','size','mime','camera','date','resolution','latitude','longitude'];
-  let csv = headers.join(',') + '\n';
-  items.forEach(it=>{
-    const row = [
-      `"${it.file.name.replace(/"/g,'""')}"`,
-      it.file.size,
-      it.file.type,
-      `"${(it.metadata?.cameraFriendly||'').toString().replace(/"/g,'""')}"`,
-      `"${(it.metadata?.dateFriendly||'').toString().replace(/"/g,'""')}"`,
-      `"${(it.metadata?.ExifImageWidth||'-')} x ${(it.metadata?.ExifImageLength||'-')}"`,
-      it.gps?.latitude || '',
-      it.gps?.longitude || ''
-    ];
-    csv += row.join(',') + '\n';
-  });
-  const blob = new Blob([csv], {type:'text/csv'}); const a=document.createElement('a'); a.href = URL.createObjectURL(blob); a.download='exif_report.csv'; a.click();
-  showToast('Reporte CSV exportado correctamente.', 'success');
-});
-
-/* ZIP (images sanitized + JSON) */
-exportZipBtn.addEventListener('click', async ()=>{
-  if(items.length===0) return showToast('No hay datos para exportar.', 'warning');
-  
-  showToast('Generando archivo ZIP, esto puede tardar unos momentos...', 'info');
-  
-  const zip = new JSZip();
-  const metaArr = [];
-  
-  try {
-    for(let i=0;i<items.length;i++){
-      const it = items[i];
-      // ensure sanitized blob
-      if(!it.sanitized) it.sanitized = await sanitizeImageBlob(it.file);
-      const blob = it.sanitized;
-      const buf = await blob.arrayBuffer();
-      zip.file(it.file.name.replace(/\.(\w+)$/,'_sane.jpg'), buf);
-      metaArr.push({
-        filename: it.file.name,
-        size: it.file.size,
-        camera: it.metadata?.cameraFriendly||'',
-        date: it.metadata?.dateFriendly||'',
-        latitude: it.gps?.latitude || '',
-        longitude: it.gps?.longitude || ''
-      });
-    }
-    zip.file('exif_report.json', JSON.stringify(metaArr,null,2));
-    const content = await zip.generateAsync({type:'blob'});
-    const a=document.createElement('a'); a.href = URL.createObjectURL(content); a.download='exif_export.zip'; a.click();
-    showToast('Archivo ZIP exportado correctamente.', 'success');
-  } catch (error) {
-    console.error('Error generating ZIP:', error);
-    showToast('Error al generar el archivo ZIP.', 'danger');
-  }
-});
-
-/* =========== Map helpers: show all / fit / zoom =========== */
-btnShowAll.addEventListener('click', ()=>{
-  markers.clearLayers();
-  items.forEach(it=>{
-    if(it.gps){
-      const m = L.marker([it.gps.latitude,it.gps.longitude]);
-      m.bindPopup(`<div style="max-width:200px"><strong>${it.file.name}</strong><div style="font-size:.85rem;color:#bfcfe0">${it.gps.latitude.toFixed(6)}, ${it.gps.longitude.toFixed(6)}</div></div>`);
-      markers.addLayer(m);
-    }
-  });
-  map.fitBounds(markers.getBounds().isValid() ? markers.getBounds() : [[0,0],[0,0]], {maxZoom:16});
-});
-fitAllBtn.addEventListener('click', ()=>{
-  if(markers.getLayers().length===0) return showToast('No hay marcadores en el mapa.', 'warning');
-  map.fitBounds(markers.getBounds(), {padding:[40,40]});
-});
-zoomToMarkerBtn.addEventListener('click', ()=>{
-  if(selectedIndex<0) return;
-  const e = items[selectedIndex];
-  if(!e.gps) return showToast('La imagen seleccionada no contiene datos GPS.', 'warning');
-  map.flyTo([e.gps.latitude,e.gps.longitude], 17, {duration:1.2});
-});
-
-/* initialize feather icons */
-feather.replace();
-
-/* Accessibility: keyboard to select dropzone */
-dropzone.addEventListener('keydown', (e)=>{ if(e.key==='Enter'||e.key===' ') fileInput.click(); });
-
 </script>
-
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
