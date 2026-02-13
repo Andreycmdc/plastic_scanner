@@ -3,43 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>✨ Marleys Social · Red privada</title>
-  <!-- Fonts & Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <title>🌸 MARLEYS · tu espacio especial</title>
+  
+  <!-- Fuentes e iconos preciosos -->
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <!-- Firebase (modular) -->
+  
+  <!-- Firebase Modular -->
   <script type="importmap">
     {
       "imports": {
-        "firebase/app": "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js",
-        "firebase/database": "https://www.gstatic.com/firebasejs/12.7.0/firebase-database.js"
+        "firebase/app": "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js",
+        "firebase/database": "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js"
       }
     }
   </script>
+  
   <style>
-    /* ----- 🌸 VARIABLES & RESET (Tono Marleys) ----- */
-    :root {
-      --primary-soft: #f8e0e8;
-      --primary: #d46b7c;
-      --primary-deep: #b94e5e;
-      --secondary: #a5d8d3;
-      --secondary-deep: #67b0a8;
-      --accent: #f9c7b7;
-      --glow: #ffe7f0;
-      --bg: #fff9fb;
-      --surface: rgba(255, 245, 248, 0.8);
-      --card-bg: rgba(255, 255, 255, 0.8);
-      --text-dark: #3c2a2e;
-      --text-soft: #6e4b55;
-      --text-muted: #a48a90;
-      --border-light: #ffdee6;
-      --shadow-sm: 0 12px 28px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(255, 220, 230, 0.5);
-      --shadow-hover: 0 20px 32px rgba(180, 100, 120, 0.12), 0 0 0 1px rgba(212, 107, 124, 0.3);
-      --radius-xl: 28px;
-      --radius-lg: 20px;
-      --radius-md: 16px;
-    }
-
+    /* ====== ESTILOS DE ENSUEÑO ====== */
     * {
       margin: 0;
       padding: 0;
@@ -47,789 +28,973 @@
     }
 
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: linear-gradient(145deg, #fff3f7 0%, #ffeef5 100%);
-      color: var(--text-dark);
-      line-height: 1.5;
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(145deg, #fff9fa 0%, #ffe9f0 100%);
+      color: #4a3b3f;
+      line-height: 1.6;
       min-height: 100vh;
-      padding: 20px 16px;
-      -webkit-font-smoothing: antialiased;
+      padding: 20px;
+      position: relative;
+      overflow-x: hidden;
     }
 
-    /* Glassmorph + burbuja */
-    .glass-card {
-      background: var(--card-bg);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1.5px solid rgba(255, 255, 255, 0.7);
-      box-shadow: var(--shadow-sm);
-      border-radius: var(--radius-lg);
-      transition: all 0.25s ease;
+    /* Fondo de estrellas flotantes */
+    body::before {
+      content: "🌸🌸🌸";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.08;
+      font-size: 60px;
+      letter-spacing: 30px;
+      pointer-events: none;
+      z-index: 0;
+      animation: float 20s infinite linear;
     }
 
-    .glass-card:hover {
-      box-shadow: var(--shadow-hover);
-      border-color: rgba(255, 220, 230, 0.9);
-      background: rgba(255, 255, 255, 0.9);
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(5deg); }
+      100% { transform: translateY(0) rotate(0deg); }
     }
 
-    /* Layout principal */
-    .marleys-app {
-      max-width: 1100px;
+    .app-container {
+      max-width: 1000px;
       margin: 0 auto;
+      position: relative;
+      z-index: 10;
     }
 
-    /* 🎀 Cabecera especial – dedicada a Marleys */
-    .hero-header {
-      background: linear-gradient(120deg, #fff1f5, #ffe9ef);
-      padding: 28px 30px;
-      border-radius: var(--radius-xl);
-      margin-bottom: 28px;
-      border: 2px solid white;
-      box-shadow: 0 10px 25px rgba(212, 107, 124, 0.12);
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
+    /* ===== TARJETAS DE CRISTAL ===== */
+    .crystal-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 2px solid rgba(255, 255, 255, 0.8);
+      border-radius: 40px;
+      box-shadow: 0 25px 40px -15px rgba(212, 107, 124, 0.15),
+                  inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+      padding: 30px;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .crystal-card:hover {
+      background: rgba(255, 255, 255, 0.85);
+      box-shadow: 0 30px 50px -15px rgba(180, 80, 100, 0.25);
+      transform: translateY(-5px);
+    }
+
+    /* ===== HEADER MÁGICO ===== */
+    .magic-header {
+      background: linear-gradient(135deg, #ffb6c1 0%, #ffc0cb 50%, #ffe4e9 100%);
+      border-radius: 60px 60px 60px 60px;
+      padding: 35px 30px;
+      margin-bottom: 30px;
+      border: 4px solid white;
       position: relative;
       overflow: hidden;
+      box-shadow: 0 20px 30px rgba(255, 140, 170, 0.2);
     }
 
-    .hero-header::after {
-      content: "🌸";
+    .magic-header::after {
+      content: "✨";
       position: absolute;
-      right: 20px;
-      bottom: -10px;
-      font-size: 80px;
-      opacity: 0.1;
-      transform: rotate(10deg);
+      bottom: -20px;
+      right: -10px;
+      font-size: 120px;
+      opacity: 0.15;
+      transform: rotate(15deg);
     }
 
-    .title-block h1 {
-      font-size: 2.4rem;
-      font-weight: 800;
-      letter-spacing: -0.5px;
-      background: linear-gradient(145deg, #b94e5e, #d46b7c);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 5px;
-    }
-
-    .marleys-badge {
-      background: white;
-      padding: 6px 18px;
-      border-radius: 50px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: var(--primary-deep);
-      border: 2px solid #ffe2e9;
-      display: inline-block;
-    }
-
-    .status-area {
-      background: rgba(255, 255, 255, 0.7);
-      padding: 12px 24px;
-      border-radius: 40px;
-      border: 1.5px solid white;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .online-dot {
-      width: 14px;
-      height: 14px;
-      background: #5fc98e;
-      border-radius: 50%;
-      box-shadow: 0 0 0 3px rgba(95, 201, 142, 0.2);
-    }
-
-    /* sesión */
-    .session-panel {
-      background: rgba(255, 255, 255, 0.7);
-      backdrop-filter: blur(16px);
-      padding: 24px 28px;
-      border-radius: var(--radius-lg);
-      margin-bottom: 30px;
-      border: 2px solid rgba(255, 255, 255, 0.6);
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .user-avatar-large {
-      width: 56px;
-      height: 56px;
-      background: linear-gradient(145deg, var(--primary), #f09a9c);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
+    .header-title {
+      font-size: 3.2rem;
       font-weight: 700;
-      font-size: 1.5rem;
-      border: 3px solid white;
-      box-shadow: 0 6px 12px rgba(212, 107, 124, 0.2);
+      color: white;
+      text-shadow: 3px 3px 0 rgba(180, 80, 100, 0.2);
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+      margin-bottom: 8px;
     }
 
+    .header-sub {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: #fff1f3;
+      background: rgba(255, 255, 255, 0.3);
+      display: inline-block;
+      padding: 8px 25px;
+      border-radius: 60px;
+      backdrop-filter: blur(5px);
+    }
+
+    /* ===== BOTONES DELICATESSEN ===== */
     .btn {
       border: none;
-      background: white;
-      padding: 12px 26px;
+      padding: 14px 28px;
       border-radius: 60px;
       font-weight: 600;
       font-size: 0.95rem;
+      font-family: 'Quicksand', sans-serif;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      border: 1.5px solid rgba(255, 255, 255, 0.8);
-      transition: 0.15s;
+      justify-content: center;
+      gap: 12px;
       cursor: pointer;
-      color: var(--text-dark);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.02);
+      transition: 0.25s ease;
+      border: 2px solid transparent;
+      background: white;
+      color: #5a4a4e;
+      box-shadow: 0 6px 0 rgba(0,0,0,0.02);
     }
 
     .btn-primary {
-      background: var(--primary);
+      background: #ff8a9c;
       color: white;
-      border: none;
+      box-shadow: 0 8px 0 rgba(200, 100, 120, 0.3);
     }
 
     .btn-primary:hover {
-      background: var(--primary-deep);
-      transform: scale(0.98);
+      background: #ff6b81;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 0 rgba(200, 100, 120, 0.25);
+    }
+
+    .btn-primary:active {
+      transform: translateY(6px);
+      box-shadow: 0 4px 0 rgba(200, 100, 120, 0.3);
     }
 
     .btn-outline {
       background: transparent;
-      border: 2px solid var(--primary);
-      color: var(--primary-deep);
+      border: 3px solid #ffb3c1;
+      color: #b94e5e;
     }
 
-    /* grid historias + feed */
-    .stories-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-      gap: 16px;
-      margin-bottom: 32px;
+    .btn-outline:hover {
+      background: #ffe7ec;
+      border-color: #ff8a9c;
     }
 
-    .story-card {
-      background: linear-gradient(145deg, white, #fff7f9);
-      padding: 20px 8px;
-      border-radius: 28px;
-      text-align: center;
-      border: 2px solid white;
-      box-shadow: 0 8px 18px #ffdce4;
+    /* ===== INPUTS PRECIOSOS ===== */
+    .input-lovely {
+      background: rgba(255, 255, 255, 0.9);
+      border: 3px solid #ffe2ec;
+      border-radius: 60px;
+      padding: 16px 24px;
+      font-size: 1rem;
+      font-family: 'Quicksand', sans-serif;
       transition: 0.2s;
+      width: 100%;
     }
 
-    .story-emoji {
-      font-size: 2.5rem;
-      margin-bottom: 8px;
-    }
-
-    /* feed estilo social */
-    .feed {
-      display: flex;
-      flex-direction: column;
-      gap: 28px;
-    }
-
-    .post-card {
+    .input-lovely:focus {
+      border-color: #ff8a9c;
+      outline: none;
+      box-shadow: 0 0 0 6px rgba(255, 138, 156, 0.1);
       background: white;
-      border-radius: var(--radius-xl);
-      padding: 24px 26px;
-      border: 1px solid #ffe4eb;
-      box-shadow: 0 6px 0 #ffe2e9;
     }
 
-    .post-header {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 16px;
-    }
-
-    .post-avatar {
-      width: 48px;
-      height: 48px;
-      background: #ffdae1;
+    /* ===== AVATAR CON AURA ===== */
+    .aura-avatar {
+      width: 70px;
+      height: 70px;
+      background: linear-gradient(145deg, #ffb6c1, #ff9aac);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: bold;
-      color: var(--primary-deep);
+      color: white;
+      font-weight: 700;
+      font-size: 1.8rem;
+      border: 5px solid white;
+      box-shadow: 0 10px 0 rgba(180, 100, 120, 0.1);
     }
 
-    .comment-thread {
-      background: #fff9fc;
-      border-radius: 20px;
-      padding: 16px;
-      margin-top: 20px;
-    }
-
-    .reply-badge {
-      background: #ffedf0;
+    /* ===== FEED DE ENSUEÑO ===== */
+    .dream-post {
+      background: white;
       border-radius: 40px;
-      padding: 6px 14px;
-      font-size: 0.8rem;
+      padding: 28px;
+      margin-bottom: 25px;
+      border: 2px solid #ffe4ec;
+      box-shadow: 0 15px 0 #ffe2e9;
+    }
+
+    .post-author {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .author-avatar-mini {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(145deg, #ffccd5, #ffb3c1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 1.3rem;
+      border: 3px solid white;
+    }
+
+    /* ===== BURBUJAS DE RESPUESTA ===== */
+    .reply-bubble {
+      background: #fff5f7;
+      border-radius: 30px 30px 30px 10px;
+      padding: 18px;
+      margin-left: 25px;
+      margin-top: 15px;
+      border-left: 8px solid #ffc1cc;
+    }
+
+    /* ===== INDICADORES ===== */
+    .online-badge {
+      background: #b0e9d0;
+      padding: 8px 18px;
+      border-radius: 60px;
       display: inline-flex;
       align-items: center;
-      gap: 4px;
+      gap: 8px;
+      font-weight: 600;
     }
 
-    /* input elegante */
-    .input-lovely {
-      background: #fff9fb;
-      border: 2px solid #ffe4ec;
-      border-radius: 40px;
-      padding: 14px 20px;
-      font-size: 0.95rem;
-      width: 100%;
-      transition: 0.2s;
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 650px) {
+      .magic-header h1 { font-size: 2.4rem; }
+      .crystal-card { padding: 20px; }
     }
 
-    .input-lovely:focus {
-      border-color: var(--primary);
-      outline: none;
-      background: white;
-      box-shadow: 0 0 0 4px rgba(212, 107, 124, 0.08);
+    .hidden { display: none !important; }
+    
+    /* Animaciones */
+    @keyframes heartBeat {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
     }
 
-    /* adaptación responsive */
-    @media (max-width: 600px) {
-      .hero-header h1 { font-size: 1.9rem; }
+    .heart-icon {
+      color: #ff6b8b;
+      animation: heartBeat 1.5s infinite;
     }
-
-    /* animación tiny */
-    @keyframes floatGlow {
-      0% { box-shadow: 0 5px 15px rgba(212,107,124,0.1); }
-      100% { box-shadow: 0 12px 28px rgba(212,107,124,0.2); }
-    }
-
-    .mention-marleys {
-      color: var(--primary-deep);
-      font-weight: 700;
-      background: #ffeef2;
-      padding: 2px 8px;
-      border-radius: 40px;
-    }
-
-    .hidden { display: none; }
   </style>
 </head>
 <body>
-  <div class="marleys-app">
-    <!-- 🧁 Header Superlativo: solo para Marleys -->
-    <div class="hero-header">
-      <div class="title-block">
-        <h1>🌸 marleys social</h1>
-        <span class="marleys-badge"><i class="fas fa-heart" style="color: #d46b7c;"></i> red privada · solo para ti</span>
-      </div>
-      <div class="status-area" id="globalStatus">
-        <span class="online-dot"></span>
-        <span style="font-weight:600;" id="statusMessage">Conectando...</span>
-        <span id="activeUsersBadge" style="background: #ffe6ec; padding: 4px 12px; border-radius: 30px; font-size:0.85rem;"></span>
-      </div>
-    </div>
 
-    <!-- 👤 SESIÓN / LOGIN  (dedicado a Marleys)-->
-    <div class="session-panel glass-card" id="sessionWidget">
-      <!-- Cuando el usuario NO ha iniciado sesión -->
-      <div id="loginPrompt">
-        <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
-          <div style="background: #ffdee6; padding: 14px; border-radius: 60px;">
-            <i class="fas fa-smile-wink" style="font-size: 2.2rem; color: #b94e5e;"></i>
-          </div>
-          <div>
-            <h2 style="font-size: 1.5rem; font-weight: 700;">hola, marleys 💭</h2>
-            <p style="color: var(--text-soft);">usa un alias para entrar a tu espacio</p>
-          </div>
-        </div>
-        <div style="display: flex; gap: 12px; margin-top: 18px; flex-wrap: wrap;">
-          <input type="text" id="aliasInputMain" class="input-lovely" placeholder="ej. marleys_love" maxlength="20" style="flex:1; min-width: 200px;" value="marleys_">
-          <button class="btn btn-primary" id="loginButtonMain"><i class="fas fa-arrow-right-to-bracket"></i> Entrar</button>
-        </div>
-        <p style="margin-top: 12px; font-size: 0.85rem; color: #a48a90;"><i class="fas fa-lock"></i> solo tú y quienes invites</p>
+<div class="app-container">
+  
+  <!-- ===== CABECERA ESPECTACULAR ===== -->
+  <div class="magic-header">
+    <h1 class="header-title">
+      🌸 marleys 
+    </h1>
+    <span class="header-sub">
+      <i class="fas fa-heart heart-icon"></i> solo para ti
+    </span>
+    <div style="margin-top: 20px; display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+      <div class="online-badge" id="globalStatusBadge">
+        <i class="fas fa-circle" style="color: #5fc98e; font-size: 0.8rem;"></i> 
+        <span id="statusText">Cargando...</span>
       </div>
-
-      <!-- Cuando el usuario está logueado -->
-      <div id="userLoggedPanel" style="display: none; width:100%;">
-        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
-          <div style="display: flex; align-items: center; gap: 18px;">
-            <div class="user-avatar-large" id="avatarInitials">🌸</div>
-            <div>
-              <h3 style="font-weight: 700; margin-bottom: 4px;" id="displayUserAlias">marleys_</h3>
-              <span style="background: #dff0ea; padding: 6px 16px; border-radius: 30px; font-size:0.8rem;"><i class="fas fa-circle" style="color: #5fc98e; font-size: 0.7rem;"></i> conectada</span>
-            </div>
-          </div>
-          <div style="display: flex; gap: 8px;">
-            <button class="btn btn-outline" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> salir</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 🌟 Historias destacadas (inspiradas en Marleys) -->
-    <div style="margin-bottom: 16px;">
-      <div style="display: flex; align-items: baseline; justify-content: space-between;">
-        <h3 style="font-weight: 700; font-size: 1.3rem;"><i class="fas fa-star" style="color: #f7c35c;"></i> historias de hoy</h3>
-        <span style="color: var(--primary); font-size:0.9rem;">solo Marleys puede ver ✨</span>
-      </div>
-    </div>
-    <div class="stories-grid">
-      <div class="story-card"><div class="story-emoji">☕️</div><div style="font-weight:600;">cafecito</div><div style="font-size:0.7rem; color: var(--text-soft);">pendiente</div></div>
-      <div class="story-card"><div class="story-emoji">📖</div><div style="font-weight:600;">libro</div><div style="font-size:0.7rem; color: var(--text-soft);">recomienda</div></div>
-      <div class="story-card"><div class="story-emoji">🎧</div><div style="font-weight:600;">playlist</div><div style="font-size:0.7rem; color: var(--text-soft);">para Marleys</div></div>
-      <div class="story-card"><div class="story-emoji">🌸</div><div style="font-weight:600;">flores</div><div style="font-size:0.7rem; color: var(--text-soft);">tu favoritas</div></div>
-    </div>
-
-    <!-- 💬 FEED PRINCIPAL: red social de Marleys (comentarios, respuestas, encuestas) -->
-    <div class="feed" id="socialFeed">
-      <!-- 1. Encuesta especial ¿qué plan? -->
-      <div class="post-card">
-        <div class="post-header">
-          <div class="post-avatar"><i class="fas fa-heart" style="font-size:1.6rem;"></i></div>
-          <div><span style="font-weight:800; font-size:1.1rem;">pregunta para Marleys</span><span style="display:block; font-size:0.75rem; color: #8f7a7f;">❤️ responde solo una vez</span></div>
-        </div>
-        <p style="font-size:1.2rem; font-weight:500; margin-bottom:16px;">¿qué plan te hace más feliz? 🥺</p>
-        <div style="display: flex; gap: 12px; flex-wrap: wrap;" id="pollMarleysOptions">
-          <button class="btn" style="background:#fdeff2;" value="cafe"><i class="fas fa-mug-hot"></i> café</button>
-          <button class="btn" style="background:#e2f0ed;" value="cine"><i class="fas fa-film"></i> peli</button>
-          <button class="btn" style="background:#fff1dd;" value="atardecer"><i class="fas fa-sun"></i> atardecer</button>
-          <button class="btn" style="background:#fee7fa;" value="libros"><i class="fas fa-book"></i> librería</button>
-        </div>
-        <div id="pollResultsMarleys" style="margin-top: 20px; background: #fff2f5; border-radius: 20px; padding: 16px;">
-          <p style="font-weight:600;"><i class="fas fa-chart-simple"></i> votos de tus personas favoritas</p>
-          <div id="pollStats">cargando...</div>
-        </div>
-        <!-- Indicador de voto diario -->
-        <div id="pollVoteIndicator" style="margin-top:12px;" class="hidden">✅ ya votaste (vuelve mañana)</div>
-      </div>
-
-      <!-- 2. MURO: Pensamientos / confesiones (con respuestas) -->
-      <div class="post-card" id="forumSection">
-        <div class="post-header">
-          <div class="post-avatar"><i class="fas fa-pen-fancy"></i></div>
-          <div><span style="font-weight:800;">muro de marleys</span><span style="display:block; font-size:0.8rem;">lo que piensas, siempre bonito</span></div>
-        </div>
-        <!-- Form comentario -->
-        <div id="forumCommentForm" style="display: flex; flex-direction: column; gap:12px; margin-bottom:20px;">
-          <textarea class="input-lovely" id="forumMessageInput" placeholder="escribe algo bonito, un recuerdo, lo que quieras..." rows="2" maxlength="400"></textarea>
-          <div style="display:flex; justify-content: flex-end;">
-            <button class="btn btn-primary" id="postForumBtn" style="background: var(--primary);"><i class="fas fa-paper-plane"></i> publicar</button>
-          </div>
-        </div>
-        <!-- Comentarios + replies -->
-        <div style="font-weight:600; margin-bottom:12px;"><i class="fas fa-comment-dots"></i> conversaciones</div>
-        <div id="forumCommentsContainer" style="max-height: 500px; overflow-y: auto; padding-right: 6px;">
-          <!-- se carga dinámicamente -->
-          <p style="color: var(--text-muted);">cargando mensajes...</p>
-        </div>
-      </div>
-
-      <!-- 3. ESPACIO: recuerdos instantáneos (juego de reflejos) pero personalizado -->
-      <div class="post-card" style="background: linear-gradient(145deg, #fff9fc, #ffffff);">
-        <div style="display:flex; align-items:center; gap: 12px; margin-bottom: 20px;">
-          <span style="font-size:2.4rem;">⚡</span>
-          <div><h3 style="font-weight:700;">¿qué tan rápido reaccionas?</h3><span style="color: var(--primary-deep);">prueba de reflejos Marleys</span></div>
-        </div>
-        <div id="reactionBox" style="background: #ffecf0; border-radius: 40px; padding: 40px 16px; text-align: center; font-size: 2.2rem; font-weight: 700; color: #ac5a66; border: 4px solid white; box-shadow: inset 0 4px 10px rgba(0,0,0,0.02); cursor: pointer; transition:0.1s;" class="reaction-ready">
-          💖 marleys
-        </div>
-        <div style="display: flex; justify-content: space-between; margin-top: 18px;">
-          <button class="btn" id="reactionStartBtn"><i class="fas fa-play"></i> empezar</button>
-          <span style="background: #ffe6ec; padding: 8px 20px; border-radius: 50px;">mejor: <span id="bestReaction">-</span> ms</span>
-        </div>
-        <div id="reactionFeedback" style="margin-top:16px; font-weight:500; min-height: 32px;"></div>
-      </div>
-    </div>
-
-    <!-- piecito -->
-    <div style="margin-top: 48px; text-align: center; color: #ba9ca0; border-top: 2px dashed #ffdbe2; padding-top: 28px;">
-      <p style="font-size: 1.1rem;">🍰 hecho con mucho ✨ para Marleys — siempre brilla</p>
-      <p style="margin-top: 6px;" id="footerConnection">conectada como <span id="footerAlias">invitada</span></p>
+      <span style="background: white; padding: 6px 20px; border-radius: 60px; font-size: 0.9rem;" id="onlineCountBadge">
+        <i class="fas fa-users"></i> 0 aquí
+      </span>
     </div>
   </div>
 
-  <!-- Modal personalizado sutil para primer login -->
-  <div id="welcomeMarleysModal" style="display: none; position: fixed; inset:0; background: rgba(0,0,0,0.2); backdrop-filter: blur(6px); align-items: center; justify-content: center; z-index: 999;">
-    <div style="background: white; max-width: 400px; padding: 32px; border-radius: 48px; box-shadow: 0 30px 60px rgba(180,100,120,0.2); text-align: center;">
-      <span style="font-size: 3.2rem;">🌸</span>
-      <h2 style="margin: 16px 0; color: var(--primary-deep);">bienvenida, Marleys</h2>
-      <p style="margin-bottom: 24px;">tu rincón secreto. entra con tu alias 💭</p>
-      <input type="text" id="modalAliasField" class="input-lovely" placeholder="alias" style="margin-bottom: 16px;" value="marleys_">
-      <button class="btn btn-primary" id="modalLoginBtn" style="width:100%;">comenzar</button>
-    </div>
-  </div>
-
-  <script type="module">
-    // 🔥 FIREBASE (misma config)
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
-    import { getDatabase, ref, set, onValue, runTransaction, push, update, get, onDisconnect } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-database.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyByB_5gP3sDwbCmVWbiB5CQXHzsKhcDvoo",
-      authDomain: "chist-4aac2.firebaseapp.com",
-      databaseURL: "https://chist-4aac2-default-rtdb.firebaseio.com",
-      projectId: "chist-4aac2",
-      storageBucket: "chist-4aac2.firebasestorage.app",
-      messagingSenderId: "64011595640",
-      appId: "1:64011595640:web:8fa8b005b916cf2af7628d",
-      measurementId: "G-8NXX8FKF54"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-
-    // ------------------------
-    // 🌸 ESTADO GLOBAL (Marleys edition)
-    // ------------------------
-    let currentUser = {
-      id: null,
-      alias: null,
-      isLoggedIn: false
-    };
-
-    // juego reflejos
-    let reactionActive = false;
-    let reactionStartTime = null;
-    let bestTime = localStorage.getItem('marleysBestReaction') || null;
+  <!-- ===== PANEL DE IDENTIDAD ===== -->
+  <div class="crystal-card" style="margin-bottom: 30px;" id="sessionPanel">
     
-    // util: formatear timestamp
-    function formatTimeAgo(timestamp) {
-      if (!timestamp) return 'ahora';
-      const diff = Date.now() - timestamp;
-      if (diff < 60000) return 'ahora mismo';
-      if (diff < 3600000) return `${Math.floor(diff/60000)} min`;
-      if (diff < 86400000) return `${Math.floor(diff/3600000)} h`;
-      return new Date(timestamp).toLocaleDateString('es-ES', {day:'numeric', month:'short'});
-    }
+    <!-- VISTA: NO LOGEADA -->
+    <div id="notLoggedView">
+      <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin-bottom: 15px;">
+        <span style="font-size: 3.5rem;">🦋</span>
+        <div>
+          <h2 style="font-size: 1.9rem; font-weight: 700; color: #b94e5e;">hola, marleys</h2>
+          <p style="color: #7a5a62;">identifícate con un alias para entrar</p>
+        </div>
+      </div>
+      <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+        <input type="text" id="aliasInput" class="input-lovely" placeholder="ej. marleys_amor" maxlength="20" style="flex: 1;" value="marleys_">
+        <button class="btn btn-primary" id="loginBtn"><i class="fas fa-arrow-right-to-bracket"></i> entrar</button>
+      </div>
+    </div>
+    
+    <!-- VISTA: LOGEADA -->
+    <div id="loggedView" style="display: none;">
+      <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
+        <div style="display: flex; align-items: center; gap: 20px;">
+          <div class="aura-avatar" id="avatarDisplay">🌸</div>
+          <div>
+            <h3 style="font-size: 1.7rem; font-weight: 700;" id="userAliasDisplay">marleys</h3>
+            <span style="background: #dff0ea; padding: 6px 18px; border-radius: 60px;">
+              <i class="fas fa-check-circle" style="color: #2e9b5c;"></i> conectada
+            </span>
+          </div>
+        </div>
+        <button class="btn btn-outline" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> salir</button>
+      </div>
+    </div>
+  </div>
 
-    // --- actualizar UI sesión ---
-    function updateUIForUser() {
-      const loggedInDiv = document.getElementById('userLoggedPanel');
-      const loginDiv = document.getElementById('loginPrompt');
-      if (currentUser.isLoggedIn) {
-        loggedInDiv.style.display = 'flex';
-        loginDiv.style.display = 'none';
-        document.getElementById('displayUserAlias').innerText = currentUser.alias;
-        document.getElementById('footerAlias').innerText = currentUser.alias;
-        document.getElementById('avatarInitials').innerHTML = currentUser.alias.substring(0,2).toUpperCase() || '👤';
-        document.getElementById('statusMessage').innerHTML = 'conectada <span style="font-weight:400;">· hola Marleys</span>';
-        // mostrar form de comentarios
-        document.getElementById('forumCommentForm').style.display = 'flex';
+  <!-- ===== ENCUESTA ESPECIAL PARA MARLEYS ===== -->
+  <div class="dream-post">
+    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+      <span style="font-size: 2.5rem;">💭</span>
+      <h2 style="font-weight: 700; font-size: 1.6rem;">¿qué plan te hace feliz?</h2>
+    </div>
+    <p style="margin-bottom: 25px; font-size: 1.1rem;">vota solo una vez al día, corazón 💕</p>
+    
+    <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 25px;" id="pollOptions">
+      <button class="btn" value="cafe" style="background: #f5e6d3;"><i class="fas fa-mug-hot"></i> café</button>
+      <button class="btn" value="cine" style="background: #d4e1f0;"><i class="fas fa-film"></i> cine</button>
+      <button class="btn" value="atardecer" style="background: #ffe0b5;"><i class="fas fa-sun"></i> atardecer</button>
+      <button class="btn" value="libros" style="background: #e6d9e2;"><i class="fas fa-book"></i> librería</button>
+    </div>
+    
+    <div id="alreadyVotedMessage" class="hidden" style="background: #ffe2ec; padding: 14px; border-radius: 40px; margin-bottom: 20px;">
+      <i class="fas fa-check-circle"></i> ya votaste hoy, vuelve mañana
+    </div>
+    
+    <div style="background: #fff5f7; border-radius: 40px; padding: 25px;">
+      <h3 style="font-weight: 600; margin-bottom: 20px;"><i class="fas fa-chart-pie"></i> resultados</h3>
+      <div id="pollResultsContainer">
+        <p style="color: #8f7a7f;">cargando...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MURO DE PENSAMIENTOS (CON RESPUESTAS) ===== -->
+  <div class="dream-post" style="background: #fffbfd;">
+    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 10px;">
+      <span style="font-size: 2.2rem;">📝</span>
+      <h2 style="font-weight: 700; font-size: 1.6rem;">muro de marleys</h2>
+    </div>
+    
+    <!-- FORM SOLO PARA LOGEADAS -->
+    <div id="forumFormContainer" style="margin: 20px 0 30px;">
+      <textarea id="forumInput" class="input-lovely" placeholder="escribe un pensamiento, recuerdo o mensaje..." rows="2" maxlength="400"></textarea>
+      <div style="display: flex; justify-content: flex-end; margin-top: 15px;">
+        <button class="btn btn-primary" id="postForumBtn"><i class="fas fa-feather-alt"></i> publicar</button>
+      </div>
+    </div>
+    
+    <!-- LISTA DE MENSAJES + RESPUESTAS -->
+    <div id="forumFeed">
+      <p style="color: #a48a90; text-align: center;">cargando mensajes bonitos...</p>
+    </div>
+  </div>
+
+  <!-- ===== JUEGO DE REFLEJOS ===== -->
+  <div class="crystal-card" style="background: linear-gradient(145deg, #ffeef2, #fff5f7);">
+    <div style="display: flex; align-items: center; gap: 15px;">
+      <span style="font-size: 3rem;">⚡</span>
+      <div>
+        <h2 style="font-weight: 700;">prueba de reflejos</h2>
+        <p style="color: #8a5a62;">¿qué tan rápida eres?</p>
+      </div>
+    </div>
+    
+    <div id="reactionBox" style="background: #ffe0e8; border-radius: 60px; padding: 45px 20px; margin: 25px 0; text-align: center; font-size: 2.2rem; font-weight: 700; color: #ac5e6e; border: 5px solid white; cursor: pointer; transition: 0.05s;">
+      💖 tócame
+    </div>
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+      <button class="btn btn-primary" id="startReactionBtn"><i class="fas fa-play"></i> comenzar</button>
+      <span style="background: white; padding: 10px 20px; border-radius: 60px;">
+        🏆 mejor: <span id="bestTimeDisplay">-</span> ms
+      </span>
+    </div>
+    <div id="reactionFeedback" style="margin-top: 20px; font-size: 1.1rem; min-height: 35px;"></div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <div style="margin-top: 50px; text-align: center; color: #ad8c94; border-top: 3px dashed #ffd7df; padding-top: 30px;">
+    <p style="font-size: 1.2rem;">✨ hecho con todo mi corazón para marleys ✨</p>
+    <p style="margin-top: 10px;" id="footerUserStatus">conectada como: invitada</p>
+  </div>
+</div>
+
+<!-- ===== MODAL DE BIENVENIDA PRECIOSO ===== -->
+<div id="welcomeModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.2); backdrop-filter: blur(12px); align-items: center; justify-content: center; z-index: 9999;">
+  <div style="background: white; max-width: 450px; width: 90%; padding: 40px; border-radius: 70px; box-shadow: 0 40px 60px rgba(180,100,120,0.2); text-align: center;">
+    <span style="font-size: 4rem;">🦋</span>
+    <h2 style="margin: 20px 0; color: #b94e5e; font-size: 2rem;">marleys</h2>
+    <p style="margin-bottom: 30px; font-size: 1.1rem;">bienvenida a tu rincón secreto</p>
+    <input type="text" id="modalAliasInput" class="input-lovely" placeholder="tu alias" value="marleys_">
+    <button class="btn btn-primary" id="modalLoginBtn" style="width: 100%; margin-top: 25px;">comenzar</button>
+  </div>
+</div>
+
+<script type="module">
+  // ========== FIREBASE CONFIGURACIÓN ==========
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getDatabase, ref, set, onValue, runTransaction, push, update, get, onDisconnect, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+  // TU CONFIGURACIÓN (EXACTA)
+  const firebaseConfig = {
+    apiKey: "AIzaSyByB_5gP3sDwbCmVWbiB5CQXHzsKhcDvoo",
+    authDomain: "chist-4aac2.firebaseapp.com",
+    databaseURL: "https://chist-4aac2-default-rtdb.firebaseio.com",
+    projectId: "chist-4aac2",
+    storageBucket: "chist-4aac2.firebasestorage.app",
+    messagingSenderId: "64011595640",
+    appId: "1:64011595640:web:8fa8b005b916cf2af7628d"
+  };
+
+  // INICIALIZAR FIREBASE
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+  
+  console.log("🔥 Firebase conectado correctamente");
+
+  // ========== ESTADO GLOBAL ==========
+  let currentUser = {
+    id: null,
+    alias: null,
+    isLoggedIn: false
+  };
+
+  // Mejor tiempo de reacción
+  let bestReactionTime = localStorage.getItem('marleysBestTime') || null;
+  if (bestReactionTime) document.getElementById('bestTimeDisplay').innerText = bestReactionTime;
+
+  // ========== FUNCIONES DE UTILIDAD ==========
+  function formatTimeAgo(timestamp) {
+    if (!timestamp) return 'ahora';
+    const seconds = Math.floor((Date.now() - timestamp) / 1000);
+    if (seconds < 60) return 'ahora mismo';
+    if (seconds < 3600) return `${Math.floor(seconds / 60)} min`;
+    if (seconds < 86400) return `${Math.floor(seconds / 3600)} h`;
+    return new Date(timestamp).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
+  }
+
+  function showNotification(message, type = 'happy') {
+    const notif = document.createElement('div');
+    notif.innerHTML = `<i class="fas fa-heart" style="margin-right: 8px;"></i> ${message}`;
+    notif.style.position = 'fixed';
+    notif.style.bottom = '25px';
+    notif.style.right = '25px';
+    notif.style.background = type === 'happy' ? '#ff8a9c' : '#b0c4de';
+    notif.style.color = 'white';
+    notif.style.padding = '16px 28px';
+    notif.style.borderRadius = '80px';
+    notif.style.fontWeight = '600';
+    notif.style.boxShadow = '0 15px 25px rgba(255, 100, 130, 0.3)';
+    notif.style.zIndex = '99999';
+    notif.style.backdropFilter = 'blur(10px)';
+    notif.style.border = '2px solid white';
+    notif.style.animation = 'heartBeat 0.5s';
+    document.body.appendChild(notif);
+    setTimeout(() => notif.remove(), 2800);
+  }
+
+  // ========== SESIÓN ==========
+  async function login(alias) {
+    if (!alias || alias.trim().length < 2) {
+      showNotification('elige un alias bonito', 'error');
+      return false;
+    }
+    
+    const cleanAlias = alias.trim().substring(0, 20);
+    const userId = 'user_' + Date.now() + '_' + Math.random().toString(36).substring(2, 8);
+    
+    currentUser = {
+      id: userId,
+      alias: cleanAlias,
+      isLoggedIn: true
+    };
+    
+    // Guardar en localStorage
+    localStorage.setItem('marleysUser', JSON.stringify(currentUser));
+    
+    // Guardar en Firebase
+    const userRef = ref(db, `users/${userId}`);
+    await set(userRef, {
+      id: userId,
+      alias: cleanAlias,
+      online: true,
+      lastActive: Date.now(),
+      sessionStart: Date.now()
+    });
+    
+    // Desconexión automática
+    onDisconnect(userRef).update({
+      online: false,
+      lastActive: Date.now()
+    });
+    
+    updateUI();
+    showNotification(`✨ bienvenida, ${cleanAlias}`);
+    return true;
+  }
+
+  async function logout() {
+    if (currentUser.isLoggedIn) {
+      const userRef = ref(db, `users/${currentUser.id}`);
+      await update(userRef, { online: false, lastActive: Date.now() });
+    }
+    localStorage.removeItem('marleysUser');
+    currentUser = { id: null, alias: null, isLoggedIn: false };
+    updateUI();
+    showNotification('🌙 sesión cerrada');
+  }
+
+  // ========== UI ==========
+  function updateUI() {
+    const notLogged = document.getElementById('notLoggedView');
+    const logged = document.getElementById('loggedView');
+    const forumForm = document.getElementById('forumFormContainer');
+    const footerStatus = document.getElementById('footerUserStatus');
+    
+    if (currentUser.isLoggedIn) {
+      notLogged.style.display = 'none';
+      logged.style.display = 'block';
+      forumForm.style.display = 'block';
+      document.getElementById('userAliasDisplay').innerText = currentUser.alias;
+      document.getElementById('avatarDisplay').innerHTML = currentUser.alias.substring(0, 2).toUpperCase() || '🌸';
+      footerStatus.innerHTML = `conectada como: <strong>${currentUser.alias}</strong>`;
+      
+      // Ocultar modal si está visible
+      document.getElementById('welcomeModal').style.display = 'none';
+    } else {
+      notLogged.style.display = 'block';
+      logged.style.display = 'none';
+      forumForm.style.display = 'none';
+      footerStatus.innerHTML = 'conectada como: invitada';
+    }
+  }
+
+  // ========== VERIFICAR VOTO DIARIO ==========
+  async function checkDailyVote() {
+    if (!currentUser.isLoggedIn) return;
+    
+    const today = new Date().toDateString();
+    const voteRef = ref(db, `pollMarleysVotes/${currentUser.id}`);
+    
+    try {
+      const snapshot = await get(voteRef);
+      if (snapshot.exists()) {
+        const voteData = snapshot.val();
+        const voteDate = new Date(voteData.timestamp).toDateString();
+        
+        if (voteDate === today) {
+          document.getElementById('alreadyVotedMessage').classList.remove('hidden');
+          // Deshabilitar botones
+          document.querySelectorAll('#pollOptions .btn').forEach(btn => {
+            btn.disabled = true;
+            btn.style.opacity = '0.6';
+          });
+        } else {
+          document.getElementById('alreadyVotedMessage').classList.add('hidden');
+          document.querySelectorAll('#pollOptions .btn').forEach(btn => {
+            btn.disabled = false;
+            btn.style.opacity = '1';
+          });
+        }
       } else {
-        loggedInDiv.style.display = 'none';
-        loginDiv.style.display = 'flex';
-        document.getElementById('footerAlias').innerText = 'invitada';
-        document.getElementById('statusMessage').innerHTML = 'desconectada';
-        document.getElementById('forumCommentForm').style.display = 'none';
+        document.getElementById('alreadyVotedMessage').classList.add('hidden');
+        document.querySelectorAll('#pollOptions .btn').forEach(btn => {
+          btn.disabled = false;
+          btn.style.opacity = '1';
+        });
       }
+    } catch (error) {
+      console.error('Error verificando voto:', error);
     }
+  }
 
-    // login unificado
-    async function performLogin(alias) {
-      if (!alias || alias.trim().length < 2) { alert('alias muy corto'); return false; }
-      const cleanAlias = alias.trim().substring(0,20);
-      const userId = 'marleys_' + Date.now() + '_' + Math.random().toString(36).substring(2,6);
-      currentUser = { id: userId, alias: cleanAlias, isLoggedIn: true };
-      localStorage.setItem('marleysSocialUser', JSON.stringify(currentUser));
-      updateUIForUser();
-      await initSessionInFirebase();
-      checkPollVoteStatus();
-      showNotification('🌸 bienvenida, ' + cleanAlias);
-      return true;
+  // ========== VOTAR ENCUESTA ==========
+  async function votePoll(option) {
+    if (!currentUser.isLoggedIn) {
+      showNotification('primero identifícate 💕');
+      return;
     }
-
-    async function initSessionInFirebase() {
-      if (!currentUser.isLoggedIn) return;
-      const userRef = ref(db, 'users/' + currentUser.id);
-      await set(userRef, {
-        alias: currentUser.alias,
-        online: true,
-        lastActive: Date.now(),
-        sessionStart: Date.now()
-      });
-      onDisconnect(userRef).update({ online: false, lastActive: Date.now() });
-    }
-
-    // logout
-    async function logout() {
-      if (currentUser.isLoggedIn) {
-        const userRef = ref(db, 'users/' + currentUser.id);
-        await update(userRef, { online: false, lastActive: Date.now() });
-      }
-      localStorage.removeItem('marleysSocialUser');
-      currentUser = { id: null, alias: null, isLoggedIn: false };
-      updateUIForUser();
-      showNotification('sesión cerrada');
-    }
-
-    // -----  ENCUESTA PLAN (voto diario) ----
-    async function votePoll(option) {
-      if (!currentUser.isLoggedIn) { alert('entra primero'); return; }
-      const today = new Date().toDateString();
-      const voteRef = ref(db, `pollMarleysVotes/${currentUser.id}`);
-      const snap = await get(voteRef);
-      if (snap.exists()) {
-        const date = new Date(snap.val().timestamp).toDateString();
-        if (date === today) {
-          showNotification('ya votaste hoy 💕', 'info');
+    
+    const today = new Date().toDateString();
+    const voteRef = ref(db, `pollMarleysVotes/${currentUser.id}`);
+    
+    try {
+      const snapshot = await get(voteRef);
+      if (snapshot.exists()) {
+        const voteDate = new Date(snapshot.val().timestamp).toDateString();
+        if (voteDate === today) {
+          showNotification('ya votaste hoy, vuelve mañana 🌸');
           return;
         }
       }
-      // transacción
-      await runTransaction(ref(db, 'pollMarleys/' + option), n => (n || 0) + 1);
-      await set(voteRef, { option, timestamp: Date.now(), alias: currentUser.alias });
-      document.getElementById('pollVoteIndicator').classList.remove('hidden');
-      showNotification('votaste: ' + option);
-      checkPollVoteStatus();
-    }
-
-    async function checkPollVoteStatus() {
-      if (!currentUser.isLoggedIn) return;
-      const today = new Date().toDateString();
-      const snap = await get(ref(db, `pollMarleysVotes/${currentUser.id}`));
-      if (snap.exists() && new Date(snap.val().timestamp).toDateString() === today) {
-        document.getElementById('pollVoteIndicator').classList.remove('hidden');
-      } else {
-        document.getElementById('pollVoteIndicator').classList.add('hidden');
-      }
-    }
-
-    // ---- foro / muro con respuestas ----
-    function renderForumComments(snapshot) {
-      const container = document.getElementById('forumCommentsContainer');
-      if (!snapshot.exists()) {
-        container.innerHTML = '<p style="color: var(--text-muted);">✨ aún no hay mensajes, escribe algo bonito</p>';
-        return;
-      }
-      const comments = snapshot.val();
-      const sorted = Object.entries(comments).sort((a,b) => b[1].timestamp - a[1].timestamp).slice(0, 20);
-      let html = '';
-      sorted.forEach(([id, c]) => {
-        const replies = c.replies ? Object.values(c.replies).sort((x,y) => x.timestamp - y.timestamp) : [];
-        const repliesHtml = replies.map(r => `
-          <div style="margin-left: 24px; margin-top: 12px; padding: 12px 16px; background: #fff4f7; border-radius: 24px; border-left: 6px solid #ffd1d9;">
-            <div style="display:flex; justify-content: space-between;"><strong>${r.alias || 'anónimo'}</strong> <span style="font-size:0.7rem;">${formatTimeAgo(r.timestamp)}</span></div>
-            <p style="margin-top:6px;">${r.text}</p>
-          </div>
-        `).join('');
-        
-        html += `
-          <div style="background: #fffbfc; border-radius: 28px; padding: 18px; margin-bottom: 24px; border: 1.8px solid white;">
-            <div style="display:flex; align-items: center; gap:10px; margin-bottom: 6px;">
-              <span style="background: #ffdae2; padding: 6px; border-radius: 50%; width: 36px; height:36px; display:flex; align-items:center; justify-content:center;"><i class="fas fa-user"></i></span>
-              <div><span style="font-weight:700;">${c.alias || 'alguien'}</span> <span style="color: var(--text-muted); margin-left: 8px; font-size:0.75rem;">${formatTimeAgo(c.timestamp)}</span></div>
-            </div>
-            <p style="margin: 8px 0 16px 8px; font-size:1.05rem;">${c.text}</p>
-            <div style="display:flex; gap:20px; align-items:center;">
-              <button class="reply-btn" style="background:none; border:none; color: #b94e5e; font-weight:600; display:flex; gap:6px;" data-section="forum" data-commentid="${id}"><i class="fas fa-reply"></i> responder</button>
-              <span style="font-size:0.8rem;">${replies.length} 💬</span>
-            </div>
-            <div id="replyForm-${id}" style="display:none; margin-top:18px;">
-              <textarea id="replyInput-${id}" class="input-lovely" placeholder="escribe tu respuesta..." rows="1" style="border-radius: 40px;"></textarea>
-              <div style="display:flex; gap:8px; margin-top: 10px;">
-                <button class="btn btn-primary send-reply" data-section="forum" data-commentid="${id}" style="padding: 8px 18px;">enviar</button>
-                <button class="btn cancel-reply" data-commentid="${id}" style="background:transparent;">cancelar</button>
-              </div>
-            </div>
-            ${repliesHtml}
-          </div>
-        `;
-      });
-      container.innerHTML = html;
       
-      // attach listeners a reply buttons (dinámico)
-      document.querySelectorAll('.reply-btn').forEach(btn => {
-        btn.removeEventListener('click', showReplyFormHandler);
-        btn.addEventListener('click', showReplyFormHandler);
+      // Registrar voto en el contador
+      await runTransaction(ref(db, `pollMarleys/${option}`), (current) => {
+        return (current || 0) + 1;
       });
-      document.querySelectorAll('.send-reply').forEach(btn => {
-        btn.removeEventListener('click', sendReplyHandler);
-        btn.addEventListener('click', sendReplyHandler);
-      });
-      document.querySelectorAll('.cancel-reply').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          const id = e.currentTarget.dataset.commentid;
-          document.getElementById(`replyForm-${id}`).style.display = 'none';
-        });
-      });
-    }
-
-    function showReplyFormHandler(e) {
-      if (!currentUser.isLoggedIn) { alert('entra para responder'); return; }
-      const commentId = e.currentTarget.dataset.commentid;
-      const form = document.getElementById(`replyForm-${commentId}`);
-      if (form) form.style.display = 'block';
-    }
-
-    async function sendReplyHandler(e) {
-      if (!currentUser.isLoggedIn) { alert('necesitas identificarte'); return; }
-      const commentId = e.currentTarget.dataset.commentid;
-      const input = document.getElementById(`replyInput-${commentId}`);
-      const text = input.value.trim();
-      if (!text) return;
-      const replyId = 'r_' + Date.now() + '_' + Math.random().toString(36);
-      const replyData = {
-        alias: currentUser.alias,
-        text: text,
+      
+      // Registrar voto del usuario
+      await set(voteRef, {
+        option: option,
         timestamp: Date.now(),
+        alias: currentUser.alias,
         userId: currentUser.id
-      };
-      try {
-        await set(ref(db, `forumComments/${commentId}/replies/${replyId}`), replyData);
-        input.value = '';
-        document.getElementById(`replyForm-${commentId}`).style.display = 'none';
-        showNotification('respuesta enviada 💬');
-      } catch(e) { console.error(e); }
+      });
+      
+      showNotification(`votaste: ${option} 💖`);
+      checkDailyVote();
+      
+    } catch (error) {
+      console.error('Error al votar:', error);
+      showNotification('error al votar');
     }
+  }
 
-    // post nuevo en muro
-    async function postForumMessage() {
-      if (!currentUser.isLoggedIn) { alert('inicia sesión'); return; }
-      const input = document.getElementById('forumMessageInput');
-      const text = input.value.trim();
-      if (!text) return;
-      const newCommentRef = push(ref(db, 'forumComments'));
-      await set(newCommentRef, {
+  // ========== PUBLICAR EN MURO ==========
+  async function postForumMessage() {
+    if (!currentUser.isLoggedIn) {
+      showNotification('identifícate para publicar');
+      return;
+    }
+    
+    const input = document.getElementById('forumInput');
+    const text = input.value.trim();
+    
+    if (text.length === 0) {
+      showNotification('escribe algo bonito');
+      return;
+    }
+    
+    if (text.length > 400) {
+      showNotification('mensaje muy largo');
+      return;
+    }
+    
+    try {
+      const newPostRef = push(ref(db, 'forumComments'));
+      await set(newPostRef, {
         alias: currentUser.alias,
         text: text,
         timestamp: Date.now(),
         userId: currentUser.id,
         replies: {}
       });
+      
       input.value = '';
-      showNotification('mensaje publicado 💖');
+      showNotification('mensaje publicado ✨');
+      
+    } catch (error) {
+      console.error('Error publicando:', error);
+      showNotification('error al publicar');
     }
+  }
 
-    // ---------- JUEGO REACCIÓN (edición Marleys) ---------
-    function startReaction() {
-      if (!currentUser.isLoggedIn) { alert('primero entra, bella'); return; }
-      if (reactionActive) return;
-      reactionActive = true;
-      const box = document.getElementById('reactionBox');
-      box.innerText = '🌸 espera...';
-      box.style.background = '#fde0e6';
-      box.style.cursor = 'default';
-      document.getElementById('reactionStartBtn').disabled = true;
-      const delay = Math.random() * 3000 + 2000;
-      setTimeout(() => {
-        if (!reactionActive) return;
-        reactionStartTime = Date.now();
-        box.innerText = '💥 AHORA!!';
-        box.style.background = '#ffcdd9';
-        box.style.cursor = 'pointer';
-        box.onclick = function reactionHandler() {
-          if (!reactionStartTime) return;
-          const rt = Date.now() - reactionStartTime;
-          reactionActive = false;
-          box.onclick = null;
-          box.style.background = '#ffecf0';
-          box.innerText = `⚡ ${rt} ms`;
-          document.getElementById('reactionStartBtn').disabled = false;
-          if (!bestTime || rt < parseInt(bestTime)) {
-            bestTime = rt;
-            localStorage.setItem('marleysBestReaction', rt);
-            document.getElementById('bestReaction').innerText = rt;
-            showNotification('¡nuevo récord! 🏆');
-          } else {
-            document.getElementById('bestReaction').innerText = bestTime;
-          }
-          document.getElementById('reactionFeedback').innerHTML = `tu tiempo: ${rt} ms  ${rt < 280 ? '💫 increíble' : ''}`;
-        };
-      }, delay);
+  // ========== RESPONDER A COMENTARIO ==========
+  async function postReply(commentId, replyText) {
+    if (!currentUser.isLoggedIn) {
+      showNotification('identifícate para responder');
+      return;
     }
-
-    // notificaciones
-    function showNotification(msg) {
-      const notif = document.createElement('div');
-      notif.innerText = msg;
-      notif.style.position = 'fixed'; notif.style.bottom = '20px'; notif.style.right = '20px';
-      notif.style.background = '#d46b7c'; notif.style.color = 'white'; notif.style.padding = '14px 24px';
-      notif.style.borderRadius = '60px'; notif.style.fontWeight = '600'; notif.style.zIndex = '9999';
-      notif.style.boxShadow = '0 6px 14px rgba(0,0,0,0.1)';
-      document.body.appendChild(notif);
-      setTimeout(() => notif.remove(), 2800);
+    
+    if (!replyText || replyText.trim().length === 0) return;
+    
+    try {
+      const replyId = 'reply_' + Date.now() + '_' + Math.random().toString(36).substring(2, 6);
+      const replyRef = ref(db, `forumComments/${commentId}/replies/${replyId}`);
+      
+      await set(replyRef, {
+        alias: currentUser.alias,
+        text: replyText.trim(),
+        timestamp: Date.now(),
+        userId: currentUser.id
+      });
+      
+      showNotification('respondiste 💬');
+      
+    } catch (error) {
+      console.error('Error al responder:', error);
+      showNotification('error al responder');
     }
+  }
 
-    // ----- FIREBASE LISTENERS -----
-    function setupListeners() {
-      // usuarios online
-      onValue(ref(db, 'users'), (snap) => {
-        if (snap.exists()) {
-          const users = Object.values(snap.val()).filter(u => u.online).length;
-          document.getElementById('activeUsersBadge').innerHTML = `<i class="fas fa-user"></i> ${users} aquí`;
-        }
-      });
-      // resultados encuesta Marleys
-      onValue(ref(db, 'pollMarleys'), (snap) => {
-        const data = snap.val() || { cafe:0, cine:0, atardecer:0, libros:0 };
-        const total = Object.values(data).reduce((a,b)=>a+b,0);
-        let html = '';
-        for (let [k,v] of Object.entries(data)) {
-          const percent = total ? ((v/total)*100).toFixed(0) : 0;
-          html += `<div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span>${k} </span><span style="background: #ffdbe4; padding:6px 14px; border-radius:30px;">${v} votos (${percent}%)</span></div>`;
-        }
-        document.getElementById('pollStats').innerHTML = html || 'sin votos';
-      });
-      // foro comments con replies
-      onValue(ref(db, 'forumComments'), (snap) => renderForumComments(snap));
+  // ========== RENDERIZAR FORO ==========
+  function renderForum(snapshot) {
+    const feed = document.getElementById('forumFeed');
+    
+    if (!snapshot.exists()) {
+      feed.innerHTML = '<div style="text-align: center; padding: 30px; color: #a48a90;">🌸 aún no hay mensajes, escribe algo hermoso</div>';
+      return;
     }
-
-    // ---------- INIT -------------
-    window.addEventListener('DOMContentLoaded', async () => {
-      // fecha simbólica
-      // check local user
-      const saved = localStorage.getItem('marleysSocialUser');
-      if (saved) {
-        try {
-          const u = JSON.parse(saved);
-          if (u && u.id && u.alias) {
-            currentUser = { id: u.id, alias: u.alias, isLoggedIn: true };
-            await initSessionInFirebase();
-          }
-        } catch(e) {}
-      }
-      updateUIForUser();
-      setupListeners();
-      checkPollVoteStatus();
+    
+    const comments = snapshot.val();
+    const sorted = Object.entries(comments)
+      .sort((a, b) => b[1].timestamp - a[1].timestamp)
+      .slice(0, 20);
+    
+    let html = '';
+    
+    for (const [commentId, comment] of sorted) {
+      const replies = comment.replies ? Object.values(comment.replies).sort((a, b) => a.timestamp - b.timestamp) : [];
       
-      // mejor tiempo reflejo
-      if (bestTime) document.getElementById('bestReaction').innerText = bestTime;
-      
-      // event listeners UI
-      document.getElementById('loginButtonMain').addEventListener('click', async () => {
-        const alias = document.getElementById('aliasInputMain').value;
-        await performLogin(alias);
+      let repliesHtml = '';
+      replies.forEach(reply => {
+        repliesHtml += `
+          <div class="reply-bubble">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+              <span style="font-weight: 700; color: #b94e5e;">${reply.alias || 'anónimo'}</span>
+              <span style="font-size: 0.75rem; color: #a18489;">${formatTimeAgo(reply.timestamp)}</span>
+            </div>
+            <p style="font-size: 0.98rem;">${reply.text}</p>
+          </div>
+        `;
       });
-      document.getElementById('logoutBtn').addEventListener('click', logout);
       
-      // votos encuesta Marleys
-      document.querySelectorAll('#pollMarleysOptions .btn').forEach(btn => {
-        btn.addEventListener('click', () => votePoll(btn.value));
-      });
-      // post foro
-      document.getElementById('postForumBtn').addEventListener('click', postForumMessage);
-      
-      // reacción
-      document.getElementById('reactionStartBtn').addEventListener('click', startReaction);
-      
-      // modal bienvenida (si no está logueada, mostramos modal una vez)
-      if (!currentUser.isLoggedIn) {
-        document.getElementById('welcomeMarleysModal').style.display = 'flex';
-      }
-      document.getElementById('modalLoginBtn').addEventListener('click', async () => {
-        const alias = document.getElementById('modalAliasField').value;
-        await performLogin(alias);
-        document.getElementById('welcomeMarleysModal').style.display = 'none';
+      html += `
+        <div style="background: #fff9fc; border-radius: 35px; padding: 22px; margin-bottom: 25px; border: 2px solid white;">
+          <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 12px;">
+            <div class="author-avatar-mini">${comment.alias ? comment.alias.substring(0,2).toUpperCase() : '👤'}</div>
+            <div>
+              <span style="font-weight: 700; font-size: 1.1rem;">${comment.alias || 'alguien'}</span>
+              <span style="display: block; font-size: 0.7rem; color: #a48a90;">${formatTimeAgo(comment.timestamp)}</span>
+            </div>
+          </div>
+          
+          <p style="font-size: 1.1rem; margin: 8px 0 20px 10px;">${comment.text}</p>
+          
+          <div style="display: flex; gap: 20px; align-items: center; margin-bottom: 10px;">
+            <button class="reply-trigger-btn" data-commentid="${commentId}" style="background: none; border: none; color: #b94e5e; font-weight: 600; display: flex; gap: 5px; cursor: pointer;">
+              <i class="fas fa-reply"></i> responder
+            </button>
+            <span style="font-size: 0.85rem; color: #8f7a7f;">${replies.length} respuestas</span>
+          </div>
+          
+          <!-- FORMULARIO DE RESPUESTA OCULTO -->
+          <div id="replyForm-${commentId}" style="display: none; margin: 15px 0 20px;">
+            <textarea id="replyInput-${commentId}" class="input-lovely" placeholder="escribe tu respuesta..." rows="1" style="border-radius: 30px;"></textarea>
+            <div style="display: flex; gap: 10px; margin-top: 10px;">
+              <button class="btn btn-primary send-reply-btn" data-commentid="${commentId}" style="padding: 10px 22px;">enviar</button>
+              <button class="btn cancel-reply-btn" data-commentid="${commentId}" style="background: #f0e2e5;">cancelar</button>
+            </div>
+          </div>
+          
+          <!-- RESPUESTAS EXISTENTES -->
+          <div style="margin-top: 15px;">
+            ${repliesHtml}
+          </div>
+        </div>
+      `;
+    }
+    
+    feed.innerHTML = html;
+    
+    // Adjuntar event listeners a botones de respuesta
+    document.querySelectorAll('.reply-trigger-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const commentId = e.currentTarget.dataset.commentid;
+        const form = document.getElementById(`replyForm-${commentId}`);
+        if (form) form.style.display = 'block';
       });
     });
-  </script>
+    
+    document.querySelectorAll('.cancel-reply-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const commentId = e.currentTarget.dataset.commentid;
+        const form = document.getElementById(`replyForm-${commentId}`);
+        if (form) {
+          form.style.display = 'none';
+          document.getElementById(`replyInput-${commentId}`).value = '';
+        }
+      });
+    });
+    
+    document.querySelectorAll('.send-reply-btn').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        const commentId = e.currentTarget.dataset.commentid;
+        const input = document.getElementById(`replyInput-${commentId}`);
+        await postReply(commentId, input.value.trim());
+        input.value = '';
+        document.getElementById(`replyForm-${commentId}`).style.display = 'none';
+      });
+    });
+  }
+
+  // ========== JUEGO DE REACCIÓN ==========
+  let reactionActive = false;
+  let reactionStartTime = null;
+  
+  function startReactionGame() {
+    if (!currentUser.isLoggedIn) {
+      showNotification('identifícate para jugar');
+      return;
+    }
+    
+    if (reactionActive) return;
+    
+    reactionActive = true;
+    const box = document.getElementById('reactionBox');
+    const btn = document.getElementById('startReactionBtn');
+    
+    box.innerText = '🌸 espera...';
+    box.style.background = '#ffd1dc';
+    box.style.cursor = 'default';
+    btn.disabled = true;
+    
+    const delay = Math.random() * 3000 + 2000;
+    
+    setTimeout(() => {
+      if (!reactionActive) return;
+      
+      reactionStartTime = Date.now();
+      box.innerText = '💥 AHORA!';
+      box.style.background = '#ffb3c1';
+      box.style.cursor = 'pointer';
+      
+      box.onclick = function() {
+        if (!reactionStartTime) return;
+        
+        const reactionTime = Date.now() - reactionStartTime;
+        reactionActive = false;
+        box.onclick = null;
+        box.style.background = '#ffe0e8';
+        box.innerText = `⚡ ${reactionTime} ms`;
+        btn.disabled = false;
+        
+        if (!bestReactionTime || reactionTime < parseInt(bestReactionTime)) {
+          bestReactionTime = reactionTime;
+          localStorage.setItem('marleysBestTime', reactionTime);
+          document.getElementById('bestTimeDisplay').innerText = reactionTime;
+          showNotification('🏆 nuevo récord!');
+        }
+        
+        document.getElementById('reactionFeedback').innerHTML = `tiempo: ${reactionTime} ms`;
+      };
+    }, delay);
+  }
+
+  // ========== LISTENERS DE FIREBASE ==========
+  function setupFirebaseListeners() {
+    // Usuarios online
+    onValue(ref(db, 'users'), (snapshot) => {
+      if (snapshot.exists()) {
+        const users = Object.values(snapshot.val()).filter(u => u.online === true).length;
+        document.getElementById('onlineCountBadge').innerHTML = `<i class="fas fa-users"></i> ${users} aquí`;
+        document.getElementById('statusText').innerText = users > 0 ? 'conectada' : 'solo tú';
+      }
+    });
+    
+    // Resultados encuesta
+    onValue(ref(db, 'pollMarleys'), (snapshot) => {
+      const data = snapshot.val() || { cafe: 0, cine: 0, atardecer: 0, libros: 0 };
+      const total = Object.values(data).reduce((a, b) => a + b, 0);
+      
+      let html = '';
+      for (const [key, value] of Object.entries(data)) {
+        const percent = total > 0 ? Math.round((value / total) * 100) : 0;
+        html += `
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <span style="font-weight: 600; text-transform: capitalize;">${key}</span>
+            <span style="background: #ffe4ec; padding: 6px 18px; border-radius: 60px;">
+              ${value} votos (${percent}%)
+            </span>
+          </div>
+        `;
+      }
+      document.getElementById('pollResultsContainer').innerHTML = html || '<p>sin votos aún</p>';
+    });
+    
+    // Foro con respuestas
+    onValue(ref(db, 'forumComments'), (snapshot) => {
+      renderForum(snapshot);
+    });
+  }
+
+  // ========== INICIALIZACIÓN ==========
+  async function init() {
+    console.log('✨ Iniciando aplicación para Marleys');
+    
+    // Verificar usuario guardado
+    const savedUser = localStorage.getItem('marleysUser');
+    if (savedUser) {
+      try {
+        const parsed = JSON.parse(savedUser);
+        if (parsed && parsed.id && parsed.alias) {
+          currentUser = { ...parsed, isLoggedIn: true };
+          
+          // Reactivar sesión en Firebase
+          const userRef = ref(db, `users/${currentUser.id}`);
+          await set(userRef, {
+            id: currentUser.id,
+            alias: currentUser.alias,
+            online: true,
+            lastActive: Date.now(),
+            sessionStart: Date.now()
+          });
+          
+          onDisconnect(userRef).update({ online: false, lastActive: Date.now() });
+        }
+      } catch (e) {
+        console.error('Error cargando usuario:', e);
+      }
+    }
+    
+    updateUI();
+    setupFirebaseListeners();
+    checkDailyVote();
+    
+    // Mostrar modal si no está logueada
+    if (!currentUser.isLoggedIn) {
+      setTimeout(() => {
+        document.getElementById('welcomeModal').style.display = 'flex';
+      }, 300);
+    }
+  }
+
+  // ========== EVENT LISTENERS ==========
+  document.addEventListener('DOMContentLoaded', init);
+  
+  // Login
+  document.getElementById('loginBtn').addEventListener('click', () => {
+    const alias = document.getElementById('aliasInput').value;
+    login(alias);
+  });
+  
+  document.getElementById('modalLoginBtn').addEventListener('click', () => {
+    const alias = document.getElementById('modalAliasInput').value;
+    login(alias);
+  });
+  
+  // Logout
+  document.getElementById('logoutBtn').addEventListener('click', logout);
+  
+  // Votar encuesta
+  document.querySelectorAll('#pollOptions .btn').forEach(btn => {
+    btn.addEventListener('click', () => votePoll(btn.value));
+  });
+  
+  // Publicar en muro
+  document.getElementById('postForumBtn').addEventListener('click', postForumMessage);
+  
+  // Enter en textarea de foro
+  document.getElementById('forumInput').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      postForumMessage();
+    }
+  });
+  
+  // Juego de reacción
+  document.getElementById('startReactionBtn').addEventListener('click', startReactionGame);
+  
+  // Cerrar modal al hacer click fuera
+  document.getElementById('welcomeModal').addEventListener('click', (e) => {
+    if (e.target === document.getElementById('welcomeModal')) {
+      document.getElementById('welcomeModal').style.display = 'none';
+    }
+  });
+
+</script>
+
 </body>
 </html>
