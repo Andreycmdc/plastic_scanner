@@ -3,13 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>🌸 MARLEYS DREAMLAND · tu universo secreto</title>
+  <title>🌸 MARLEYS SOCIAL · red emocional</title>
   
-  <!-- Fuentes e iconos mágicos -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  
-  <!-- Firebase Modular CORREGIDO -->
+  <!-- Firebase Modular -->
   <script type="importmap">
     {
       "imports": {
@@ -20,149 +16,137 @@
   </script>
   
   <style>
-    /* ========== ESTILOS DE CUENTO DE HADAS ========== */
-    @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
-    
+    /* ===== ESTILOS DE ENSUEÑO ===== */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-    }
-
-    body {
       font-family: 'Quicksand', 'Inter', sans-serif;
-      background: linear-gradient(145deg, #fff5f8 0%, #ffe4ec 100%);
+    }
+    
+    @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+    
+    body {
+      background: linear-gradient(145deg, #fff5f8, #ffe4ec);
       color: #4a3035;
-      line-height: 1.5;
+      padding: 16px;
       min-height: 100vh;
-      padding: 20px;
-      position: relative;
-      overflow-x: hidden;
     }
-
-    /* Fondo de estrellas y flores animadas */
-    body::before {
-      content: "🌸✨🌸✨🌸✨🌸✨🌸";
-      position: fixed;
-      top: -50px;
-      left: -50px;
-      width: calc(100% + 100px);
-      height: calc(100% + 100px);
-      opacity: 0.08;
-      font-size: 70px;
-      letter-spacing: 40px;
-      pointer-events: none;
-      z-index: 0;
-      animation: floatStars 45s linear infinite;
-      white-space: nowrap;
-    }
-
-    body::after {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at 20% 30%, rgba(255, 200, 210, 0.1) 0%, transparent 40%),
-                  radial-gradient(circle at 80% 70%, rgba(255, 180, 200, 0.1) 0%, transparent 40%);
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    @keyframes floatStars {
-      0% { transform: translateY(0) rotate(0deg); }
-      100% { transform: translateY(-200px) rotate(10deg); }
-    }
-
-    .app-wrapper {
-      max-width: 1100px;
+    
+    .app {
+      max-width: 1200px;
       margin: 0 auto;
       position: relative;
-      z-index: 100;
     }
-
-    /* ===== TARJETAS CON EFECTO CRISTAL ===== */
-    .dream-card {
-      background: rgba(255, 255, 255, 0.78);
-      backdrop-filter: blur(16px) saturate(180%);
-      -webkit-backdrop-filter: blur(16px) saturate(180%);
-      border: 2px solid rgba(255, 255, 255, 0.9);
-      border-radius: 48px;
-      box-shadow: 0 25px 45px -12px rgba(190, 80, 110, 0.18),
-                  inset 0 1px 4px rgba(255, 255, 255, 0.8);
-      padding: 32px;
-      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    
+    /* ===== TARJETAS DE CRISTAL ===== */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 3px solid rgba(255, 255, 255, 0.9);
+      border-radius: 40px;
+      box-shadow: 0 20px 30px -10px rgba(180, 90, 110, 0.15);
+      padding: 25px;
+      transition: all 0.3s;
     }
-
-    .dream-card:hover {
-      background: rgba(255, 255, 255, 0.9);
-      box-shadow: 0 35px 55px -15px rgba(200, 90, 120, 0.25);
-      transform: translateY(-6px);
-      border-color: white;
+    
+    .glass-card:hover {
+      background: rgba(255, 255, 255, 0.95);
+      transform: translateY(-5px);
+      box-shadow: 0 30px 40px -10px rgba(180, 90, 110, 0.25);
     }
-
+    
     /* ===== HEADER MÁGICO ===== */
-    .magical-header {
-      background: linear-gradient(125deg, #ffb3c6 0%, #ffc1cc 45%, #ffd9e2 100%);
-      border-radius: 100px 100px 100px 100px;
-      padding: 38px 36px;
-      margin-bottom: 32px;
+    .magic-header {
+      background: linear-gradient(135deg, #ffb6c1, #ff9aac);
+      border-radius: 60px;
+      padding: 30px;
+      margin-bottom: 25px;
       border: 6px solid white;
+      box-shadow: 0 20px 0 rgba(180, 80, 100, 0.2);
       position: relative;
       overflow: hidden;
-      box-shadow: 0 30px 35px -10px rgba(220, 110, 140, 0.28);
     }
-
-    .magical-header::before {
-      content: "🦋";
+    
+    .magic-header::after {
+      content: "🌸✨";
       position: absolute;
-      top: -20px;
-      left: -20px;
-      font-size: 140px;
-      opacity: 0.12;
-      transform: rotate(-15deg);
-    }
-
-    .magical-header::after {
-      content: "✨";
-      position: absolute;
-      bottom: -30px;
+      bottom: -20px;
       right: -10px;
-      font-size: 150px;
-      opacity: 0.12;
-      transform: rotate(20deg);
+      font-size: 90px;
+      opacity: 0.2;
+      transform: rotate(15deg);
     }
-
+    
     .glow-title {
-      font-size: 4rem;
+      font-size: 3.2rem;
       font-weight: 800;
-      background: linear-gradient(to right, #fff, #fff9fb);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 10px 20px rgba(180, 70, 100, 0.2);
+      color: white;
+      text-shadow: 0 8px 0 rgba(150, 60, 80, 0.2);
       letter-spacing: -1px;
-      line-height: 1.1;
-      margin-bottom: 10px;
     }
-
-    .floating-badge {
+    
+    /* ===== BOTONES ===== */
+    .btn {
+      border: none;
+      padding: 14px 28px;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: 0.2s;
       display: inline-flex;
       align-items: center;
-      gap: 12px;
-      background: rgba(255, 255, 255, 0.3);
-      backdrop-filter: blur(12px);
-      padding: 12px 28px;
-      border-radius: 100px;
-      border: 2px solid white;
-      font-weight: 600;
-      color: #6b3f48;
+      gap: 10px;
+      background: white;
+      border: 3px solid transparent;
     }
-
-    /* ===== AVATAR CON AURA ===== */
-    .aura-circle {
-      width: 80px;
-      height: 80px;
+    
+    .btn-primary {
+      background: #ff7a8f;
+      color: white;
+      box-shadow: 0 8px 0 #b34e62;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 0 #b34e62;
+    }
+    
+    .btn-success {
+      background: #7ac9a0;
+      color: white;
+      box-shadow: 0 8px 0 #4f8a6e;
+    }
+    
+    .btn-outline {
+      background: transparent;
+      border: 3px solid #ffb6c1;
+      color: #b34e62;
+    }
+    
+    /* ===== INPUTS ===== */
+    .input {
+      background: white;
+      border: 4px solid #ffe2ec;
+      border-radius: 60px;
+      padding: 16px 24px;
+      font-size: 1rem;
+      width: 100%;
+      transition: 0.2s;
+    }
+    
+    .input:focus {
+      border-color: #ff7a8f;
+      outline: none;
+      box-shadow: 0 0 0 8px rgba(255, 122, 143, 0.1);
+    }
+    
+    /* ===== AVATARES ===== */
+    .avatar {
+      width: 60px;
+      height: 60px;
       background: linear-gradient(145deg, #ffb8c9, #ff90a5);
       border-radius: 50%;
       display: flex;
@@ -170,373 +154,415 @@
       justify-content: center;
       color: white;
       font-weight: 700;
-      font-size: 2.2rem;
-      border: 6px solid white;
-      box-shadow: 0 15px 25px rgba(200, 90, 120, 0.3);
-      transition: 0.3s;
+      font-size: 1.8rem;
+      border: 5px solid white;
+      box-shadow: 0 8px 0 rgba(180, 80, 100, 0.15);
     }
-
-    /* ===== BOTONES DE SUEÑO ===== */
-    .btn-dream {
-      border: none;
-      padding: 16px 32px;
-      border-radius: 120px;
-      font-weight: 700;
-      font-size: 1rem;
-      font-family: 'Quicksand', sans-serif;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      cursor: pointer;
-      transition: 0.25s ease;
-      border: 3px solid transparent;
-      background: white;
-      color: #562e36;
-      box-shadow: 0 8px 0 rgba(0, 0, 0, 0.02);
-      letter-spacing: 0.3px;
+    
+    .avatar-sm {
+      width: 45px;
+      height: 45px;
+      font-size: 1.3rem;
+      border-width: 3px;
     }
-
-    .btn-dream-primary {
+    
+    /* ===== BURBUJAS DE CHAT ===== */
+    .chat-bubble-mine {
       background: #ff7a8f;
       color: white;
-      box-shadow: 0 10px 0 #b34e62;
+      padding: 16px 24px;
+      border-radius: 30px 30px 10px 30px;
+      max-width: 80%;
+      align-self: flex-end;
+      margin-left: auto;
+      border: 3px solid white;
     }
-
-    .btn-dream-primary:hover {
-      background: #ff5f78;
-      transform: translateY(-4px);
-      box-shadow: 0 16px 0 #b34e62;
-    }
-
-    .btn-dream-primary:active {
-      transform: translateY(6px);
-      box-shadow: 0 6px 0 #b34e62;
-    }
-
-    .btn-dream-outline {
-      background: transparent;
-      border: 4px solid #ffb6c1;
-      color: #b34e62;
-      box-shadow: none;
-    }
-
-    .btn-dream-outline:hover {
-      background: #ffe3e8;
-      border-color: #ff7a8f;
-    }
-
-    /* ===== INPUTS DE ENSOÑACIÓN ===== */
-    .input-magic {
-      background: rgba(255, 255, 255, 0.95);
-      border: 4px solid #ffe2ec;
-      border-radius: 80px;
-      padding: 18px 26px;
-      font-size: 1.05rem;
-      font-family: 'Quicksand', sans-serif;
-      transition: 0.25s;
-      width: 100%;
-    }
-
-    .input-magic:focus {
-      border-color: #ff7a8f;
-      outline: none;
-      box-shadow: 0 0 0 10px rgba(255, 122, 143, 0.08);
+    
+    .chat-bubble-other {
       background: white;
+      color: #4a3035;
+      padding: 16px 24px;
+      border-radius: 30px 30px 30px 10px;
+      max-width: 80%;
+      align-self: flex-start;
+      border: 3px solid #ffe2ec;
     }
-
-    /* ===== POSTS DE ENSUEÑO ===== */
-    .dream-post {
+    
+    /* ===== TARJETA DE USUARIO ===== */
+    .user-card {
       background: white;
-      border-radius: 48px;
-      padding: 32px;
-      margin-bottom: 30px;
-      border: 3px solid #ffe9ef;
-      box-shadow: 0 20px 0 #ffd9e2;
-    }
-
-    .post-avatar-mini {
-      width: 56px;
-      height: 56px;
-      background: linear-gradient(145deg, #ffc0cb, #ffa5b6);
-      border-radius: 50%;
+      border-radius: 30px;
+      padding: 20px;
       display: flex;
       align-items: center;
-      justify-content: center;
-      color: white;
-      font-weight: bold;
-      font-size: 1.5rem;
-      border: 4px solid white;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      border: 3px solid #ffe2ec;
+      transition: 0.2s;
     }
-
-    /* ===== BURBUJAS DE RESPUESTA ===== */
-    .reply-bubble {
-      background: #fff2f5;
-      border-radius: 32px 32px 32px 12px;
-      padding: 22px;
-      margin-left: 30px;
-      margin-top: 18px;
-      border-left: 12px solid #ffb0c0;
-      border-bottom: 3px solid white;
+    
+    .user-card:hover {
+      border-color: #ffb6c1;
+      transform: scale(1.02);
     }
-
-    /* ===== INSIGNIAS Y ESTADOS ===== */
-    .status-pill {
-      background: #b1e6d0;
-      padding: 10px 22px;
-      border-radius: 80px;
+    
+    /* ===== BADGES ===== */
+    .badge {
+      background: #ffe2ec;
+      padding: 6px 16px;
+      border-radius: 60px;
+      font-size: 0.8rem;
+      font-weight: 600;
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      font-weight: 600;
-      backdrop-filter: blur(8px);
+      gap: 6px;
     }
-
-    .hidden {
-      display: none !important;
+    
+    .badge-online {
+      background: #c7f0db;
+      color: #1f8b4c;
     }
-
+    
     /* ===== ANIMACIONES ===== */
-    @keyframes gentlePulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.03); }
-      100% { transform: scale(1); }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
     }
-
-    .heart-beat {
-      color: #ff4d6d;
-      animation: gentlePulse 1.8s infinite;
+    
+    .float-animation {
+      animation: float 3s infinite;
     }
-
-    /* ===== RESPONSIVE ===== */
-    @media (max-width: 700px) {
-      .glow-title { font-size: 2.8rem; }
-      .dream-card { padding: 24px; }
+    
+    /* ===== LAYOUT ===== */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 25px;
     }
-
-    /* ===== SCROLLBAR BONITO ===== */
-    ::-webkit-scrollbar {
-      width: 12px;
+    
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 25px;
     }
-    ::-webkit-scrollbar-track {
-      background: #ffe1e7;
-      border-radius: 20px;
+    
+    @media (max-width: 900px) {
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .glow-title { font-size: 2.5rem; }
     }
-    ::-webkit-scrollbar-thumb {
-      background: #ff9aac;
-      border-radius: 20px;
-      border: 3px solid white;
+    
+    /* ===== DIARIO PRIVADO ===== */
+    .diario-entry {
+      background: #fff9e6;
+      border-radius: 30px;
+      padding: 20px;
+      margin-bottom: 15px;
+      border-left: 12px solid #ffb6c1;
+    }
+    
+    /* ===== NOTIFICACIÓN ===== */
+    .notification {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: #ff7a8f;
+      color: white;
+      padding: 18px 32px;
+      border-radius: 80px;
+      font-weight: 600;
+      border: 5px solid white;
+      box-shadow: 0 12px 0 #b34e62;
+      z-index: 9999;
+      animation: slideIn 0.3s;
+    }
+    
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    
+    .hidden { display: none !important; }
+    
+    /* ===== SECCIÓN DE CHAT ===== */
+    .chat-container {
+      height: 400px;
+      overflow-y: auto;
+      padding: 20px;
+      background: #fff7f9;
+      border-radius: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    
+    /* ===== SECCIÓN DE JUEGOS ===== */
+    .game-card {
+      background: linear-gradient(145deg, #ffe9ef, #fff5f8);
+      border-radius: 30px;
+      padding: 25px;
+      text-align: center;
+      border: 4px solid white;
+    }
+    
+    .reaction-box {
+      background: #ffdbe4;
+      border-radius: 60px;
+      padding: 35px;
+      font-size: 2rem;
+      font-weight: 700;
+      border: 6px solid white;
+      cursor: pointer;
+      transition: 0.05s;
     }
   </style>
 </head>
 <body>
 
-<div class="app-wrapper">
+<div class="app">
 
-  <!-- ===== HEADER DE CUENTO ===== -->
-  <div class="magical-header">
-    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+  <!-- ===== HEADER MÁGICO ===== -->
+  <div class="magic-header">
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
       <div>
-        <h1 class="glow-title">
-          🌸 marleys dream
-        </h1>
-        <div class="floating-badge" style="margin-top: 12px;">
-          <i class="fas fa-heart heart-beat"></i>
-          <span id="globalStatusMessage">tu rincón especial</span>
+        <h1 class="glow-title">🌸 marleys social</h1>
+        <div style="display: flex; gap: 12px; margin-top: 12px;">
+          <span class="badge" style="background: rgba(255,255,255,0.3); backdrop-filter: blur(5px); color: white; border: 2px solid white;">
+            <i class="fas fa-heart"></i> red emocional
+          </span>
+          <span class="badge" id="globalOnlineBadge" style="background: white; color: #b34e62;">
+            <i class="fas fa-users"></i> <span id="onlineCount">0</span> conectados
+          </span>
         </div>
       </div>
-      <div style="display: flex; gap: 15px; align-items: center;">
-        <span class="status-pill" id="onlineUsersPill">
-          <i class="fas fa-users"></i> <span id="onlineCount">0</span> aquí
-        </span>
+      <div id="headerUserInfo" style="display: none;">
+        <!-- Se llena con JS -->
       </div>
     </div>
   </div>
 
-  <!-- ===== PANEL DE IDENTIDAD MÁGICO ===== -->
-  <div class="dream-card" style="margin-bottom: 35px;" id="sessionMagicPanel">
-    
-    <!-- VISTA: NO CONECTADA -->
-    <div id="viewNotLogged">
-      <div style="display: flex; align-items: center; gap: 25px; flex-wrap: wrap; margin-bottom: 20px;">
-        <span style="font-size: 4.2rem;">🦋</span>
-        <div>
-          <h2 style="font-size: 2.2rem; font-weight: 700; color: #b64b5b;">hola, marleys</h2>
-          <p style="color: #6a4e54; font-size: 1.1rem;">identifícate para entrar a tu universo</p>
+  <!-- ===== PANEL DE IDENTIDAD ===== -->
+  <div class="glass-card" style="margin-bottom: 25px;" id="sessionPanel">
+    <!-- NO LOGEADO -->
+    <div id="notLoggedView">
+      <div style="display: flex; align-items: center; gap: 25px; flex-wrap: wrap;">
+        <span style="font-size: 4.5rem;">🦋</span>
+        <div style="flex: 1;">
+          <h2 style="font-size: 2.2rem; color: #b54a5a; margin-bottom: 8px;">hola, marleys</h2>
+          <p style="color: #6a4e54; font-size: 1.1rem; margin-bottom: 20px;">crea tu identidad en esta red emocional</p>
+          <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+            <input type="text" id="registerAliasInput" class="input" placeholder="tu alias" style="flex: 2;" value="marleys_">
+            <button class="btn btn-primary" id="registerBtn" style="flex: 1;"><i class="fas fa-heart"></i> comenzar</button>
+          </div>
+          <p style="margin-top: 15px; font-size: 0.9rem; color: #8f6f77;"><i class="fas fa-shield-alt"></i> tu espacio seguro</p>
         </div>
-      </div>
-      <div style="display: flex; gap: 18px; flex-wrap: wrap;">
-        <input type="text" id="loginAliasInput" class="input-magic" placeholder="tu alias secreto" maxlength="20" style="flex: 2;" value="marleys_">
-        <button class="btn-dream btn-dream-primary" id="loginButtonMain" style="flex: 0.8;">
-          <i class="fas fa-arrow-right-to-bracket"></i> entrar
-        </button>
       </div>
     </div>
     
-    <!-- VISTA: CONECTADA -->
-    <div id="viewLogged" style="display: none;">
-      <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 25px;">
-        <div style="display: flex; align-items: center; gap: 25px;">
-          <div class="aura-circle" id="avatarPreview">🌸</div>
+    <!-- LOGEADO -->
+    <div id="loggedView" style="display: none;">
+      <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
+        <div style="display: flex; align-items: center; gap: 20px;">
+          <div class="avatar" id="userAvatar">🌸</div>
           <div>
-            <h2 style="font-size: 2rem; font-weight: 700; margin-bottom: 6px;" id="userNameDisplay">marleys</h2>
-            <span style="background: #c7f0db; padding: 10px 24px; border-radius: 60px; font-weight: 600;">
-              <i class="fas fa-check-circle" style="color: #1f8b4c;"></i> conectada ahora
-            </span>
+            <h2 style="font-size: 1.8rem; font-weight: 700;" id="userNameDisplay">marleys</h2>
+            <div style="display: flex; gap: 12px; margin-top: 8px;">
+              <span class="badge badge-online"><i class="fas fa-circle"></i> conectada</span>
+              <span class="badge" id="userMoodBadge"><i class="fas fa-smile"></i> feliz</span>
+            </div>
           </div>
         </div>
-        <button class="btn-dream btn-dream-outline" id="logoutButton">
-          <i class="fas fa-sign-out-alt"></i> salir
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ===== SECCIÓN DE ENCUESTA CORREGIDA Y FUNCIONAL ===== -->
-  <div class="dream-post" id="pollSection">
-    <div style="display: flex; align-items: center; gap: 18px; margin-bottom: 20px;">
-      <span style="font-size: 2.8rem;">💭</span>
-      <div>
-        <h2 style="font-weight: 800; font-size: 1.9rem; color: #a54553;">¿cuál es tu plan feliz?</h2>
-        <p style="font-size: 1.1rem;">voto único por día, elige con el corazón</p>
-      </div>
-    </div>
-    
-    <!-- OPCIONES DE VOTO -->
-    <div style="display: flex; gap: 18px; flex-wrap: wrap; margin: 25px 0 25px;" id="pollOptionsContainer">
-      <button class="btn-dream poll-option" data-option="cafe" style="background: #f9e2cf; border: 3px solid #ffe5d0;">
-        <i class="fas fa-mug-hot"></i> café
-      </button>
-      <button class="btn-dream poll-option" data-option="cine" style="background: #cfe1f0; border: 3px solid #d4e6f5;">
-        <i class="fas fa-film"></i> cine
-      </button>
-      <button class="btn-dream poll-option" data-option="atardecer" style="background: #ffe0b9; border: 3px solid #ffdbb5;">
-        <i class="fas fa-sun"></i> atardecer
-      </button>
-      <button class="btn-dream poll-option" data-option="libros" style="background: #ecd8e6; border: 3px solid #e9d0e2;">
-        <i class="fas fa-book"></i> librería
-      </button>
-    </div>
-    
-    <!-- MENSAJE DE VOTO DIARIO -->
-    <div id="dailyVoteMessage" class="hidden" style="background: #ffd9e2; border-radius: 60px; padding: 16px 24px; margin-bottom: 25px; font-weight: 600; display: flex; align-items: center; gap: 12px;">
-      <i class="fas fa-check-circle" style="color: #1f8b4c; font-size: 1.3rem;"></i>
-      ya votaste hoy · vuelve mañana 💕
-    </div>
-    
-    <!-- RESULTADOS EN VIVO -->
-    <div style="background: #fff7f9; border-radius: 48px; padding: 28px;">
-      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 24px;">
-        <i class="fas fa-chart-pie" style="font-size: 1.6rem; color: #a84c5c;"></i>
-        <h3 style="font-weight: 700; font-size: 1.4rem;">resultados del corazón</h3>
-      </div>
-      <div id="pollLiveResults">
-        <p style="color: #8b6b71;">cargando...</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- ===== MURO DE PENSAMIENTOS CON RESPUESTAS ===== -->
-  <div class="dream-post" style="background: linear-gradient(145deg, #fffbfc, white);">
-    <div style="display: flex; align-items: center; gap: 18px; margin-bottom: 15px;">
-      <span style="font-size: 2.6rem;">📓</span>
-      <h2 style="font-weight: 800; font-size: 1.9rem;">diario de marleys</h2>
-    </div>
-    
-    <!-- FORMULARIO DE NUEVO MENSAJE (SOLO LOGUEADA) -->
-    <div id="forumPostFormContainer" style="margin: 20px 0 35px;">
-      <textarea id="forumMessageInput" class="input-magic" placeholder="escribe un pensamiento, un recuerdo, algo que quieras decir..." rows="2" maxlength="500"></textarea>
-      <div style="display: flex; justify-content: flex-end; margin-top: 18px;">
-        <button class="btn-dream btn-dream-primary" id="publishForumBtn">
-          <i class="fas fa-feather"></i> publicar mensaje
-        </button>
-      </div>
-    </div>
-    
-    <!-- FEED DE MENSAJES Y RESPUESTAS -->
-    <div id="forumFeedContainer">
-      <div style="text-align: center; padding: 40px; color: #a48189;">
-        <i class="fas fa-spinner fa-spin" style="font-size: 2rem;"></i>
-        <p style="margin-top: 15px;">cargando mensajes bonitos...</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- ===== JUEGO DE REFLEJOS + REGALO SORPRESA ===== -->
-  <div class="dream-card" style="background: linear-gradient(125deg, #ffeef2, #fff5fa); margin-bottom: 30px;">
-    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
-      <div style="display: flex; align-items: center; gap: 20px;">
-        <span style="font-size: 3.2rem;">⚡</span>
-        <div>
-          <h3 style="font-weight: 800; font-size: 1.7rem;">prueba de reflejos</h3>
-          <p style="color: #875b63;">¿qué tan rápida eres?</p>
+        <div style="display: flex; gap: 12px;">
+          <button class="btn btn-outline" id="openDiarioBtn"><i class="fas fa-book"></i> diario</button>
+          <button class="btn" id="logoutBtn" style="background: #ffe2ec;">salir</button>
         </div>
       </div>
-      <span style="background: white; padding: 14px 28px; border-radius: 60px; font-weight: 700; box-shadow: 0 6px 0 #ffe2e9;">
-        🏆 mejor: <span id="bestReactionDisplay">-</span> ms
-      </span>
-    </div>
-    
-    <!-- ZONA DE REACCIÓN -->
-    <div id="reactionTouchZone" style="background: #ffdbe4; border-radius: 100px; padding: 55px 20px; margin: 30px 0; text-align: center; font-size: 2.5rem; font-weight: 700; color: #a14255; border: 8px solid white; cursor: pointer; transition: 0.05s; box-shadow: inset 0 0 30px rgba(255,200,210,0.5);">
-      💖 tócame
-    </div>
-    
-    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
-      <button class="btn-dream btn-dream-primary" id="startReactionGameBtn">
-        <i class="fas fa-play"></i> comenzar
-      </button>
-      <div id="reactionFeedbackMessage" style="font-size: 1.2rem; font-weight: 600; color: #a54553;"></div>
     </div>
   </div>
 
-  <!-- ===== NUEVA FUNCIÓN: ÁLBUM DE RECUERDOS ===== -->
-  <div class="dream-card" style="margin-bottom: 30px; background: #fff2f5;">
-    <div style="display: flex; align-items: center; gap: 18px;">
-      <span style="font-size: 2.8rem;">📸</span>
-      <h2 style="font-weight: 800; font-size: 1.8rem;">recuerdos instantáneos</h2>
-    </div>
-    <p style="margin: 15px 0 25px; font-size: 1.1rem;">cada mensaje bonito se guarda como recuerdo ✨</p>
+  <!-- ===== PANEL PRINCIPAL: SOLO VISIBLE LOGEADO ===== -->
+  <div id="mainAppContent" style="display: none;">
     
-    <div id="memoryWall" style="display: flex; flex-wrap: wrap; gap: 16px;">
-      <!-- se llenará con JavaScript -->
-      <div style="background: white; border-radius: 30px; padding: 18px; display: flex; align-items: center; gap: 15px; border: 3px solid #ffd1d9;">
-        <i class="fas fa-heart" style="color: #ff6b8b;"></i>
-        <span>los mensajes bonitos aparecen aquí</span>
+    <!-- ===== SECCIÓN: ESTADO EMOCIONAL ===== -->
+    <div class="glass-card" style="margin-bottom: 25px; background: linear-gradient(145deg, #ffe9ef, white);">
+      <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;">
+        <div style="display: flex; align-items: center; gap: 15px;">
+          <span style="font-size: 2.2rem;">💗</span>
+          <h3 style="font-weight: 700;">¿cómo te sientes hoy?</h3>
+        </div>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <button class="btn mood-btn" data-mood="feliz" style="background: #ffe87c;">😊 feliz</button>
+          <button class="btn mood-btn" data-mood="tranquila" style="background: #a5d8d3;">😌 tranquila</button>
+          <button class="btn mood-btn" data-mood="nostalgica" style="background: #e2cfeb;">🥺 nostálgica</button>
+          <button class="btn mood-btn" data-mood="energetica" style="background: #ffb3b3;">⚡ energética</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== GRID PRINCIPAL: 2 COLUMNAS ===== -->
+    <div class="grid-2">
+      
+      <!-- COLUMNA IZQUIERDA: USUARIOS + SOLICITUDES + CHAT -->
+      <div>
+        <!-- BUSCADOR DE USUARIOS -->
+        <div class="glass-card" style="margin-bottom: 25px;">
+          <h3 style="margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+            <i class="fas fa-user-friends"></i> conectar con alguien
+          </h3>
+          <input type="text" id="userSearchInput" class="input" placeholder="buscar por alias..." style="margin-bottom: 20px;">
+          <div id="usersListContainer" style="max-height: 300px; overflow-y: auto; padding-right: 8px;">
+            <!-- Se llena con JS -->
+            <p style="color: #a8767e; text-align: center;">cargando usuarios...</p>
+          </div>
+        </div>
+        
+        <!-- SOLICITUDES PENDIENTES -->
+        <div class="glass-card" style="margin-bottom: 25px;">
+          <h3 style="margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+            <i class="fas fa-bell"></i> solicitudes <span id="pendingRequestsBadge" style="background: #ff7a8f; color: white; padding: 4px 12px; border-radius: 60px; font-size: 0.8rem;">0</span>
+          </h3>
+          <div id="pendingRequestsContainer">
+            <p style="color: #a8767e; text-align: center;">no hay solicitudes</p>
+          </div>
+        </div>
+        
+        <!-- CHAT PRIVADO (SOLO CON USUARIOS CONECTADOS) -->
+        <div class="glass-card" id="chatSection">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+            <h3 style="display: flex; align-items: center; gap: 10px;">
+              <i class="fas fa-comments"></i> chat privado
+            </h3>
+            <select id="chatUserSelect" class="badge" style="padding: 10px 20px; border: 2px solid #ffe2ec;">
+              <option value="">selecciona un contacto</option>
+            </select>
+          </div>
+          
+          <!-- CONTENEDOR DE MENSAJES -->
+          <div id="chatMessagesContainer" class="chat-container" style="margin-bottom: 15px;">
+            <p style="color: #a8767e; text-align: center;">selecciona un contacto para chatear</p>
+          </div>
+          
+          <!-- FORMULARIO DE MENSAJE -->
+          <div style="display: flex; gap: 12px;" id="chatFormContainer">
+            <input type="text" id="chatMessageInput" class="input" placeholder="escribe tu mensaje..." style="flex: 1;">
+            <button class="btn btn-primary" id="sendMessageBtn"><i class="fas fa-paper-plane"></i></button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- COLUMNA DERECHA: FEED + DIARIO + JUEGOS -->
+      <div>
+        <!-- FEED SOCIAL PÚBLICO -->
+        <div class="glass-card" style="margin-bottom: 25px;">
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+            <span style="font-size: 2rem;">📰</span>
+            <h3>feed de pensamientos</h3>
+          </div>
+          
+          <!-- PUBLICAR EN FEED -->
+          <div style="margin-bottom: 25px;">
+            <textarea id="feedPostInput" class="input" placeholder="comparte algo con todos..." rows="2" style="border-radius: 30px; margin-bottom: 12px;"></textarea>
+            <div style="display: flex; justify-content: flex-end;">
+              <button class="btn btn-primary" id="publishFeedBtn"><i class="fas fa-feather"></i> publicar</button>
+            </div>
+          </div>
+          
+          <!-- LISTA DE POSTS -->
+          <div id="feedPostsContainer" style="max-height: 500px; overflow-y: auto; padding-right: 8px;">
+            <p style="color: #a8767e; text-align: center;">cargando pensamientos...</p>
+          </div>
+        </div>
+        
+        <!-- MODO SOLITARIO: DIARIO PRIVADO -->
+        <div class="glass-card" style="margin-bottom: 25px; background: #fff9f0;">
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+            <span style="font-size: 2rem;">🌙</span>
+            <h3>modo solitario · diario íntimo</h3>
+            <span class="badge" style="background: #ffb6c1; color: white;">solo tú</span>
+          </div>
+          
+          <div style="margin-bottom: 20px;">
+            <textarea id="diarioEntryInput" class="input" placeholder="escribe lo que sientes, solo tú lo verás..." rows="2" style="border-radius: 30px; margin-bottom: 12px;"></textarea>
+            <div style="display: flex; justify-content: flex-end;">
+              <button class="btn btn-success" id="saveDiarioBtn"><i class="fas fa-save"></i> guardar en mi diario</button>
+            </div>
+          </div>
+          
+          <div id="diarioEntriesContainer" style="max-height: 300px; overflow-y: auto;">
+            <!-- Se llena con JS -->
+          </div>
+        </div>
+        
+        <!-- JUEGOS Y RECOMPENSAS -->
+        <div class="glass-card">
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+            <span style="font-size: 2rem;">🎮</span>
+            <h3>juegos · recompensa diaria</h3>
+          </div>
+          
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+            <!-- JUEGO 1: Reflejos -->
+            <div class="game-card">
+              <span style="font-size: 2rem;">⚡</span>
+              <h4 style="margin: 12px 0;">prueba de reflejos</h4>
+              <div id="miniReactionBox" class="reaction-box" style="padding: 20px; font-size: 1.5rem; margin-bottom: 12px;">
+                💖 toca
+              </div>
+              <button class="btn btn-outline" id="miniReactionBtn" style="width: 100%;">jugar</button>
+              <p style="margin-top: 10px; font-size: 0.8rem;">mejor: <span id="miniBestTime">-</span> ms</p>
+            </div>
+            
+            <!-- JUEGO 2: Recompensa diaria -->
+            <div class="game-card">
+              <span style="font-size: 2rem;">🎁</span>
+              <h4 style="margin: 12px 0;">recompensa diaria</h4>
+              <div style="background: white; border-radius: 30px; padding: 15px; margin-bottom: 12px;">
+                <span style="font-size: 1.5rem; display: block;" id="dailyRewardEmoji">🌸</span>
+                <span id="dailyRewardMessage">¡vuelve mañana!</span>
+              </div>
+              <button class="btn btn-success" id="claimDailyRewardBtn" style="width: 100%;">reclamar</button>
+            </div>
+          </div>
+          
+          <!-- COLECCIONABLES -->
+          <div style="margin-top: 20px; padding-top: 20px; border-top: 3px dashed #ffced7;">
+            <p style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+              <i class="fas fa-star" style="color: #ffb800;"></i> tus coleccionables
+            </p>
+            <div id="collectiblesContainer" style="display: flex; gap: 12px; flex-wrap: wrap;">
+              <!-- Se llena con JS -->
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-
+  
   <!-- ===== FOOTER ===== -->
-  <div style="margin-top: 60px; text-align: center; border-top: 4px dashed #ffced7; padding-top: 35px;">
-    <p style="font-size: 1.3rem; font-weight: 600; color: #8a5a62;">
-      ✨ con infinito cariño, para marleys ✨
-    </p>
-    <p style="margin-top: 15px; color: #a8767e;" id="footerConnectionStatus">
-      conectada como: invitada
-    </p>
+  <div style="margin-top: 40px; text-align: center; color: #a8767e; border-top: 3px dashed #ffced7; padding-top: 25px;">
+    <p style="font-size: 1.1rem;">✨ red social emocional · creada para marleys con infinito cariño ✨</p>
+    <p style="margin-top: 8px;" id="globalFooterStatus">🌙 modo solitario disponible</p>
   </div>
+
 </div>
 
-<!-- ===== MODAL DE BIENVENIDA PRECIOSO ===== -->
-<div id="welcomeMagicModal" style="display: none; position: fixed; inset: 0; background: rgba(130, 70, 80, 0.2); backdrop-filter: blur(15px); align-items: center; justify-content: center; z-index: 9999;">
-  <div style="background: white; max-width: 500px; width: 90%; padding: 45px; border-radius: 90px; box-shadow: 0 45px 70px rgba(150, 60, 80, 0.3); text-align: center; border: 8px solid white;">
-    <span style="font-size: 5rem;">🦋</span>
-    <h2 style="margin: 20px 0 10px; color: #b54a5a; font-size: 2.6rem; font-weight: 800;">marleys</h2>
-    <p style="margin-bottom: 30px; font-size: 1.2rem;">bienvenida a tu espacio sagrado</p>
-    <input type="text" id="modalAliasField" class="input-magic" placeholder="tu alias especial" value="marleys_">
-    <button class="btn-dream btn-dream-primary" id="modalLoginBtn" style="width: 100%; margin-top: 25px; padding: 18px;">
-      <i class="fas fa-heart"></i> comenzar
-    </button>
+<!-- ===== MODAL DIARIO (VISTA COMPLETA) ===== -->
+<div id="diarioModal" style="display: none; position: fixed; inset: 0; background: rgba(100, 60, 70, 0.3); backdrop-filter: blur(12px); align-items: center; justify-content: center; z-index: 9998;">
+  <div style="background: white; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto; border-radius: 60px; padding: 35px; border: 8px solid white;">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 25px;">
+      <h2 style="font-size: 2rem; color: #b54a5a;">📔 mi diario</h2>
+      <button class="btn" id="closeDiarioModalBtn" style="background: #ffe2ec;">cerrar</button>
+    </div>
+    <div id="diarioFullEntries">
+      <!-- se llena con JS -->
+    </div>
   </div>
 </div>
 
 <script type="module">
-  // ========== FIREBASE CONFIGURACIÓN 100% FUNCIONAL ==========
+  // ========== FIREBASE ==========
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getDatabase, ref, set, onValue, runTransaction, push, update, get, onDisconnect, child } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+  import { getDatabase, ref, set, onValue, push, update, get, onDisconnect, query, orderByChild, equalTo, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-  // TU CONFIGURACIÓN ORIGINAL - FUNCIONA PERFECTO
   const firebaseConfig = {
     apiKey: "AIzaSyByB_5gP3sDwbCmVWbiB5CQXHzsKhcDvoo",
     authDomain: "chist-4aac2.firebaseapp.com",
@@ -547,645 +573,803 @@
     appId: "1:64011595640:web:8fa8b005b916cf2af7628d"
   };
 
-  // ========== INICIALIZAR FIREBASE ==========
   const app = initializeApp(firebaseConfig);
   const db = getDatabase(app);
   
-  console.log("🔥 FIREBASE CONECTADO EXITOSAMENTE");
+  console.log("🔥 FIREBASE LISTO");
 
   // ========== ESTADO GLOBAL ==========
   let currentUser = {
     id: null,
     alias: null,
-    isLoggedIn: false
+    isLoggedIn: false,
+    mood: 'feliz',
+    dailyRewardClaimed: false,
+    lastRewardDate: null,
+    collectibles: []
   };
 
-  // ========== FUNCIONES DE AYUDA ==========
-  function formatTimeAgo(timestamp) {
-    if (!timestamp) return 'ahora mismo';
-    const diff = Date.now() - timestamp;
-    if (diff < 60000) return 'ahora mismo';
-    if (diff < 3600000) return `${Math.floor(diff / 60000)} min`;
-    if (diff < 86400000) return `${Math.floor(diff / 3600000)} h`;
-    return new Date(timestamp).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
-  }
-
-  function showDreamNotification(message, type = 'happy') {
+  // ========== UTILIDADES ==========
+  function showNotification(msg, type = 'happy') {
     const notif = document.createElement('div');
-    notif.innerHTML = `<i class="fas fa-heart" style="margin-right: 10px;"></i> ${message}`;
-    notif.style.position = 'fixed';
-    notif.style.bottom = '30px';
-    notif.style.right = '30px';
-    notif.style.background = type === 'happy' ? '#ff7a8f' : '#b0c4de';
-    notif.style.color = 'white';
-    notif.style.padding = '18px 32px';
-    notif.style.borderRadius = '100px';
-    notif.style.fontWeight = '700';
-    notif.style.fontSize = '1.1rem';
-    notif.style.boxShadow = '0 20px 35px rgba(255, 100, 130, 0.4)';
-    notif.style.zIndex = '999999';
-    notif.style.backdropFilter = 'blur(20px)';
-    notif.style.border = '4px solid white';
-    notif.style.animation = 'gentlePulse 0.4s';
-    notif.style.letterSpacing = '0.5px';
+    notif.className = 'notification';
+    notif.innerHTML = `<i class="fas fa-heart"></i> ${msg}`;
+    if (type === 'success') notif.style.background = '#7ac9a0';
+    if (type === 'reward') notif.style.background = '#ffb800';
     document.body.appendChild(notif);
     setTimeout(() => notif.remove(), 3000);
   }
 
-  // ========== SISTEMA DE LOGIN PERFECTO ==========
-  async function loginUser(alias) {
+  function formatTime(timestamp) {
+    if (!timestamp) return '';
+    const date = new Date(timestamp);
+    return `${date.getHours().toString().padStart(2,'0')}:${date.getMinutes().toString().padStart(2,'0')}`;
+  }
+
+  // ========== AUTENTICACIÓN ==========
+  async function register(alias) {
     if (!alias || alias.trim().length < 2) {
-      showDreamNotification('elige un alias bonito', 'error');
-      return false;
+      showNotification('elige un alias bonito');
+      return;
     }
     
-    const cleanAlias = alias.trim().substring(0, 20);
-    const userId = 'user_' + Date.now() + '_' + Math.random().toString(36).substring(2, 10);
+    const cleanAlias = alias.trim();
+    const userId = 'user_' + Date.now() + '_' + Math.random().toString(36).substring(2);
     
     currentUser = {
       id: userId,
       alias: cleanAlias,
-      isLoggedIn: true
+      isLoggedIn: true,
+      mood: 'feliz',
+      dailyRewardClaimed: false,
+      collectibles: []
     };
     
-    // Guardar en localStorage
-    localStorage.setItem('marleysDreamUser', JSON.stringify(currentUser));
+    localStorage.setItem('marleysSocialUser', JSON.stringify({
+      id: userId,
+      alias: cleanAlias
+    }));
     
     try {
-      // Guardar en Firebase con ESTRUCTURA CORRECTA
-      const userRef = ref(db, `users/${userId}`);
-      await set(userRef, {
+      await set(ref(db, `users/${userId}`), {
         id: userId,
         alias: cleanAlias,
         online: true,
-        lastActive: Date.now(),
-        sessionStart: Date.now()
+        mood: 'feliz',
+        registeredAt: Date.now(),
+        lastActive: Date.now()
       });
       
-      // Configurar desconexión automática
-      onDisconnect(userRef).update({
+      onDisconnect(ref(db, `users/${userId}`)).update({
         online: false,
         lastActive: Date.now()
       });
       
-      console.log("✅ Usuario guardado en Firebase:", userId);
+      // Inicializar diario privado
+      await set(ref(db, `diario/${userId}`), {});
+      
+      // Inicializar coleccionables
+      await set(ref(db, `collectibles/${userId}`), {
+        flowers: 1,
+        stars: 0,
+        hearts: 0
+      });
+      
+      currentUser.collectibles = { flowers: 1, stars: 0, hearts: 0 };
+      
       updateUI();
-      showDreamNotification(`✨ bienvenida, ${cleanAlias}`);
+      showNotification(`✨ bienvenida, ${cleanAlias}`);
       
-      // Verificar voto diario después de login
-      setTimeout(() => checkDailyVoteStatus(), 500);
-      
-      return true;
     } catch (error) {
-      console.error("ERROR en Firebase:", error);
-      showDreamNotification('error de conexión', 'error');
-      return false;
+      console.error(error);
+      showNotification('error de conexión');
     }
   }
 
-  async function logoutUser() {
+  async function logout() {
     if (currentUser.isLoggedIn) {
-      try {
-        const userRef = ref(db, `users/${currentUser.id}`);
-        await update(userRef, { online: false, lastActive: Date.now() });
-      } catch (e) {
-        console.error("Error en logout:", e);
-      }
+      await update(ref(db, `users/${currentUser.id}`), { online: false, lastActive: Date.now() });
     }
-    localStorage.removeItem('marleysDreamUser');
+    localStorage.removeItem('marleysSocialUser');
     currentUser = { id: null, alias: null, isLoggedIn: false };
     updateUI();
-    showDreamNotification('🌙 sesión cerrada');
+    showNotification('🌙 sesión cerrada');
   }
 
-  // ========== ACTUALIZAR INTERFAZ ==========
+  // ========== UI ==========
   function updateUI() {
-    const viewNotLogged = document.getElementById('viewNotLogged');
-    const viewLogged = document.getElementById('viewLogged');
-    const forumForm = document.getElementById('forumPostFormContainer');
-    const footerStatus = document.getElementById('footerConnectionStatus');
+    const notLogged = document.getElementById('notLoggedView');
+    const logged = document.getElementById('loggedView');
+    const mainContent = document.getElementById('mainAppContent');
+    const footer = document.getElementById('globalFooterStatus');
     
     if (currentUser.isLoggedIn) {
-      viewNotLogged.style.display = 'none';
-      viewLogged.style.display = 'block';
-      if (forumForm) forumForm.style.display = 'block';
-      
+      notLogged.style.display = 'none';
+      logged.style.display = 'block';
+      mainContent.style.display = 'block';
       document.getElementById('userNameDisplay').innerText = currentUser.alias;
-      document.getElementById('avatarPreview').innerHTML = currentUser.alias.substring(0, 2).toUpperCase() || '🌸';
-      footerStatus.innerHTML = `conectada como: <strong>${currentUser.alias}</strong>`;
+      document.getElementById('userAvatar').innerHTML = currentUser.alias.substring(0,2).toUpperCase();
+      document.getElementById('userMoodBadge').innerHTML = `<i class="fas fa-smile"></i> ${currentUser.mood}`;
+      footer.innerHTML = `🌸 conectada como ${currentUser.alias} · modo solitario disponible`;
       
-      // Cerrar modal si está abierto
-      document.getElementById('welcomeMagicModal').style.display = 'none';
+      // Cargar datos del usuario
+      loadUsers();
+      loadPendingRequests();
+      loadFeedPosts();
+      loadDiarioEntries();
+      loadCollectibles();
+      checkDailyReward();
+      
     } else {
-      viewNotLogged.style.display = 'block';
-      viewLogged.style.display = 'none';
-      if (forumForm) forumForm.style.display = 'none';
-      footerStatus.innerHTML = 'conectada como: invitada';
+      notLogged.style.display = 'block';
+      logged.style.display = 'none';
+      mainContent.style.display = 'none';
+      footer.innerHTML = '🌙 modo solitario disponible';
     }
   }
 
-  // ========== VERIFICAR VOTO DIARIO (CORREGIDO) ==========
-  async function checkDailyVoteStatus() {
+  // ========== 1. MÓDULO DE USUARIOS ==========
+  function loadUsers() {
+    onValue(ref(db, 'users'), (snapshot) => {
+      if (!snapshot.exists()) return;
+      
+      const users = snapshot.val();
+      const onlineCount = Object.values(users).filter(u => u.online).length;
+      document.getElementById('onlineCount').innerText = onlineCount;
+      
+      // Lista de usuarios para conectar
+      const searchTerm = document.getElementById('userSearchInput')?.value?.toLowerCase() || '';
+      let html = '';
+      
+      Object.entries(users).forEach(([id, user]) => {
+        if (id === currentUser.id) return; // no mostrarse a sí mismo
+        
+        const alias = user.alias || 'usuario';
+        if (searchTerm && !alias.toLowerCase().includes(searchTerm)) return;
+        
+        html += `
+          <div class="user-card">
+            <div style="display: flex; align-items: center; gap: 15px;">
+              <div class="avatar avatar-sm" style="background: linear-gradient(145deg, #ffb8c9, #ff90a5);">
+                ${alias.substring(0,2).toUpperCase()}
+              </div>
+              <div>
+                <div style="font-weight: 700;">${alias}</div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-top: 5px;">
+                  <span class="badge ${user.online ? 'badge-online' : ''}" style="${!user.online ? 'background: #e2e2e2;' : ''}">
+                    <i class="fas fa-circle" style="font-size: 0.6rem;"></i> ${user.online ? 'conectada' : 'desconectada'}
+                  </span>
+                  <span class="badge"><i class="fas fa-smile"></i> ${user.mood || 'feliz'}</span>
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-outline send-request-btn" data-userid="${id}" data-alias="${alias}" style="padding: 10px 20px;">
+              <i class="fas fa-user-plus"></i>
+            </button>
+          </div>
+        `;
+      });
+      
+      document.getElementById('usersListContainer').innerHTML = html || '<p style="color: #a8767e; text-align: center;">no hay usuarios</p>';
+      
+      // Event listeners para enviar solicitudes
+      document.querySelectorAll('.send-request-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          sendFriendRequest(btn.dataset.userid, btn.dataset.alias);
+        });
+      });
+    });
+  }
+
+  // ========== 2. SISTEMA DE CONEXIONES ==========
+  async function sendFriendRequest(toUserId, toAlias) {
     if (!currentUser.isLoggedIn) return;
     
-    try {
-      const voteRef = ref(db, `pollMarleysVotes/${currentUser.id}`);
-      const snapshot = await get(voteRef);
-      const today = new Date().toDateString();
-      
-      if (snapshot.exists()) {
-        const voteData = snapshot.val();
-        const voteDate = new Date(voteData.timestamp).toDateString();
-        
-        if (voteDate === today) {
-          // YA VOTÓ HOY
-          document.getElementById('dailyVoteMessage').classList.remove('hidden');
-          document.querySelectorAll('.poll-option').forEach(btn => {
-            btn.disabled = true;
-            btn.style.opacity = '0.6';
-            btn.style.cursor = 'not-allowed';
-          });
-        } else {
-          // NO VOTÓ HOY
-          document.getElementById('dailyVoteMessage').classList.add('hidden');
-          document.querySelectorAll('.poll-option').forEach(btn => {
-            btn.disabled = false;
-            btn.style.opacity = '1';
-            btn.style.cursor = 'pointer';
-          });
-        }
-      } else {
-        // NUNCA HA VOTADO
-        document.getElementById('dailyVoteMessage').classList.add('hidden');
-        document.querySelectorAll('.poll-option').forEach(btn => {
-          btn.disabled = false;
-          btn.style.opacity = '1';
-          btn.style.cursor = 'pointer';
-        });
-      }
-    } catch (error) {
-      console.error("Error verificando voto diario:", error);
-    }
-  }
-
-  // ========== VOTAR ENCUESTA (CORREGIDO) ==========
-  async function votePoll(option) {
-    if (!currentUser.isLoggedIn) {
-      showDreamNotification('identifícate para votar 💕');
+    const requestId = `${currentUser.id}_${toUserId}`;
+    const requestRef = ref(db, `friendRequests/${requestId}`);
+    
+    // Verificar si ya existe
+    const snapshot = await get(requestRef);
+    if (snapshot.exists()) {
+      showNotification('solicitud ya enviada');
       return;
     }
     
-    try {
-      const today = new Date().toDateString();
-      const voteRef = ref(db, `pollMarleysVotes/${currentUser.id}`);
-      
-      // Verificar si ya votó hoy
-      const snapshot = await get(voteRef);
-      if (snapshot.exists()) {
-        const voteDate = new Date(snapshot.val().timestamp).toDateString();
-        if (voteDate === today) {
-          showDreamNotification('ya votaste hoy, vuelve mañana 🌸');
-          return;
-        }
-      }
-      
-      // TRANSACCIÓN ATÓMICA PARA CONTEO
-      const pollRef = ref(db, `pollMarleys/${option}`);
-      await runTransaction(pollRef, (currentValue) => {
-        return (currentValue || 0) + 1;
-      });
-      
-      // REGISTRAR VOTO DEL USUARIO
-      await set(voteRef, {
-        option: option,
-        timestamp: Date.now(),
-        alias: currentUser.alias,
-        userId: currentUser.id
-      });
-      
-      showDreamNotification(`votaste: ${option} 💖`);
-      checkDailyVoteStatus(); // Actualizar estado
-      
-    } catch (error) {
-      console.error("ERROR AL VOTAR:", error);
-      showDreamNotification('error al votar, intenta de nuevo');
-    }
+    await set(requestRef, {
+      from: currentUser.id,
+      fromAlias: currentUser.alias,
+      to: toUserId,
+      toAlias: toAlias,
+      status: 'pending',
+      timestamp: Date.now()
+    });
+    
+    showNotification(`solicitud enviada a ${toAlias}`);
   }
 
-  // ========== PUBLICAR EN MURO (CORREGIDO) ==========
-  async function publishForumMessage() {
-    if (!currentUser.isLoggedIn) {
-      showDreamNotification('identifícate para publicar');
-      return;
-    }
+  async function loadPendingRequests() {
+    if (!currentUser.isLoggedIn) return;
     
-    const input = document.getElementById('forumMessageInput');
-    const text = input.value.trim();
-    
-    if (!text) {
-      showDreamNotification('escribe algo bonito');
-      return;
-    }
-    
-    if (text.length > 500) {
-      showDreamNotification('mensaje muy largo (máx 500)');
-      return;
-    }
-    
-    try {
-      const newPostRef = push(ref(db, 'forumComments'));
-      await set(newPostRef, {
-        alias: currentUser.alias,
-        text: text,
-        timestamp: Date.now(),
-        userId: currentUser.id,
-        replies: {}  // IMPORTANTE: inicializar replies como objeto vacío
-      });
-      
-      input.value = '';
-      showDreamNotification('mensaje publicado ✨');
-      
-      // Actualizar muro de recuerdos
-      updateMemoryWall();
-      
-    } catch (error) {
-      console.error("ERROR PUBLICANDO:", error);
-      showDreamNotification('error al publicar');
-    }
-  }
-
-  // ========== RESPONDER A COMENTARIO (CORREGIDO) ==========
-  async function replyToComment(commentId, replyText) {
-    if (!currentUser.isLoggedIn) {
-      showDreamNotification('identifícate para responder');
-      return false;
-    }
-    
-    if (!replyText || replyText.trim().length === 0) return false;
-    
-    try {
-      const replyId = 'reply_' + Date.now() + '_' + Math.random().toString(36).substring(2, 8);
-      const replyRef = ref(db, `forumComments/${commentId}/replies/${replyId}`);
-      
-      await set(replyRef, {
-        alias: currentUser.alias,
-        text: replyText.trim(),
-        timestamp: Date.now(),
-        userId: currentUser.id
-      });
-      
-      showDreamNotification('respondiste 💬');
-      return true;
-      
-    } catch (error) {
-      console.error("ERROR AL RESPONDER:", error);
-      showDreamNotification('error al responder');
-      return false;
-    }
-  }
-
-  // ========== RENDERIZAR FORO (CORREGIDO) ==========
-  function renderForumFeed(snapshot) {
-    const feedContainer = document.getElementById('forumFeedContainer');
+    const requestsRef = ref(db, 'friendRequests');
+    const snapshot = await get(requestsRef);
     
     if (!snapshot.exists()) {
-      feedContainer.innerHTML = `
-        <div style="text-align: center; padding: 45px; background: #fff7f9; border-radius: 60px;">
-          <span style="font-size: 3rem;">🌸</span>
-          <p style="margin-top: 15px; color: #8d6a72; font-size: 1.1rem;">aún no hay mensajes, escribe algo hermoso</p>
-        </div>
-      `;
+      document.getElementById('pendingRequestsContainer').innerHTML = '<p style="color: #a8767e; text-align: center;">no hay solicitudes</p>';
+      document.getElementById('pendingRequestsBadge').innerText = '0';
       return;
     }
     
-    const comments = snapshot.val();
-    const sortedComments = Object.entries(comments)
-      .sort((a, b) => b[1].timestamp - a[1].timestamp)
-      .slice(0, 15);
+    const requests = snapshot.val();
+    const pendingToMe = Object.entries(requests)
+      .filter(([id, req]) => req.to === currentUser.id && req.status === 'pending')
+      .map(([id, req]) => req);
     
-    if (sortedComments.length === 0) {
-      feedContainer.innerHTML = '<p style="text-align: center; padding: 30px;">no hay mensajes</p>';
+    document.getElementById('pendingRequestsBadge').innerText = pendingToMe.length;
+    
+    if (pendingToMe.length === 0) {
+      document.getElementById('pendingRequestsContainer').innerHTML = '<p style="color: #a8767e; text-align: center;">no hay solicitudes</p>';
       return;
     }
     
     let html = '';
-    
-    for (const [commentId, comment] of sortedComments) {
-      const replies = comment.replies ? Object.values(comment.replies).sort((a, b) => a.timestamp - b.timestamp) : [];
-      
-      let repliesHtml = '';
-      replies.forEach(reply => {
-        repliesHtml += `
-          <div class="reply-bubble">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-              <span style="font-weight: 800; color: #ac4e5e;">${reply.alias || 'anónimo'}</span>
-              <span style="font-size: 0.75rem; background: white; padding: 4px 14px; border-radius: 40px;">${formatTimeAgo(reply.timestamp)}</span>
-            </div>
-            <p style="font-size: 1rem; line-height: 1.5;">${reply.text}</p>
-          </div>
-        `;
-      });
-      
+    pendingToMe.forEach(req => {
       html += `
-        <div style="background: #fffbfd; border-radius: 50px; padding: 28px; margin-bottom: 30px; border: 3px solid white; box-shadow: 0 10px 0 #ffd9e2;">
-          <div style="display: flex; align-items: center; gap: 18px; margin-bottom: 18px;">
-            <div class="post-avatar-mini">${comment.alias ? comment.alias.substring(0, 2).toUpperCase() : '👤'}</div>
+        <div class="user-card" style="margin-bottom: 12px;">
+          <div style="display: flex; align-items: center; gap: 15px;">
+            <div class="avatar avatar-sm">${req.fromAlias.substring(0,2).toUpperCase()}</div>
             <div>
-              <span style="font-weight: 800; font-size: 1.2rem;">${comment.alias || 'alguien'}</span>
-              <span style="display: block; font-size: 0.75rem; color: #9a7e84; margin-top: 4px;">${formatTimeAgo(comment.timestamp)}</span>
+              <div style="font-weight: 700;">${req.fromAlias}</div>
+              <div style="font-size: 0.8rem;">quiere conectarse</div>
             </div>
           </div>
-          
-          <p style="font-size: 1.15rem; margin: 8px 0 20px 15px; line-height: 1.5;">${comment.text}</p>
-          
-          <div style="display: flex; gap: 25px; align-items: center; margin-bottom: 10px;">
-            <button class="reply-trigger" data-commentid="${commentId}" style="background: none; border: none; color: #b34e62; font-weight: 700; display: flex; gap: 8px; cursor: pointer; padding: 8px 16px; border-radius: 40px; transition: 0.2s;">
-              <i class="fas fa-reply"></i> responder
-            </button>
-            <span style="background: #ffe9ef; padding: 6px 20px; border-radius: 60px; font-size: 0.85rem;">
-              ${replies.length} ${replies.length === 1 ? 'respuesta' : 'respuestas'}
-            </span>
-          </div>
-          
-          <!-- FORMULARIO DE RESPUESTA (OCULTO) -->
-          <div id="replyForm-${commentId}" style="display: none; margin: 20px 0 25px;">
-            <textarea id="replyInput-${commentId}" class="input-magic" placeholder="escribe tu respuesta..." rows="1" style="border-radius: 60px; padding: 14px 22px;"></textarea>
-            <div style="display: flex; gap: 12px; margin-top: 15px;">
-              <button class="btn-dream btn-dream-primary send-reply-btn" data-commentid="${commentId}" style="padding: 12px 28px;">enviar</button>
-              <button class="btn-dream cancel-reply-btn" data-commentid="${commentId}" style="background: #edd0d5; color: #562e36;">cancelar</button>
-            </div>
-          </div>
-          
-          <!-- RESPUESTAS EXISTENTES -->
-          <div style="margin-top: 15px;">
-            ${repliesHtml}
+          <div style="display: flex; gap: 8px;">
+            <button class="btn btn-success accept-request-btn" data-from="${req.from}" style="padding: 8px 16px;">aceptar</button>
+            <button class="btn reject-request-btn" data-from="${req.from}" style="background: #ffe2ec; padding: 8px 16px;">rechazar</button>
           </div>
         </div>
       `;
-    }
+    });
     
-    feedContainer.innerHTML = html;
+    document.getElementById('pendingRequestsContainer').innerHTML = html;
     
-    // Adjuntar event listeners a los botones de respuesta
-    document.querySelectorAll('.reply-trigger').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const commentId = e.currentTarget.dataset.commentid;
-        const form = document.getElementById(`replyForm-${commentId}`);
-        if (form) {
-          form.style.display = 'block';
-        }
+    // Event listeners
+    document.querySelectorAll('.accept-request-btn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const fromUserId = btn.dataset.from;
+        await acceptFriendRequest(fromUserId);
       });
     });
     
-    document.querySelectorAll('.cancel-reply-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const commentId = e.currentTarget.dataset.commentid;
-        const form = document.getElementById(`replyForm-${commentId}`);
-        if (form) {
-          form.style.display = 'none';
-          document.getElementById(`replyInput-${commentId}`).value = '';
-        }
-      });
-    });
-    
-    document.querySelectorAll('.send-reply-btn').forEach(btn => {
-      btn.addEventListener('click', async (e) => {
-        const commentId = e.currentTarget.dataset.commentid;
-        const input = document.getElementById(`replyInput-${commentId}`);
-        const success = await replyToComment(commentId, input.value.trim());
-        if (success) {
-          input.value = '';
-          document.getElementById(`replyForm-${commentId}`).style.display = 'none';
-        }
+    document.querySelectorAll('.reject-request-btn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const fromUserId = btn.dataset.from;
+        await rejectFriendRequest(fromUserId);
       });
     });
   }
 
-  // ========== NUEVA FUNCIÓN: MURO DE RECUERDOS ==========
-  async function updateMemoryWall() {
-    try {
-      const snapshot = await get(ref(db, 'forumComments'));
-      if (!snapshot.exists()) return;
+  async function acceptFriendRequest(fromUserId) {
+    const requestId = `${fromUserId}_${currentUser.id}`;
+    
+    // Crear conexión bidireccional
+    await set(ref(db, `connections/${currentUser.id}/${fromUserId}`), {
+      userId: fromUserId,
+      connectedAt: Date.now()
+    });
+    
+    await set(ref(db, `connections/${fromUserId}/${currentUser.id}`), {
+      userId: currentUser.id,
+      connectedAt: Date.now()
+    });
+    
+    // Eliminar solicitud
+    await remove(ref(db, `friendRequests/${requestId}`));
+    
+    showNotification('solicitud aceptada 💕');
+    loadPendingRequests();
+    loadChatContacts();
+  }
+
+  async function rejectFriendRequest(fromUserId) {
+    const requestId = `${fromUserId}_${currentUser.id}`;
+    await remove(ref(db, `friendRequests/${requestId}`));
+    showNotification('solicitud rechazada');
+    loadPendingRequests();
+  }
+
+  async function loadConnections() {
+    if (!currentUser.isLoggedIn) return [];
+    
+    const snapshot = await get(ref(db, `connections/${currentUser.id}`));
+    if (!snapshot.exists()) return [];
+    
+    return Object.keys(snapshot.val());
+  }
+
+  // ========== 3. CHAT PRIVADO ==========
+  async function loadChatContacts() {
+    if (!currentUser.isLoggedIn) return;
+    
+    const connections = await loadConnections();
+    const select = document.getElementById('chatUserSelect');
+    
+    let options = '<option value="">selecciona un contacto</option>';
+    
+    for (const userId of connections) {
+      const userSnapshot = await get(ref(db, `users/${userId}`));
+      if (userSnapshot.exists()) {
+        const user = userSnapshot.val();
+        options += `<option value="${userId}">💬 ${user.alias}</option>`;
+      }
+    }
+    
+    select.innerHTML = options;
+  }
+
+  function loadChatMessages(otherUserId) {
+    if (!otherUserId) {
+      document.getElementById('chatMessagesContainer').innerHTML = '<p style="color: #a8767e; text-align: center;">selecciona un contacto</p>';
+      return;
+    }
+    
+    const chatId = [currentUser.id, otherUserId].sort().join('_');
+    const messagesRef = ref(db, `chats/${chatId}`);
+    
+    onValue(messagesRef, (snapshot) => {
+      const messages = snapshot.val();
+      const container = document.getElementById('chatMessagesContainer');
       
-      const comments = snapshot.val();
-      const recent = Object.entries(comments)
-        .sort((a, b) => b[1].timestamp - a[1].timestamp)
-        .slice(0, 6);
+      if (!messages) {
+        container.innerHTML = '<p style="color: #a8767e; text-align: center;">no hay mensajes aún</p>';
+        return;
+      }
       
-      let memoryHtml = '';
-      recent.forEach(([id, comment]) => {
-        memoryHtml += `
-          <div style="background: white; border-radius: 40px; padding: 20px 25px; display: flex; align-items: center; gap: 18px; border: 4px solid #ffd9e2; box-shadow: 0 8px 0 #ffc0cb; flex: 1 1 200px;">
-            <i class="fas fa-heart" style="color: #ff6b8b; font-size: 1.6rem;"></i>
-            <div style="overflow: hidden;">
-              <span style="font-weight: 700; display: block; margin-bottom: 5px;">${comment.alias || 'alguien'}</span>
-              <span style="font-size: 0.85rem; color: #8d6a72;">${comment.text.substring(0, 30)}${comment.text.length > 30 ? '...' : ''}</span>
+      const messagesArray = Object.entries(messages)
+        .sort((a,b) => a[1].timestamp - b[1].timestamp)
+        .map(([id, msg]) => msg);
+      
+      let html = '';
+      messagesArray.forEach(msg => {
+        const isMine = msg.from === currentUser.id;
+        html += `
+          <div style="display: flex; flex-direction: column; ${isMine ? 'align-items: flex-end;' : 'align-items: flex-start;'}">
+            <div class="${isMine ? 'chat-bubble-mine' : 'chat-bubble-other'}">
+              <div style="font-size: 0.75rem; margin-bottom: 5px; ${isMine ? 'color: rgba(255,255,255,0.9);' : 'color: #a8767e;'}">
+                ${isMine ? 'tú' : msg.fromAlias} · ${formatTime(msg.timestamp)}
+              </div>
+              <div style="font-size: 1rem;">${msg.text}</div>
             </div>
           </div>
         `;
       });
       
-      document.getElementById('memoryWall').innerHTML = memoryHtml || '<div style="background: white; border-radius: 30px; padding: 18px;">✨ los recuerdos aparecerán aquí</div>';
+      container.innerHTML = html;
+      container.scrollTop = container.scrollHeight;
+    });
+  }
+
+  async function sendMessage() {
+    if (!currentUser.isLoggedIn) return;
+    
+    const otherUserId = document.getElementById('chatUserSelect').value;
+    if (!otherUserId) {
+      showNotification('selecciona un contacto');
+      return;
+    }
+    
+    const text = document.getElementById('chatMessageInput').value.trim();
+    if (!text) return;
+    
+    const chatId = [currentUser.id, otherUserId].sort().join('_');
+    const messageRef = push(ref(db, `chats/${chatId}`));
+    
+    await set(messageRef, {
+      from: currentUser.id,
+      fromAlias: currentUser.alias,
+      to: otherUserId,
+      text: text,
+      timestamp: Date.now()
+    });
+    
+    document.getElementById('chatMessageInput').value = '';
+  }
+
+  // ========== 4. FEED SOCIAL ==========
+  async function publishFeedPost() {
+    if (!currentUser.isLoggedIn) return;
+    
+    const text = document.getElementById('feedPostInput').value.trim();
+    if (!text) return;
+    
+    const postRef = push(ref(db, 'feed'));
+    await set(postRef, {
+      alias: currentUser.alias,
+      userId: currentUser.id,
+      text: text,
+      timestamp: Date.now(),
+      likes: 0,
+      likedBy: {}
+    });
+    
+    document.getElementById('feedPostInput').value = '';
+    showNotification('pensamiento publicado ✨');
+  }
+
+  function loadFeedPosts() {
+    const feedRef = ref(db, 'feed');
+    
+    onValue(feedRef, (snapshot) => {
+      if (!snapshot.exists()) {
+        document.getElementById('feedPostsContainer').innerHTML = '<p style="color: #a8767e; text-align: center;">aún no hay pensamientos</p>';
+        return;
+      }
       
-    } catch (error) {
-      console.error("Error cargando recuerdos:", error);
+      const posts = Object.entries(snapshot.val())
+        .sort((a,b) => b[1].timestamp - a[1].timestamp)
+        .slice(0, 10);
+      
+      let html = '';
+      posts.forEach(([id, post]) => {
+        const userLiked = post.likedBy && post.likedBy[currentUser.id];
+        
+        html += `
+          <div style="background: white; border-radius: 30px; padding: 22px; margin-bottom: 18px; border: 3px solid #ffe2ec;">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+              <div class="avatar avatar-sm">${post.alias.substring(0,2).toUpperCase()}</div>
+              <div>
+                <span style="font-weight: 700;">${post.alias}</span>
+                <span style="display: block; font-size: 0.7rem; color: #a8767e;">${new Date(post.timestamp).toLocaleString()}</span>
+              </div>
+            </div>
+            <p style="margin: 12px 0 16px 8px; font-size: 1.1rem;">${post.text}</p>
+            <div style="display: flex; align-items: center; gap: 15px;">
+              <button class="btn like-btn" data-postid="${id}" style="background: ${userLiked ? '#ff7a8f' : '#ffe2ec'}; color: ${userLiked ? 'white' : '#4a3035'}; padding: 8px 20px;">
+                <i class="fas fa-heart"></i> ${post.likes || 0}
+              </button>
+            </div>
+          </div>
+        `;
+      });
+      
+      document.getElementById('feedPostsContainer').innerHTML = html;
+      
+      // Like functionality
+      document.querySelectorAll('.like-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const postId = btn.dataset.postid;
+          await likePost(postId);
+        });
+      });
+    });
+  }
+
+  async function likePost(postId) {
+    if (!currentUser.isLoggedIn) return;
+    
+    const postRef = ref(db, `feed/${postId}`);
+    const snapshot = await get(postRef);
+    
+    if (snapshot.exists()) {
+      const post = snapshot.val();
+      const likedBy = post.likedBy || {};
+      
+      if (likedBy[currentUser.id]) {
+        // Unlike
+        delete likedBy[currentUser.id];
+        await update(postRef, {
+          likes: (post.likes || 0) - 1,
+          likedBy: likedBy
+        });
+      } else {
+        // Like
+        likedBy[currentUser.id] = true;
+        await update(postRef, {
+          likes: (post.likes || 0) + 1,
+          likedBy: likedBy
+        });
+      }
     }
   }
 
-  // ========== JUEGO DE REFLEJOS ==========
+  // ========== 5. MODO SOLITARIO - DIARIO PRIVADO ==========
+  async function saveDiarioEntry() {
+    if (!currentUser.isLoggedIn) return;
+    
+    const text = document.getElementById('diarioEntryInput').value.trim();
+    if (!text) return;
+    
+    const entryRef = push(ref(db, `diario/${currentUser.id}`));
+    await set(entryRef, {
+      text: text,
+      timestamp: Date.now()
+    });
+    
+    document.getElementById('diarioEntryInput').value = '';
+    showNotification('guardado en tu diario 📔');
+    loadDiarioEntries();
+  }
+
+  async function loadDiarioEntries() {
+    if (!currentUser.isLoggedIn) return;
+    
+    const snapshot = await get(ref(db, `diario/${currentUser.id}`));
+    
+    if (!snapshot.exists()) {
+      document.getElementById('diarioEntriesContainer').innerHTML = '<p style="color: #a8767e; text-align: center;">aún no hay entradas en tu diario</p>';
+      document.getElementById('diarioFullEntries').innerHTML = '<p style="color: #a8767e; text-align: center;">aún no hay entradas</p>';
+      return;
+    }
+    
+    const entries = Object.entries(snapshot.val())
+      .sort((a,b) => b[1].timestamp - a[1].timestamp)
+      .slice(0, 5);
+    
+    let html = '';
+    let fullHtml = '';
+    
+    entries.forEach(([id, entry]) => {
+      const date = new Date(entry.timestamp).toLocaleString();
+      html += `
+        <div class="diario-entry">
+          <p style="font-size: 0.8rem; color: #a8767e; margin-bottom: 8px;">📅 ${date}</p>
+          <p>${entry.text}</p>
+        </div>
+      `;
+      
+      fullHtml += `
+        <div class="diario-entry" style="margin-bottom: 20px;">
+          <p style="font-size: 0.8rem; color: #a8767e; margin-bottom: 8px;">📅 ${date}</p>
+          <p style="font-size: 1.1rem;">${entry.text}</p>
+        </div>
+      `;
+    });
+    
+    document.getElementById('diarioEntriesContainer').innerHTML = html || '<p style="color: #a8767e;">no hay entradas</p>';
+    document.getElementById('diarioFullEntries').innerHTML = fullHtml || '<p style="color: #a8767e;">no hay entradas</p>';
+  }
+
+  // ========== 6. JUEGOS Y RECOMPENSAS ==========
+  // Juego de reflejos
   let reactionActive = false;
   let reactionStartTime = null;
   let bestTime = localStorage.getItem('marleysBestReaction') || null;
   
-  if (bestTime) {
-    document.getElementById('bestReactionDisplay').innerText = bestTime;
-  }
-  
-  function startReactionGame() {
+  if (bestTime) document.getElementById('miniBestTime').innerText = bestTime;
+
+  function startMiniReaction() {
     if (!currentUser.isLoggedIn) {
-      showDreamNotification('identifícate para jugar');
+      showNotification('inicia sesión para jugar');
       return;
     }
     
     if (reactionActive) return;
     
     reactionActive = true;
-    const zone = document.getElementById('reactionTouchZone');
-    const btn = document.getElementById('startReactionGameBtn');
+    const box = document.getElementById('miniReactionBox');
+    const btn = document.getElementById('miniReactionBtn');
     
-    zone.innerText = '🌸 espera...';
-    zone.style.background = '#ffccd5';
-    zone.style.cursor = 'default';
+    box.innerText = '🌸 espera...';
+    box.style.background = '#ffccd5';
     btn.disabled = true;
-    
-    const delay = Math.random() * 3000 + 2000;
     
     setTimeout(() => {
       if (!reactionActive) return;
       
       reactionStartTime = Date.now();
-      zone.innerText = '💥 AHORA!';
-      zone.style.background = '#ffa5b6';
-      zone.style.cursor = 'pointer';
+      box.innerText = '💥 TOCA!';
+      box.style.background = '#ffa5b6';
+      box.style.cursor = 'pointer';
       
-      zone.onclick = function() {
-        if (!reactionStartTime) return;
-        
-        const reactionTime = Date.now() - reactionStartTime;
+      box.onclick = () => {
+        const time = Date.now() - reactionStartTime;
         reactionActive = false;
-        zone.onclick = null;
-        zone.style.background = '#ffdbe4';
-        zone.innerText = `⚡ ${reactionTime} ms`;
+        box.innerText = `⚡ ${time} ms`;
+        box.onclick = null;
         btn.disabled = false;
         
-        if (!bestTime || reactionTime < parseInt(bestTime)) {
-          bestTime = reactionTime;
-          localStorage.setItem('marleysBestReaction', reactionTime);
-          document.getElementById('bestReactionDisplay').innerText = reactionTime;
-          showDreamNotification('🏆 nuevo récord!');
+        if (!bestTime || time < parseInt(bestTime)) {
+          bestTime = time;
+          localStorage.setItem('marleysBestReaction', time);
+          document.getElementById('miniBestTime').innerText = time;
+          
+          // Recompensa por récord
+          addCollectible('⚡', 'récord reflejos');
+          showNotification('🏆 nuevo récord! +⚡', 'reward');
         }
-        
-        document.getElementById('reactionFeedbackMessage').innerHTML = `tiempo: ${reactionTime} ms`;
       };
-    }, delay);
+    }, Math.random() * 2000 + 1500);
   }
 
-  // ========== SETUP FIREBASE LISTENERS (TODOS CORREGIDOS) ==========
-  function setupFirebaseListeners() {
+  // Recompensa diaria
+  async function checkDailyReward() {
+    if (!currentUser.isLoggedIn) return;
     
-    // LISTENER DE USUARIOS ONLINE
-    onValue(ref(db, 'users'), (snapshot) => {
-      if (snapshot.exists()) {
-        const users = Object.values(snapshot.val()).filter(u => u.online === true).length;
-        document.getElementById('onlineCount').innerText = users;
-        document.getElementById('globalStatusMessage').innerHTML = users > 0 ? '✨ hay almas conectadas' : '🌸 solo tú por ahora';
-      }
-    }, (error) => {
-      console.error("Error en listener de users:", error);
+    const lastClaim = localStorage.getItem('marleysLastReward');
+    const today = new Date().toDateString();
+    
+    if (lastClaim === today) {
+      document.getElementById('dailyRewardEmoji').innerText = '✅';
+      document.getElementById('dailyRewardMessage').innerText = 'ya reclamaste hoy';
+      document.getElementById('claimDailyRewardBtn').disabled = true;
+    } else {
+      document.getElementById('dailyRewardEmoji').innerText = '🎁';
+      document.getElementById('dailyRewardMessage').innerText = '¡reclama tu recompensa!';
+      document.getElementById('claimDailyRewardBtn').disabled = false;
+    }
+  }
+
+  async function claimDailyReward() {
+    if (!currentUser.isLoggedIn) return;
+    
+    const today = new Date().toDateString();
+    localStorage.setItem('marleysLastReward', today);
+    
+    // Dar coleccionable aleatorio
+    const rewards = ['🌸', '✨', '💖', '🦋', '🌟'];
+    const reward = rewards[Math.floor(Math.random() * rewards.length)];
+    
+    await addCollectible(reward, 'recompensa diaria');
+    
+    document.getElementById('dailyRewardEmoji').innerText = '✅';
+    document.getElementById('dailyRewardMessage').innerText = '¡reclamada!';
+    document.getElementById('claimDailyRewardBtn').disabled = true;
+    
+    showNotification(`🎁 reclamaste: ${reward}`, 'reward');
+  }
+
+  // Coleccionables
+  async function loadCollectibles() {
+    if (!currentUser.isLoggedIn) return;
+    
+    const snapshot = await get(ref(db, `collectibles/${currentUser.id}`));
+    
+    if (!snapshot.exists()) {
+      document.getElementById('collectiblesContainer').innerHTML = '<span class="badge">🌸 1</span>';
+      return;
+    }
+    
+    const cols = snapshot.val();
+    let html = '';
+    
+    if (cols.flowers) html += `<span class="badge" style="background: #ffe2ec;">🌸 ${cols.flowers}</span>`;
+    if (cols.stars) html += `<span class="badge" style="background: #fff1c1;">✨ ${cols.stars}</span>`;
+    if (cols.hearts) html += `<span class="badge" style="background: #ffd6e0;">💖 ${cols.hearts}</span>`;
+    if (cols.lightning) html += `<span class="badge" style="background: #ffe0b5;">⚡ ${cols.lightning}</span>`;
+    
+    document.getElementById('collectiblesContainer').innerHTML = html || '<span class="badge">🌸 1</span>';
+  }
+
+  async function addCollectible(type, reason) {
+    if (!currentUser.isLoggedIn) return;
+    
+    const collectibleRef = ref(db, `collectibles/${currentUser.id}`);
+    const snapshot = await get(collectibleRef);
+    
+    let collectibles = snapshot.exists() ? snapshot.val() : { flowers: 1, stars: 0, hearts: 0 };
+    
+    if (type === '🌸') collectibles.flowers = (collectibles.flowers || 0) + 1;
+    if (type === '✨') collectibles.stars = (collectibles.stars || 0) + 1;
+    if (type === '💖') collectibles.hearts = (collectibles.hearts || 0) + 1;
+    if (type === '⚡') collectibles.lightning = (collectibles.lightning || 0) + 1;
+    
+    await set(collectibleRef, collectibles);
+    loadCollectibles();
+  }
+
+  // ========== 7. CAMBIAR ESTADO EMOCIONAL ==========
+  async function setMood(mood) {
+    if (!currentUser.isLoggedIn) return;
+    
+    currentUser.mood = mood;
+    await update(ref(db, `users/${currentUser.id}`), { mood: mood });
+    
+    const moodNames = { feliz: '😊 feliz', tranquila: '😌 tranquila', nostalgica: '🥺 nostálgica', energetica: '⚡ energética' };
+    document.getElementById('userMoodBadge').innerHTML = `<i class="fas fa-smile"></i> ${moodNames[mood]}`;
+    showNotification(`estado actualizado: ${moodNames[mood]}`);
+  }
+
+  // ========== 8. EVENT LISTENERS ==========
+  function setupEventListeners() {
+    // Registro
+    document.getElementById('registerBtn').addEventListener('click', () => {
+      register(document.getElementById('registerAliasInput').value);
     });
     
-    // LISTENER DE RESULTADOS DE ENCUESTA
-    onValue(ref(db, 'pollMarleys'), (snapshot) => {
-      const data = snapshot.val() || { cafe: 0, cine: 0, atardecer: 0, libros: 0 };
-      const total = Object.values(data).reduce((a, b) => a + b, 0);
-      
-      let resultsHtml = '';
-      for (const [key, value] of Object.entries(data)) {
-        const percent = total > 0 ? Math.round((value / total) * 100) : 0;
-        resultsHtml += `
-          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; padding: 8px 0;">
-            <span style="font-weight: 600; font-size: 1.1rem; text-transform: capitalize;">${key}</span>
-            <div style="display: flex; align-items: center; gap: 15px;">
-              <span style="background: #ffe4ec; padding: 8px 22px; border-radius: 60px; font-weight: 600;">${value} votos</span>
-              <span style="background: #ffb6c1; padding: 8px 18px; border-radius: 60px; color: white; font-weight: 700; min-width: 70px; text-align: center;">${percent}%</span>
-            </div>
-          </div>
-        `;
-      }
-      
-      document.getElementById('pollLiveResults').innerHTML = resultsHtml || '<p style="color: #8d6a72;">sin votos aún</p>';
+    // Logout
+    document.getElementById('logoutBtn').addEventListener('click', logout);
+    
+    // Búsqueda de usuarios
+    document.getElementById('userSearchInput')?.addEventListener('input', loadUsers);
+    
+    // Chat
+    document.getElementById('chatUserSelect').addEventListener('change', (e) => {
+      loadChatMessages(e.target.value);
     });
     
-    // LISTENER DEL FORO (MURO)
-    onValue(ref(db, 'forumComments'), (snapshot) => {
-      renderForumFeed(snapshot);
-      updateMemoryWall();
+    document.getElementById('sendMessageBtn').addEventListener('click', sendMessage);
+    
+    document.getElementById('chatMessageInput').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') sendMessage();
+    });
+    
+    // Feed
+    document.getElementById('publishFeedBtn').addEventListener('click', publishFeedPost);
+    
+    // Diario
+    document.getElementById('saveDiarioBtn').addEventListener('click', saveDiarioEntry);
+    
+    document.getElementById('openDiarioBtn').addEventListener('click', () => {
+      document.getElementById('diarioModal').style.display = 'flex';
+      loadDiarioEntries();
+    });
+    
+    document.getElementById('closeDiarioModalBtn').addEventListener('click', () => {
+      document.getElementById('diarioModal').style.display = 'none';
+    });
+    
+    // Juegos
+    document.getElementById('miniReactionBtn').addEventListener('click', startMiniReaction);
+    document.getElementById('claimDailyRewardBtn').addEventListener('click', claimDailyReward);
+    
+    // Estados de ánimo
+    document.querySelectorAll('.mood-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        setMood(btn.dataset.mood);
+      });
+    });
+    
+    // Cerrar modal al hacer click fuera
+    document.getElementById('diarioModal').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('diarioModal')) {
+        document.getElementById('diarioModal').style.display = 'none';
+      }
     });
   }
 
   // ========== INICIALIZACIÓN ==========
-  async function initDreamApp() {
-    console.log("✨ Iniciando Marleys Dream...");
+  async function init() {
+    console.log("🌸 Iniciando Marleys Social...");
     
     // Cargar usuario guardado
-    const savedUser = localStorage.getItem('marleysDreamUser');
-    if (savedUser) {
+    const saved = localStorage.getItem('marleysSocialUser');
+    if (saved) {
       try {
-        const parsed = JSON.parse(savedUser);
-        if (parsed && parsed.id && parsed.alias) {
-          currentUser = { ...parsed, isLoggedIn: true };
+        const u = JSON.parse(saved);
+        if (u && u.id && u.alias) {
+          currentUser = {
+            id: u.id,
+            alias: u.alias,
+            isLoggedIn: true,
+            mood: 'feliz'
+          };
           
-          // Reactivar sesión en Firebase
-          const userRef = ref(db, `users/${currentUser.id}`);
-          await set(userRef, {
-            id: currentUser.id,
-            alias: currentUser.alias,
+          await set(ref(db, `users/${u.id}`), {
+            id: u.id,
+            alias: u.alias,
             online: true,
-            lastActive: Date.now(),
-            sessionStart: Date.now()
+            mood: 'feliz',
+            lastActive: Date.now()
           });
           
-          onDisconnect(userRef).update({ online: false, lastActive: Date.now() });
-          console.log("✅ Sesión reactivada:", currentUser.alias);
+          onDisconnect(ref(db, `users/${u.id}`)).update({
+            online: false,
+            lastActive: Date.now()
+          });
         }
       } catch (e) {
-        console.error("Error cargando usuario:", e);
-        localStorage.removeItem('marleysDreamUser');
+        console.error(e);
       }
     }
     
     updateUI();
-    setupFirebaseListeners();
+    setupEventListeners();
     
-    // Verificar voto diario si está logueada
     if (currentUser.isLoggedIn) {
-      setTimeout(() => checkDailyVoteStatus(), 1000);
-    }
-    
-    // Mostrar modal si no está logueada
-    if (!currentUser.isLoggedIn) {
-      setTimeout(() => {
-        document.getElementById('welcomeMagicModal').style.display = 'flex';
-      }, 500);
+      loadChatContacts();
     }
   }
 
-  // ========== EVENT LISTENERS ==========
-  document.addEventListener('DOMContentLoaded', initDreamApp);
-  
-  // LOGIN
-  document.getElementById('loginButtonMain').addEventListener('click', () => {
-    const alias = document.getElementById('loginAliasInput').value;
-    loginUser(alias);
-  });
-  
-  document.getElementById('modalLoginBtn').addEventListener('click', () => {
-    const alias = document.getElementById('modalAliasField').value;
-    loginUser(alias);
-    document.getElementById('welcomeMagicModal').style.display = 'none';
-  });
-  
-  // LOGOUT
-  document.getElementById('logoutButton').addEventListener('click', logoutUser);
-  
-  // VOTOS ENCUESTA
-  document.querySelectorAll('.poll-option').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const option = btn.dataset.option;
-      votePoll(option);
-    });
-  });
-  
-  // PUBLICAR MENSAJE
-  document.getElementById('publishForumBtn').addEventListener('click', publishForumMessage);
-  
-  // ENTER EN TEXTAREA
-  document.getElementById('forumMessageInput').addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      publishForumMessage();
-    }
-  });
-  
-  // JUEGO DE REFLEJOS
-  document.getElementById('startReactionGameBtn').addEventListener('click', startReactionGame);
-  
-  // CERRAR MODAL CLICK FUERA
-  document.getElementById('welcomeMagicModal').addEventListener('click', (e) => {
-    if (e.target === document.getElementById('welcomeMagicModal')) {
-      document.getElementById('welcomeMagicModal').style.display = 'none';
-    }
-  });
+  init();
 
 </script>
 
