@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>🌸 MARLEYS SOCIAL · red emocional</title>
+  <title>🌸 MARLEYS · red social emocional</title>
   
   <!-- Firebase Modular -->
   <script type="importmap">
@@ -16,78 +16,157 @@
   </script>
   
   <style>
-    /* ===== ESTILOS DE ENSUEÑO ===== */
+    /* ========== 🎨 SISTEMA DE DISEÑO ULTRA-DETALLADO ========== */
+    
+    /* ----- TOKENS DE DISEÑO ----- */
+    :root {
+      --color-primary: #ff7a8f;
+      --color-primary-dark: #b34e62;
+      --color-primary-light: #ffb6c1;
+      --color-secondary: #7ac9a0;
+      --color-secondary-dark: #4f8a6e;
+      --color-accent: #ffb800;
+      --color-background: linear-gradient(145deg, #fff5f8, #ffe4ec);
+      --color-surface: rgba(255, 255, 255, 0.85);
+      --color-surface-dark: rgba(255, 255, 255, 0.95);
+      --color-text: #4a3035;
+      --color-text-soft: #6a4e54;
+      --color-text-muted: #a8767e;
+      --color-border: #ffe2ec;
+      --color-border-strong: #ffced7;
+      --color-success: #c7f0db;
+      --color-warning: #fff1c1;
+      --color-danger: #ffe2e2;
+      --radius-sm: 20px;
+      --radius-md: 30px;
+      --radius-lg: 40px;
+      --radius-xl: 60px;
+      --shadow-sm: 0 10px 0 rgba(180, 80, 100, 0.1);
+      --shadow-md: 0 15px 0 rgba(180, 80, 100, 0.15);
+      --shadow-lg: 0 20px 0 rgba(180, 80, 100, 0.2);
+      --shadow-hover: 0 25px 0 rgba(180, 80, 100, 0.25);
+      --transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Quicksand', 'Inter', sans-serif;
+      font-family: 'Quicksand', 'Inter', -apple-system, sans-serif;
     }
     
     @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
     
     body {
-      background: linear-gradient(145deg, #fff5f8, #ffe4ec);
-      color: #4a3035;
-      padding: 16px;
+      background: var(--color-background);
+      color: var(--color-text);
+      padding: 20px;
       min-height: 100vh;
-    }
-    
-    .app {
-      max-width: 1200px;
-      margin: 0 auto;
       position: relative;
     }
     
-    /* ===== TARJETAS DE CRISTAL ===== */
-    .glass-card {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+    /* ----- FONDO ANIMADO ----- */
+    body::before {
+      content: "🌸✨🌸✨🌸✨🌸✨🌸";
+      position: fixed;
+      top: -50px;
+      left: -50px;
+      width: calc(100% + 100px);
+      height: calc(100% + 100px);
+      opacity: 0.05;
+      font-size: 60px;
+      letter-spacing: 30px;
+      pointer-events: none;
+      z-index: 0;
+      animation: floatBackground 60s linear infinite;
+      white-space: nowrap;
+    }
+    
+    @keyframes floatBackground {
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(-200px) rotate(10deg); }
+    }
+    
+    .app {
+      max-width: 1400px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 100;
+    }
+    
+    /* ===== 🏗️ COMPONENTES BASE ===== */
+    
+    /* ----- TARJETAS ----- */
+    .card {
+      background: var(--color-surface);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
       border: 3px solid rgba(255, 255, 255, 0.9);
-      border-radius: 40px;
-      box-shadow: 0 20px 30px -10px rgba(180, 90, 110, 0.15);
-      padding: 25px;
-      transition: all 0.3s;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      padding: 28px;
+      transition: var(--transition);
     }
     
-    .glass-card:hover {
-      background: rgba(255, 255, 255, 0.95);
+    .card:hover {
+      background: var(--color-surface-dark);
       transform: translateY(-5px);
-      box-shadow: 0 30px 40px -10px rgba(180, 90, 110, 0.25);
+      box-shadow: var(--shadow-hover);
+      border-color: white;
     }
     
-    /* ===== HEADER MÁGICO ===== */
+    .card-sm {
+      padding: 20px;
+      border-radius: var(--radius-md);
+    }
+    
+    .card-glass {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(20px);
+    }
+    
+    /* ----- HEADER MÁGICO ----- */
     .magic-header {
-      background: linear-gradient(135deg, #ffb6c1, #ff9aac);
-      border-radius: 60px;
-      padding: 30px;
-      margin-bottom: 25px;
+      background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
+      border-radius: var(--radius-xl);
+      padding: 35px 40px;
+      margin-bottom: 30px;
       border: 6px solid white;
-      box-shadow: 0 20px 0 rgba(180, 80, 100, 0.2);
+      box-shadow: var(--shadow-lg);
       position: relative;
       overflow: hidden;
     }
     
-    .magic-header::after {
-      content: "🌸✨";
+    .magic-header::before {
+      content: "🦋";
       position: absolute;
-      bottom: -20px;
-      right: -10px;
-      font-size: 90px;
-      opacity: 0.2;
-      transform: rotate(15deg);
+      top: -30px;
+      left: -20px;
+      font-size: 150px;
+      opacity: 0.1;
+      transform: rotate(-15deg);
     }
     
-    .glow-title {
-      font-size: 3.2rem;
+    .magic-header::after {
+      content: "✨";
+      position: absolute;
+      bottom: -40px;
+      right: -20px;
+      font-size: 180px;
+      opacity: 0.1;
+      transform: rotate(20deg);
+    }
+    
+    .header-title {
+      font-size: 3.5rem;
       font-weight: 800;
       color: white;
-      text-shadow: 0 8px 0 rgba(150, 60, 80, 0.2);
-      letter-spacing: -1px;
+      text-shadow: 0 10px 0 rgba(0,0,0,0.05);
+      letter-spacing: -1.5px;
+      line-height: 1.1;
     }
     
-    /* ===== BOTONES ===== */
+    /* ----- BOTONES ----- */
     .btn {
       border: none;
       padding: 14px 28px;
@@ -95,58 +174,95 @@
       font-weight: 700;
       font-size: 0.95rem;
       cursor: pointer;
-      transition: 0.2s;
+      transition: var(--transition);
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 10px;
       background: white;
+      color: var(--color-text);
       border: 3px solid transparent;
+      box-shadow: 0 6px 0 rgba(0,0,0,0.02);
     }
     
     .btn-primary {
-      background: #ff7a8f;
+      background: var(--color-primary);
       color: white;
-      box-shadow: 0 8px 0 #b34e62;
+      box-shadow: 0 8px 0 var(--color-primary-dark);
     }
     
     .btn-primary:hover {
       transform: translateY(-4px);
-      box-shadow: 0 12px 0 #b34e62;
+      box-shadow: 0 12px 0 var(--color-primary-dark);
     }
     
-    .btn-success {
-      background: #7ac9a0;
+    .btn-primary:active {
+      transform: translateY(4px);
+      box-shadow: 0 4px 0 var(--color-primary-dark);
+    }
+    
+    .btn-secondary {
+      background: var(--color-secondary);
       color: white;
-      box-shadow: 0 8px 0 #4f8a6e;
+      box-shadow: 0 8px 0 var(--color-secondary-dark);
     }
     
     .btn-outline {
       background: transparent;
-      border: 3px solid #ffb6c1;
-      color: #b34e62;
+      border: 3px solid var(--color-primary-light);
+      color: var(--color-primary-dark);
     }
     
-    /* ===== INPUTS ===== */
+    .btn-outline:hover {
+      background: var(--color-primary-light);
+      color: white;
+      border-color: transparent;
+    }
+    
+    .btn-sm {
+      padding: 10px 20px;
+      font-size: 0.85rem;
+    }
+    
+    .btn:disabled {
+      opacity: 0.5;
+      transform: none;
+      box-shadow: 0 6px 0 rgba(0,0,0,0.02);
+      cursor: not-allowed;
+    }
+    
+    /* ----- INPUTS ----- */
     .input {
       background: white;
-      border: 4px solid #ffe2ec;
+      border: 4px solid var(--color-border);
       border-radius: 60px;
       padding: 16px 24px;
       font-size: 1rem;
       width: 100%;
-      transition: 0.2s;
+      transition: var(--transition);
     }
     
     .input:focus {
-      border-color: #ff7a8f;
+      border-color: var(--color-primary);
       outline: none;
       box-shadow: 0 0 0 8px rgba(255, 122, 143, 0.1);
     }
     
-    /* ===== AVATARES ===== */
+    .input-sm {
+      padding: 12px 20px;
+      font-size: 0.9rem;
+    }
+    
+    .textarea {
+      border-radius: 30px;
+      resize: vertical;
+      min-height: 100px;
+    }
+    
+    /* ----- AVATARES ----- */
     .avatar {
-      width: 60px;
-      height: 60px;
+      width: 70px;
+      height: 70px;
       background: linear-gradient(145deg, #ffb8c9, #ff90a5);
       border-radius: 50%;
       display: flex;
@@ -154,9 +270,16 @@
       justify-content: center;
       color: white;
       font-weight: 700;
-      font-size: 1.8rem;
-      border: 5px solid white;
-      box-shadow: 0 8px 0 rgba(180, 80, 100, 0.15);
+      font-size: 2rem;
+      border: 6px solid white;
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .avatar-md {
+      width: 55px;
+      height: 55px;
+      font-size: 1.6rem;
+      border-width: 4px;
     }
     
     .avatar-sm {
@@ -166,49 +289,16 @@
       border-width: 3px;
     }
     
-    /* ===== BURBUJAS DE CHAT ===== */
-    .chat-bubble-mine {
-      background: #ff7a8f;
-      color: white;
-      padding: 16px 24px;
-      border-radius: 30px 30px 10px 30px;
-      max-width: 80%;
-      align-self: flex-end;
-      margin-left: auto;
-      border: 3px solid white;
+    .avatar-xs {
+      width: 35px;
+      height: 35px;
+      font-size: 1rem;
+      border-width: 2px;
     }
     
-    .chat-bubble-other {
-      background: white;
-      color: #4a3035;
-      padding: 16px 24px;
-      border-radius: 30px 30px 30px 10px;
-      max-width: 80%;
-      align-self: flex-start;
-      border: 3px solid #ffe2ec;
-    }
-    
-    /* ===== TARJETA DE USUARIO ===== */
-    .user-card {
-      background: white;
-      border-radius: 30px;
-      padding: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 15px;
-      border: 3px solid #ffe2ec;
-      transition: 0.2s;
-    }
-    
-    .user-card:hover {
-      border-color: #ffb6c1;
-      transform: scale(1.02);
-    }
-    
-    /* ===== BADGES ===== */
+    /* ----- BADGES ----- */
     .badge {
-      background: #ffe2ec;
+      background: var(--color-border);
       padding: 6px 16px;
       border-radius: 60px;
       font-size: 0.8rem;
@@ -219,100 +309,247 @@
     }
     
     .badge-online {
-      background: #c7f0db;
+      background: var(--color-success);
       color: #1f8b4c;
     }
     
-    /* ===== ANIMACIONES ===== */
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-5px); }
+    .badge-offline {
+      background: #e2e2e2;
+      color: #666;
     }
     
-    .float-animation {
-      animation: float 3s infinite;
+    .badge-mood {
+      background: var(--color-warning);
     }
     
-    /* ===== LAYOUT ===== */
-    .grid-2 {
+    .badge-reward {
+      background: var(--color-accent);
+      color: white;
+    }
+    
+    /* ===== 🎯 LAYOUTS ===== */
+    
+    /* ----- GRID PRINCIPAL ----- */
+    .dashboard-grid {
       display: grid;
-      grid-template-columns: 1fr 1.2fr;
+      grid-template-columns: 1.2fr 2fr 1.2fr;
       gap: 25px;
     }
     
-    .grid-3 {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 25px;
+    @media (max-width: 1100px) {
+      .dashboard-grid { grid-template-columns: 1fr 1.5fr; }
     }
     
-    @media (max-width: 900px) {
-      .grid-2, .grid-3 { grid-template-columns: 1fr; }
-      .glow-title { font-size: 2.5rem; }
+    @media (max-width: 800px) {
+      .dashboard-grid { grid-template-columns: 1fr; }
     }
     
-    /* ===== DIARIO PRIVADO ===== */
+    /* ----- SECCIONES ORGANIZADAS ----- */
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 25px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--color-primary-dark);
+      border-bottom: 4px dashed var(--color-border-strong);
+      padding-bottom: 15px;
+    }
+    
+    .section-title i {
+      font-size: 1.8rem;
+    }
+    
+    /* ----- TARJETAS DE USUARIO ----- */
+    .user-card {
+      background: white;
+      border-radius: var(--radius-md);
+      padding: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      border: 3px solid var(--color-border);
+      transition: var(--transition);
+    }
+    
+    .user-card:hover {
+      border-color: var(--color-primary-light);
+      transform: translateX(5px);
+    }
+    
+    /* ----- BURBUJAS DE CHAT ----- */
+    .chat-bubble-mine {
+      background: var(--color-primary);
+      color: white;
+      padding: 16px 24px;
+      border-radius: 30px 30px 10px 30px;
+      max-width: 80%;
+      align-self: flex-end;
+      margin-left: auto;
+      border: 4px solid white;
+    }
+    
+    .chat-bubble-other {
+      background: white;
+      color: var(--color-text);
+      padding: 16px 24px;
+      border-radius: 30px 30px 30px 10px;
+      max-width: 80%;
+      align-self: flex-start;
+      border: 4px solid var(--color-border);
+    }
+    
+    /* ----- CONTENEDOR DE CHAT ----- */
+    .chat-container {
+      height: 450px;
+      overflow-y: auto;
+      padding: 20px;
+      background: #fff7f9;
+      border-radius: var(--radius-md);
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      border: 4px solid white;
+    }
+    
+    /* ----- POST DE FEED ----- */
+    .feed-post {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 25px;
+      margin-bottom: 20px;
+      border: 4px solid var(--color-border);
+      transition: var(--transition);
+    }
+    
+    .feed-post:hover {
+      border-color: var(--color-primary-light);
+      transform: scale(1.01);
+    }
+    
+    /* ----- ENTRADA DE DIARIO ----- */
     .diario-entry {
       background: #fff9e6;
-      border-radius: 30px;
-      padding: 20px;
+      border-radius: var(--radius-md);
+      padding: 22px;
       margin-bottom: 15px;
-      border-left: 12px solid #ffb6c1;
+      border-left: 15px solid var(--color-primary-light);
+      border-bottom: 4px solid white;
     }
     
-    /* ===== NOTIFICACIÓN ===== */
+    /* ----- TARJETA DE JUEGO ----- */
+    .game-card {
+      background: linear-gradient(145deg, white, #fff5f8);
+      border-radius: var(--radius-lg);
+      padding: 25px;
+      text-align: center;
+      border: 4px solid white;
+      transition: var(--transition);
+    }
+    
+    .game-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+    }
+    
+    /* ----- COLECCIONABLES ----- */
+    .collectible {
+      background: linear-gradient(145deg, #ffe9ef, white);
+      border-radius: 30px;
+      padding: 12px 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 3px solid white;
+      font-weight: 700;
+    }
+    
+    /* ----- NOTIFICACIÓN ----- */
     .notification {
       position: fixed;
       bottom: 30px;
       right: 30px;
-      background: #ff7a8f;
+      background: var(--color-primary);
       color: white;
       padding: 18px 32px;
       border-radius: 80px;
-      font-weight: 600;
-      border: 5px solid white;
-      box-shadow: 0 12px 0 #b34e62;
+      font-weight: 700;
+      border: 6px solid white;
+      box-shadow: 0 15px 0 var(--color-primary-dark);
       z-index: 9999;
-      animation: slideIn 0.3s;
+      animation: slideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
     
     @keyframes slideIn {
-      from { transform: translateX(100%); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
+      from { transform: translateX(100%) scale(0.8); opacity: 0; }
+      to { transform: translateX(0) scale(1); opacity: 1; }
     }
     
-    .hidden { display: none !important; }
+    /* ----- MODAL ----- */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(100, 60, 70, 0.3);
+      backdrop-filter: blur(15px);
+      align-items: center;
+      justify-content: center;
+      z-index: 9998;
+    }
     
-    /* ===== SECCIÓN DE CHAT ===== */
-    .chat-container {
-      height: 400px;
-      overflow-y: auto;
-      padding: 20px;
-      background: #fff7f9;
-      border-radius: 30px;
+    .modal.active {
       display: flex;
-      flex-direction: column;
-      gap: 15px;
     }
     
-    /* ===== SECCIÓN DE JUEGOS ===== */
-    .game-card {
-      background: linear-gradient(145deg, #ffe9ef, #fff5f8);
-      border-radius: 30px;
-      padding: 25px;
-      text-align: center;
-      border: 4px solid white;
-    }
-    
-    .reaction-box {
-      background: #ffdbe4;
-      border-radius: 60px;
+    .modal-content {
+      background: white;
+      max-width: 600px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      border-radius: var(--radius-xl);
       padding: 35px;
-      font-size: 2rem;
-      font-weight: 700;
-      border: 6px solid white;
-      cursor: pointer;
-      transition: 0.05s;
+      border: 8px solid white;
+      box-shadow: 0 30px 0 rgba(180, 80, 100, 0.2);
+    }
+    
+    /* ----- UTILIDADES ----- */
+    .hidden { display: none !important; }
+    .flex { display: flex; }
+    .flex-col { flex-direction: column; }
+    .items-center { align-items: center; }
+    .justify-between { justify-content: space-between; }
+    .gap-sm { gap: 12px; }
+    .gap-md { gap: 20px; }
+    .gap-lg { gap: 30px; }
+    .mt-sm { margin-top: 12px; }
+    .mt-md { margin-top: 20px; }
+    .mt-lg { margin-top: 30px; }
+    .mb-sm { margin-bottom: 12px; }
+    .mb-md { margin-bottom: 20px; }
+    .mb-lg { margin-bottom: 30px; }
+    .w-full { width: 100%; }
+    
+    /* ----- SCROLL PERSONALIZADO ----- */
+    ::-webkit-scrollbar {
+      width: 12px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--color-border);
+      border-radius: 20px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--color-primary-light);
+      border-radius: 20px;
+      border: 3px solid white;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--color-primary);
     }
   </style>
 </head>
@@ -320,216 +557,334 @@
 
 <div class="app">
 
-  <!-- ===== HEADER MÁGICO ===== -->
-  <div class="magic-header">
-    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+  <!-- ===== 🦋 HEADER PRINCIPAL ===== -->
+  <header class="magic-header">
+    <div class="flex justify-between items-center">
       <div>
-        <h1 class="glow-title">🌸 marleys social</h1>
-        <div style="display: flex; gap: 12px; margin-top: 12px;">
+        <h1 class="header-title">🌸 marleys social</h1>
+        <div class="flex gap-sm" style="margin-top: 15px;">
           <span class="badge" style="background: rgba(255,255,255,0.3); backdrop-filter: blur(5px); color: white; border: 2px solid white;">
-            <i class="fas fa-heart"></i> red emocional
+            <i class="fas fa-heart"></i> red emocional v2.0
           </span>
-          <span class="badge" id="globalOnlineBadge" style="background: white; color: #b34e62;">
+          <span class="badge" id="globalOnlineBadge" style="background: white; color: var(--color-primary-dark);">
             <i class="fas fa-users"></i> <span id="onlineCount">0</span> conectados
           </span>
         </div>
       </div>
-      <div id="headerUserInfo" style="display: none;">
-        <!-- Se llena con JS -->
+      <div id="headerQuickStatus" class="flex gap-sm" style="background: rgba(255,255,255,0.2); padding: 12px 25px; border-radius: 60px; backdrop-filter: blur(5px); border: 2px solid white;">
+        <!-- Se llena dinámicamente -->
       </div>
     </div>
-  </div>
+  </header>
 
-  <!-- ===== PANEL DE IDENTIDAD ===== -->
-  <div class="glass-card" style="margin-bottom: 25px;" id="sessionPanel">
-    <!-- NO LOGEADO -->
-    <div id="notLoggedView">
-      <div style="display: flex; align-items: center; gap: 25px; flex-wrap: wrap;">
-        <span style="font-size: 4.5rem;">🦋</span>
-        <div style="flex: 1;">
-          <h2 style="font-size: 2.2rem; color: #b54a5a; margin-bottom: 8px;">hola, marleys</h2>
-          <p style="color: #6a4e54; font-size: 1.1rem; margin-bottom: 20px;">crea tu identidad en esta red emocional</p>
-          <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-            <input type="text" id="registerAliasInput" class="input" placeholder="tu alias" style="flex: 2;" value="marleys_">
-            <button class="btn btn-primary" id="registerBtn" style="flex: 1;"><i class="fas fa-heart"></i> comenzar</button>
-          </div>
-          <p style="margin-top: 15px; font-size: 0.9rem; color: #8f6f77;"><i class="fas fa-shield-alt"></i> tu espacio seguro</p>
+  <!-- ===== 🎭 MÓDULO 1: IDENTIDAD Y ESTADO ===== -->
+  <section id="moduloIdentidad" class="card mb-lg">
+    <!-- VISTA NO REGISTRADA -->
+    <div id="viewNotRegistered" class="flex items-center gap-lg" style="flex-wrap: wrap;">
+      <span style="font-size: 5rem; animation: float 3s infinite;">🦋</span>
+      <div style="flex: 1;">
+        <h2 style="font-size: 2.2rem; color: var(--color-primary-dark); margin-bottom: 8px;">bienvenida, marleys</h2>
+        <p style="color: var(--color-text-soft); font-size: 1.1rem; margin-bottom: 25px;">crea tu identidad en esta red social emocional</p>
+        
+        <!-- FORMULARIO DE REGISTRO -->
+        <div style="display: flex; gap: 15px; flex-wrap: wrap; max-width: 600px;">
+          <input type="text" id="registerAliasInput" class="input" placeholder="elige tu alias" style="flex: 2;" value="marleys_">
+          <button class="btn btn-primary" id="registerBtn" style="flex: 1; padding: 16px 30px;">
+            <i class="fas fa-heart"></i> comenzar
+          </button>
+        </div>
+        
+        <div style="margin-top: 20px; display: flex; gap: 20px; flex-wrap: wrap;">
+          <span class="badge"><i class="fas fa-shield-alt"></i> espacio seguro</span>
+          <span class="badge"><i class="fas fa-lock"></i> datos privados</span>
+          <span class="badge"><i class="fas fa-star"></i> coleccionables</span>
         </div>
       </div>
     </div>
     
-    <!-- LOGEADO -->
-    <div id="loggedView" style="display: none;">
-      <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
-        <div style="display: flex; align-items: center; gap: 20px;">
+    <!-- VISTA REGISTRADA -->
+    <div id="viewRegistered" style="display: none;">
+      <div class="flex justify-between items-center" style="flex-wrap: wrap; gap: 25px;">
+        <!-- PERFIL DEL USUARIO -->
+        <div class="flex items-center gap-lg">
           <div class="avatar" id="userAvatar">🌸</div>
           <div>
-            <h2 style="font-size: 1.8rem; font-weight: 700;" id="userNameDisplay">marleys</h2>
-            <div style="display: flex; gap: 12px; margin-top: 8px;">
-              <span class="badge badge-online"><i class="fas fa-circle"></i> conectada</span>
-              <span class="badge" id="userMoodBadge"><i class="fas fa-smile"></i> feliz</span>
+            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 8px;">
+              <h2 style="font-size: 2rem; font-weight: 700;" id="userNameDisplay">marleys</h2>
+              <span class="badge badge-online" id="userStatusBadge">
+                <i class="fas fa-circle"></i> conectada
+              </span>
+            </div>
+            
+            <!-- ESTADO EMOCIONAL -->
+            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+              <span class="badge badge-mood" id="userMoodDisplay">
+                <i class="fas fa-smile"></i> feliz
+              </span>
+              <span class="badge" id="userJoinDate">
+                <i class="fas fa-calendar"></i> recién llegada
+              </span>
             </div>
           </div>
         </div>
-        <div style="display: flex; gap: 12px;">
-          <button class="btn btn-outline" id="openDiarioBtn"><i class="fas fa-book"></i> diario</button>
-          <button class="btn" id="logoutBtn" style="background: #ffe2ec;">salir</button>
+        
+        <!-- ACCIONES DE USUARIO -->
+        <div class="flex gap-sm">
+          <button class="btn btn-outline" id="openDiarioModalBtn">
+            <i class="fas fa-book"></i> mi diario
+          </button>
+          <button class="btn" id="logoutBtn" style="background: #ffe2ec;">
+            <i class="fas fa-sign-out-alt"></i> salir
+          </button>
         </div>
       </div>
-    </div>
-  </div>
-
-  <!-- ===== PANEL PRINCIPAL: SOLO VISIBLE LOGEADO ===== -->
-  <div id="mainAppContent" style="display: none;">
-    
-    <!-- ===== SECCIÓN: ESTADO EMOCIONAL ===== -->
-    <div class="glass-card" style="margin-bottom: 25px; background: linear-gradient(145deg, #ffe9ef, white);">
-      <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;">
-        <div style="display: flex; align-items: center; gap: 15px;">
-          <span style="font-size: 2.2rem;">💗</span>
-          <h3 style="font-weight: 700;">¿cómo te sientes hoy?</h3>
-        </div>
-        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-          <button class="btn mood-btn" data-mood="feliz" style="background: #ffe87c;">😊 feliz</button>
-          <button class="btn mood-btn" data-mood="tranquila" style="background: #a5d8d3;">😌 tranquila</button>
-          <button class="btn mood-btn" data-mood="nostalgica" style="background: #e2cfeb;">🥺 nostálgica</button>
-          <button class="btn mood-btn" data-mood="energetica" style="background: #ffb3b3;">⚡ energética</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- ===== GRID PRINCIPAL: 2 COLUMNAS ===== -->
-    <div class="grid-2">
       
-      <!-- COLUMNA IZQUIERDA: USUARIOS + SOLICITUDES + CHAT -->
-      <div>
-        <!-- BUSCADOR DE USUARIOS -->
-        <div class="glass-card" style="margin-bottom: 25px;">
-          <h3 style="margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
-            <i class="fas fa-user-friends"></i> conectar con alguien
-          </h3>
-          <input type="text" id="userSearchInput" class="input" placeholder="buscar por alias..." style="margin-bottom: 20px;">
-          <div id="usersListContainer" style="max-height: 300px; overflow-y: auto; padding-right: 8px;">
-            <!-- Se llena con JS -->
-            <p style="color: #a8767e; text-align: center;">cargando usuarios...</p>
+      <!-- SELECTOR DE ESTADO EMOCIONAL -->
+      <div style="margin-top: 30px; padding-top: 25px; border-top: 4px dashed var(--color-border-strong);">
+        <div class="flex items-center gap-md" style="flex-wrap: wrap;">
+          <span style="font-weight: 700; font-size: 1.1rem;"><i class="fas fa-heart" style="color: var(--color-primary);"></i> ¿cómo te sientes hoy?</span>
+          <div class="flex gap-sm" style="flex-wrap: wrap;">
+            <button class="btn btn-sm mood-btn" data-mood="feliz" style="background: #ffe87c;">😊 feliz</button>
+            <button class="btn btn-sm mood-btn" data-mood="tranquila" style="background: #a5d8d3;">😌 tranquila</button>
+            <button class="btn btn-sm mood-btn" data-mood="nostalgica" style="background: #e2cfeb;">🥺 nostálgica</button>
+            <button class="btn btn-sm mood-btn" data-mood="energetica" style="background: #ffb3b3;">⚡ energética</button>
+            <button class="btn btn-sm mood-btn" data-mood="amorosa" style="background: #ffc0cb;">💕 amorosa</button>
+            <button class="btn btn-sm mood-btn" data-mood="creativa" style="background: #b5e4ca;">🎨 creativa</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 📱 DASHBOARD PRINCIPAL (SOLO VISIBLE LOGEADO) ===== -->
+  <div id="mainDashboard" style="display: none;">
+    
+    <!-- ===== 🎯 GRID DE 3 COLUMNAS ORGANIZADO POR MÓDULOS ===== -->
+    <div class="dashboard-grid">
+      
+      <!-- ===== 🌟 COLUMNA 1: CONEXIONES SOCIALES ===== -->
+      <div class="flex flex-col gap-md">
+        
+        <!-- 📍 MÓDULO 2: USUARIOS ACTIVOS -->
+        <div class="card card-sm">
+          <div class="section-title">
+            <i class="fas fa-user-friends"></i>
+            <span>descubrir personas</span>
+          </div>
+          
+          <!-- BUSCADOR -->
+          <div style="margin-bottom: 20px;">
+            <input type="text" id="userSearchInput" class="input input-sm" placeholder="buscar por alias...">
+          </div>
+          
+          <!-- LISTA DE USUARIOS -->
+          <div id="usersListContainer" style="max-height: 350px; overflow-y: auto; padding-right: 8px;">
+            <div style="text-align: center; padding: 30px; color: var(--color-text-muted);">
+              <i class="fas fa-spinner fa-spin" style="font-size: 2rem;"></i>
+              <p style="margin-top: 12px;">cargando usuarios...</p>
+            </div>
           </div>
         </div>
         
-        <!-- SOLICITUDES PENDIENTES -->
-        <div class="glass-card" style="margin-bottom: 25px;">
-          <h3 style="margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
-            <i class="fas fa-bell"></i> solicitudes <span id="pendingRequestsBadge" style="background: #ff7a8f; color: white; padding: 4px 12px; border-radius: 60px; font-size: 0.8rem;">0</span>
-          </h3>
-          <div id="pendingRequestsContainer">
-            <p style="color: #a8767e; text-align: center;">no hay solicitudes</p>
+        <!-- 🤝 MÓDULO 3: SOLICITUDES DE CONEXIÓN -->
+        <div class="card card-sm">
+          <div class="section-title">
+            <i class="fas fa-bell"></i>
+            <span>solicitudes</span>
+            <span id="pendingRequestsBadge" style="background: var(--color-primary); color: white; padding: 4px 12px; border-radius: 60px; font-size: 0.8rem; margin-left: 10px;">0</span>
+          </div>
+          
+          <div id="pendingRequestsContainer" style="max-height: 250px; overflow-y: auto;">
+            <p style="color: var(--color-text-muted); text-align: center;">no hay solicitudes pendientes</p>
           </div>
         </div>
         
-        <!-- CHAT PRIVADO (SOLO CON USUARIOS CONECTADOS) -->
-        <div class="glass-card" id="chatSection">
-          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
-            <h3 style="display: flex; align-items: center; gap: 10px;">
-              <i class="fas fa-comments"></i> chat privado
-            </h3>
-            <select id="chatUserSelect" class="badge" style="padding: 10px 20px; border: 2px solid #ffe2ec;">
+        <!-- 🎮 MÓDULO 6: JUEGOS Y RECOMPENSAS (VISTA COMPACTA) -->
+        <div class="card card-sm">
+          <div class="section-title">
+            <i class="fas fa-gamepad"></i>
+            <span>mini-juegos</span>
+          </div>
+          
+          <!-- JUEGO DE REFLEJOS -->
+          <div style="margin-bottom: 25px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+              <span style="font-weight: 700;">⚡ prueba de reflejos</span>
+              <span class="badge">mejor: <span id="reactionBestTime">-</span> ms</span>
+            </div>
+            <div id="reactionGameBox" style="background: #ffdbe4; border-radius: 60px; padding: 30px; text-align: center; font-size: 1.8rem; font-weight: 700; border: 6px solid white; cursor: pointer; margin-bottom: 12px;">
+              💖 toca aquí
+            </div>
+            <button class="btn btn-primary w-full" id="startReactionBtn">
+              <i class="fas fa-play"></i> comenzar
+            </button>
+          </div>
+          
+          <!-- RECOMPENSA DIARIA -->
+          <div style="background: linear-gradient(145deg, #fff9e6, white); border-radius: 30px; padding: 20px; border: 4px solid white;">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-sm">
+                <span style="font-size: 2rem;" id="dailyRewardEmoji">🎁</span>
+                <div>
+                  <span style="font-weight: 700;">recompensa diaria</span>
+                  <p style="font-size: 0.8rem; color: var(--color-text-muted);" id="dailyRewardMessage">¡reclama tu regalo!</p>
+                </div>
+              </div>
+              <button class="btn btn-secondary btn-sm" id="claimDailyRewardBtn">reclamar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- ===== 💬 COLUMNA 2: CHAT PRIVADO Y FEED ===== -->
+      <div class="flex flex-col gap-md">
+        
+        <!-- 💌 MÓDULO 4: CHAT PRIVADO 1a1 -->
+        <div class="card">
+          <div class="section-title">
+            <i class="fas fa-comments"></i>
+            <span>chat privado</span>
+            <span style="font-size: 0.8rem; color: var(--color-text-muted); margin-left: 10px;">solo con conexiones</span>
+          </div>
+          
+          <!-- SELECTOR DE CONTACTOS -->
+          <div style="margin-bottom: 20px;">
+            <select id="chatContactSelect" class="input input-sm" style="background: white; cursor: pointer;">
               <option value="">selecciona un contacto</option>
             </select>
           </div>
           
           <!-- CONTENEDOR DE MENSAJES -->
           <div id="chatMessagesContainer" class="chat-container" style="margin-bottom: 15px;">
-            <p style="color: #a8767e; text-align: center;">selecciona un contacto para chatear</p>
+            <p style="color: var(--color-text-muted); text-align: center;">selecciona un contacto para chatear</p>
           </div>
           
           <!-- FORMULARIO DE MENSAJE -->
-          <div style="display: flex; gap: 12px;" id="chatFormContainer">
-            <input type="text" id="chatMessageInput" class="input" placeholder="escribe tu mensaje..." style="flex: 1;">
-            <button class="btn btn-primary" id="sendMessageBtn"><i class="fas fa-paper-plane"></i></button>
+          <div style="display: flex; gap: 12px;">
+            <input type="text" id="chatMessageInput" class="input input-sm" placeholder="escribe tu mensaje..." style="flex: 1;">
+            <button class="btn btn-primary" id="sendMessageBtn" style="padding: 12px 24px;">
+              <i class="fas fa-paper-plane"></i>
+            </button>
           </div>
+          
+          <!-- INDICADOR DE CONEXIÓN -->
+          <p style="margin-top: 12px; font-size: 0.8rem; color: var(--color-text-muted);">
+            <i class="fas fa-lock"></i> conversaciones privadas y cifradas emocionalmente
+          </p>
         </div>
-      </div>
-      
-      <!-- COLUMNA DERECHA: FEED + DIARIO + JUEGOS -->
-      <div>
-        <!-- FEED SOCIAL PÚBLICO -->
-        <div class="glass-card" style="margin-bottom: 25px;">
-          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
-            <span style="font-size: 2rem;">📰</span>
-            <h3>feed de pensamientos</h3>
+        
+        <!-- 📰 MÓDULO 5: FEED SOCIAL -->
+        <div class="card">
+          <div class="section-title">
+            <i class="fas fa-newspaper"></i>
+            <span>feed de pensamientos</span>
           </div>
           
           <!-- PUBLICAR EN FEED -->
-          <div style="margin-bottom: 25px;">
-            <textarea id="feedPostInput" class="input" placeholder="comparte algo con todos..." rows="2" style="border-radius: 30px; margin-bottom: 12px;"></textarea>
+          <div style="margin-bottom: 30px;">
+            <textarea id="feedPostInput" class="input textarea" placeholder="comparte algo con todos..." rows="2" style="margin-bottom: 12px;"></textarea>
             <div style="display: flex; justify-content: flex-end;">
-              <button class="btn btn-primary" id="publishFeedBtn"><i class="fas fa-feather"></i> publicar</button>
+              <button class="btn btn-primary" id="publishFeedBtn">
+                <i class="fas fa-feather"></i> publicar
+              </button>
             </div>
           </div>
           
           <!-- LISTA DE POSTS -->
           <div id="feedPostsContainer" style="max-height: 500px; overflow-y: auto; padding-right: 8px;">
-            <p style="color: #a8767e; text-align: center;">cargando pensamientos...</p>
+            <!-- Se llena dinámicamente -->
           </div>
         </div>
+      </div>
+      
+      <!-- ===== 🌙 COLUMNA 3: ESPACIO PERSONAL Y RECOMPENSAS ===== -->
+      <div class="flex flex-col gap-md">
         
-        <!-- MODO SOLITARIO: DIARIO PRIVADO -->
-        <div class="glass-card" style="margin-bottom: 25px; background: #fff9f0;">
-          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
-            <span style="font-size: 2rem;">🌙</span>
-            <h3>modo solitario · diario íntimo</h3>
-            <span class="badge" style="background: #ffb6c1; color: white;">solo tú</span>
+        <!-- 📔 MÓDULO 7: MODO SOLITARIO - DIARIO PRIVADO -->
+        <div class="card" style="background: #fff9f0;">
+          <div class="section-title">
+            <i class="fas fa-moon"></i>
+            <span>modo solitario · diario</span>
+            <span class="badge" style="background: var(--color-primary); color: white;">solo tú</span>
           </div>
           
-          <div style="margin-bottom: 20px;">
-            <textarea id="diarioEntryInput" class="input" placeholder="escribe lo que sientes, solo tú lo verás..." rows="2" style="border-radius: 30px; margin-bottom: 12px;"></textarea>
+          <!-- NUEVA ENTRADA -->
+          <div style="margin-bottom: 25px;">
+            <textarea id="diarioEntryInput" class="input textarea" placeholder="escribe lo que sientes, solo tú lo verás..." rows="2" style="margin-bottom: 12px;"></textarea>
             <div style="display: flex; justify-content: flex-end;">
-              <button class="btn btn-success" id="saveDiarioBtn"><i class="fas fa-save"></i> guardar en mi diario</button>
+              <button class="btn btn-secondary" id="saveDiarioBtn">
+                <i class="fas fa-save"></i> guardar en mi diario
+              </button>
             </div>
           </div>
           
-          <div id="diarioEntriesContainer" style="max-height: 300px; overflow-y: auto;">
-            <!-- Se llena con JS -->
+          <!-- ÚLTIMAS ENTRADAS -->
+          <div>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+              <span style="font-weight: 700;"><i class="fas fa-history"></i> últimas entradas</span>
+              <button class="btn btn-sm btn-outline" id="viewFullDiarioBtn">ver todas</button>
+            </div>
+            <div id="diarioEntriesPreview" style="max-height: 300px; overflow-y: auto;">
+              <!-- Se llena dinámicamente -->
+            </div>
           </div>
         </div>
         
-        <!-- JUEGOS Y RECOMPENSAS -->
-        <div class="glass-card">
-          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
-            <span style="font-size: 2rem;">🎮</span>
-            <h3>juegos · recompensa diaria</h3>
+        <!-- 🏆 MÓDULO 8: COLECCIONABLES Y LOGROS -->
+        <div class="card">
+          <div class="section-title">
+            <i class="fas fa-star"></i>
+            <span>coleccionables</span>
+          </div>
+          
+          <!-- COLECCIONABLES DEL USUARIO -->
+          <div style="margin-bottom: 25px;">
+            <div style="display: flex; flex-wrap: wrap; gap: 12px;" id="collectiblesContainer">
+              <!-- Se llena dinámicamente -->
+            </div>
+          </div>
+          
+          <!-- PROGRESO Y LOGROS -->
+          <div style="background: #fff7f9; border-radius: 30px; padding: 20px; border: 4px solid white;">
+            <div class="flex items-center gap-sm" style="margin-bottom: 15px;">
+              <i class="fas fa-trophy" style="color: #ffb800;"></i>
+              <span style="font-weight: 700;">tus logros</span>
+            </div>
+            <div id="achievementsContainer">
+              <span class="badge" style="background: #ffe2ec;"><i class="fas fa-check-circle"></i> primer mensaje</span>
+              <span class="badge" style="background: #ffe2ec;"><i class="fas fa-check-circle"></i> primera conexión</span>
+              <span class="badge" style="background: #ffe2ec;"><i class="fas fa-check-circle"></i> diario activo</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 📊 ESTADÍSTICAS PERSONALES -->
+        <div class="card card-sm">
+          <div class="section-title">
+            <i class="fas fa-chart-line"></i>
+            <span>tu actividad</span>
           </div>
           
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-            <!-- JUEGO 1: Reflejos -->
-            <div class="game-card">
-              <span style="font-size: 2rem;">⚡</span>
-              <h4 style="margin: 12px 0;">prueba de reflejos</h4>
-              <div id="miniReactionBox" class="reaction-box" style="padding: 20px; font-size: 1.5rem; margin-bottom: 12px;">
-                💖 toca
-              </div>
-              <button class="btn btn-outline" id="miniReactionBtn" style="width: 100%;">jugar</button>
-              <p style="margin-top: 10px; font-size: 0.8rem;">mejor: <span id="miniBestTime">-</span> ms</p>
+            <div style="background: white; border-radius: 30px; padding: 15px; text-align: center; border: 3px solid var(--color-border);">
+              <span style="font-size: 1.8rem;">💬</span>
+              <p style="font-weight: 700; margin-top: 5px;" id="statsMessages">0</p>
+              <p style="font-size: 0.8rem;">mensajes</p>
             </div>
-            
-            <!-- JUEGO 2: Recompensa diaria -->
-            <div class="game-card">
-              <span style="font-size: 2rem;">🎁</span>
-              <h4 style="margin: 12px 0;">recompensa diaria</h4>
-              <div style="background: white; border-radius: 30px; padding: 15px; margin-bottom: 12px;">
-                <span style="font-size: 1.5rem; display: block;" id="dailyRewardEmoji">🌸</span>
-                <span id="dailyRewardMessage">¡vuelve mañana!</span>
-              </div>
-              <button class="btn btn-success" id="claimDailyRewardBtn" style="width: 100%;">reclamar</button>
+            <div style="background: white; border-radius: 30px; padding: 15px; text-align: center; border: 3px solid var(--color-border);">
+              <span style="font-size: 1.8rem;">🤝</span>
+              <p style="font-weight: 700; margin-top: 5px;" id="statsConnections">0</p>
+              <p style="font-size: 0.8rem;">conexiones</p>
             </div>
-          </div>
-          
-          <!-- COLECCIONABLES -->
-          <div style="margin-top: 20px; padding-top: 20px; border-top: 3px dashed #ffced7;">
-            <p style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
-              <i class="fas fa-star" style="color: #ffb800;"></i> tus coleccionables
-            </p>
-            <div id="collectiblesContainer" style="display: flex; gap: 12px; flex-wrap: wrap;">
-              <!-- Se llena con JS -->
+            <div style="background: white; border-radius: 30px; padding: 15px; text-align: center; border: 3px solid var(--color-border);">
+              <span style="font-size: 1.8rem;">📔</span>
+              <p style="font-weight: 700; margin-top: 5px;" id="statsDiario">0</p>
+              <p style="font-size: 0.8rem;">entradas</p>
+            </div>
+            <div style="background: white; border-radius: 30px; padding: 15px; text-align: center; border: 3px solid var(--color-border);">
+              <span style="font-size: 1.8rem;">🎁</span>
+              <p style="font-weight: 700; margin-top: 5px;" id="statsCollectibles">0</p>
+              <p style="font-size: 0.8rem;">coleccionables</p>
             </div>
           </div>
         </div>
@@ -537,31 +892,55 @@
     </div>
   </div>
   
-  <!-- ===== FOOTER ===== -->
-  <div style="margin-top: 40px; text-align: center; color: #a8767e; border-top: 3px dashed #ffced7; padding-top: 25px;">
-    <p style="font-size: 1.1rem;">✨ red social emocional · creada para marleys con infinito cariño ✨</p>
-    <p style="margin-top: 8px;" id="globalFooterStatus">🌙 modo solitario disponible</p>
-  </div>
+  <!-- ===== 📌 FOOTER ===== -->
+  <footer style="margin-top: 50px; text-align: center; border-top: 4px dashed var(--color-border-strong); padding-top: 30px;">
+    <p style="font-size: 1.2rem; font-weight: 600; color: var(--color-text-soft);">
+      ✨ red social emocional · diseñada con infinito cariño para marleys ✨
+    </p>
+    <p style="margin-top: 12px; color: var(--color-text-muted);" id="globalFooterStatus">
+      🌙 modo solitario · tus recuerdos están a salvo
+    </p>
+    <p style="margin-top: 8px; font-size: 0.8rem; color: var(--color-text-muted);">
+      <i class="fas fa-heart" style="color: var(--color-primary);"></i> 8 módulos · 100% funcional · tiempo real
+    </p>
+  </footer>
 
 </div>
 
-<!-- ===== MODAL DIARIO (VISTA COMPLETA) ===== -->
-<div id="diarioModal" style="display: none; position: fixed; inset: 0; background: rgba(100, 60, 70, 0.3); backdrop-filter: blur(12px); align-items: center; justify-content: center; z-index: 9998;">
-  <div style="background: white; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto; border-radius: 60px; padding: 35px; border: 8px solid white;">
-    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 25px;">
-      <h2 style="font-size: 2rem; color: #b54a5a;">📔 mi diario</h2>
-      <button class="btn" id="closeDiarioModalBtn" style="background: #ffe2ec;">cerrar</button>
+<!-- ===== 🎭 MODAL: DIARIO COMPLETO ===== -->
+<div id="diarioFullModal" class="modal">
+  <div class="modal-content">
+    <div class="flex justify-between items-center" style="margin-bottom: 25px;">
+      <h2 style="font-size: 2rem; color: var(--color-primary-dark);">📔 mi diario íntimo</h2>
+      <button class="btn btn-sm" id="closeDiarioModalBtn" style="background: #ffe2ec;">
+        <i class="fas fa-times"></i> cerrar
+      </button>
     </div>
-    <div id="diarioFullEntries">
-      <!-- se llena con JS -->
+    <div id="diarioFullEntries" style="max-height: 500px; overflow-y: auto; padding-right: 12px;">
+      <!-- Se llena dinámicamente -->
+    </div>
+  </div>
+</div>
+
+<!-- ===== 🎭 MODAL: LOGROS DETALLADOS ===== -->
+<div id="achievementsModal" class="modal">
+  <div class="modal-content">
+    <div class="flex justify-between items-center" style="margin-bottom: 25px;">
+      <h2 style="font-size: 2rem; color: var(--color-primary-dark);">🏆 todos tus logros</h2>
+      <button class="btn btn-sm" id="closeAchievementsModalBtn" style="background: #ffe2ec;">
+        <i class="fas fa-times"></i> cerrar
+      </button>
+    </div>
+    <div id="achievementsFullContainer">
+      <!-- Se llena dinámicamente -->
     </div>
   </div>
 </div>
 
 <script type="module">
-  // ========== FIREBASE ==========
+  // ========== 🔥 FIREBASE CONFIGURACIÓN ==========
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getDatabase, ref, set, onValue, push, update, get, onDisconnect, query, orderByChild, equalTo, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+  import { getDatabase, ref, set, onValue, push, update, get, onDisconnect, query, orderByChild, equalTo, remove, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyByB_5gP3sDwbCmVWbiB5CQXHzsKhcDvoo",
@@ -576,70 +955,113 @@
   const app = initializeApp(firebaseConfig);
   const db = getDatabase(app);
   
-  console.log("🔥 FIREBASE LISTO");
+  console.log("🔥 Firebase conectado - Red Social Emocional v2.0");
 
-  // ========== ESTADO GLOBAL ==========
-  let currentUser = {
-    id: null,
-    alias: null,
-    isLoggedIn: false,
-    mood: 'feliz',
-    dailyRewardClaimed: false,
-    lastRewardDate: null,
-    collectibles: []
+  // ========== 🌸 ESTADO GLOBAL ULTRA-DETALLADO ==========
+  const AppState = {
+    user: {
+      id: null,
+      alias: null,
+      isLoggedIn: false,
+      mood: 'feliz',
+      registeredAt: null,
+      lastActive: null
+    },
+    stats: {
+      messagesCount: 0,
+      connectionsCount: 0,
+      diarioCount: 0,
+      collectiblesCount: 0
+    },
+    game: {
+      reactionActive: false,
+      reactionStartTime: null,
+      bestTime: localStorage.getItem('marleysBestReaction') || null
+    },
+    ui: {
+      currentChat: null,
+      dailyRewardClaimed: false,
+      lastRewardDate: null
+    }
   };
 
-  // ========== UTILIDADES ==========
-  function showNotification(msg, type = 'happy') {
+  // ========== 🎯 UTILIDADES AVANZADAS ==========
+  
+  // Notificaciones con emojis dinámicos
+  function showNotification(message, type = 'info', emoji = '🌸') {
     const notif = document.createElement('div');
     notif.className = 'notification';
-    notif.innerHTML = `<i class="fas fa-heart"></i> ${msg}`;
-    if (type === 'success') notif.style.background = '#7ac9a0';
-    if (type === 'reward') notif.style.background = '#ffb800';
+    notif.innerHTML = `<span style="font-size: 1.5rem;">${emoji}</span> ${message}`;
+    
+    if (type === 'success') notif.style.background = 'var(--color-secondary)';
+    if (type === 'reward') notif.style.background = 'var(--color-accent)';
+    if (type === 'love') notif.style.background = 'var(--color-primary)';
+    
     document.body.appendChild(notif);
-    setTimeout(() => notif.remove(), 3000);
+    setTimeout(() => notif.remove(), 3500);
   }
 
-  function formatTime(timestamp) {
-    if (!timestamp) return '';
+  // Formato de tiempo humanizado
+  function formatTimeAgo(timestamp) {
+    if (!timestamp) return 'recién';
+    const diff = Date.now() - timestamp;
+    if (diff < 60000) return 'ahora mismo';
+    if (diff < 3600000) return `${Math.floor(diff/60000)} min`;
+    if (diff < 86400000) return `${Math.floor(diff/3600000)} h`;
+    if (diff < 604800000) return `${Math.floor(diff/86400000)} d`;
+    return new Date(timestamp).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
+  }
+
+  // Formato de hora para chat
+  function formatChatTime(timestamp) {
     const date = new Date(timestamp);
     return `${date.getHours().toString().padStart(2,'0')}:${date.getMinutes().toString().padStart(2,'0')}`;
   }
 
-  // ========== AUTENTICACIÓN ==========
-  async function register(alias) {
+  // ========== 🦋 MÓDULO 1: USUARIOS - REGISTRO Y AUTENTICACIÓN ==========
+  
+  async function registerUser(alias) {
     if (!alias || alias.trim().length < 2) {
-      showNotification('elige un alias bonito');
+      showNotification('elige un alias bonito', 'info', '💕');
       return;
     }
     
     const cleanAlias = alias.trim();
-    const userId = 'user_' + Date.now() + '_' + Math.random().toString(36).substring(2);
+    const userId = 'user_' + Date.now() + '_' + Math.random().toString(36).substring(2, 10);
     
-    currentUser = {
+    AppState.user = {
       id: userId,
       alias: cleanAlias,
       isLoggedIn: true,
       mood: 'feliz',
-      dailyRewardClaimed: false,
-      collectibles: []
+      registeredAt: Date.now(),
+      lastActive: Date.now()
     };
     
+    // Guardar en localStorage
     localStorage.setItem('marleysSocialUser', JSON.stringify({
       id: userId,
       alias: cleanAlias
     }));
     
     try {
+      // Crear perfil de usuario
       await set(ref(db, `users/${userId}`), {
         id: userId,
         alias: cleanAlias,
         online: true,
         mood: 'feliz',
         registeredAt: Date.now(),
-        lastActive: Date.now()
+        lastActive: Date.now(),
+        collectibles: {
+          flowers: 1,
+          stars: 0,
+          hearts: 0,
+          lightning: 0
+        }
       });
       
+      // Configurar desconexión automática
       onDisconnect(ref(db, `users/${userId}`)).update({
         online: false,
         lastActive: Date.now()
@@ -652,162 +1074,143 @@
       await set(ref(db, `collectibles/${userId}`), {
         flowers: 1,
         stars: 0,
-        hearts: 0
+        hearts: 0,
+        lightning: 0
       });
       
-      currentUser.collectibles = { flowers: 1, stars: 0, hearts: 0 };
+      // Inicializar estadísticas
+      await set(ref(db, `stats/${userId}`), {
+        messages: 0,
+        connections: 0,
+        diarioEntries: 0,
+        reactions: 0
+      });
       
-      updateUI();
-      showNotification(`✨ bienvenida, ${cleanAlias}`);
+      updateUIBeforeLogin();
+      showNotification(`✨ bienvenida, ${cleanAlias}`, 'love', '🦋');
+      
+      // Cargar todos los módulos
+      loadAllModules();
       
     } catch (error) {
-      console.error(error);
-      showNotification('error de conexión');
+      console.error('Error en registro:', error);
+      showNotification('error de conexión', 'error', '😢');
     }
   }
 
-  async function logout() {
-    if (currentUser.isLoggedIn) {
-      await update(ref(db, `users/${currentUser.id}`), { online: false, lastActive: Date.now() });
+  async function logoutUser() {
+    if (AppState.user.isLoggedIn) {
+      await update(ref(db, `users/${AppState.user.id}`), {
+        online: false,
+        lastActive: Date.now()
+      });
     }
+    
     localStorage.removeItem('marleysSocialUser');
-    currentUser = { id: null, alias: null, isLoggedIn: false };
-    updateUI();
-    showNotification('🌙 sesión cerrada');
-  }
-
-  // ========== UI ==========
-  function updateUI() {
-    const notLogged = document.getElementById('notLoggedView');
-    const logged = document.getElementById('loggedView');
-    const mainContent = document.getElementById('mainAppContent');
-    const footer = document.getElementById('globalFooterStatus');
+    AppState.user = { id: null, alias: null, isLoggedIn: false };
+    AppState.stats = { messagesCount: 0, connectionsCount: 0, diarioCount: 0, collectiblesCount: 0 };
     
-    if (currentUser.isLoggedIn) {
-      notLogged.style.display = 'none';
-      logged.style.display = 'block';
-      mainContent.style.display = 'block';
-      document.getElementById('userNameDisplay').innerText = currentUser.alias;
-      document.getElementById('userAvatar').innerHTML = currentUser.alias.substring(0,2).toUpperCase();
-      document.getElementById('userMoodBadge').innerHTML = `<i class="fas fa-smile"></i> ${currentUser.mood}`;
-      footer.innerHTML = `🌸 conectada como ${currentUser.alias} · modo solitario disponible`;
-      
-      // Cargar datos del usuario
-      loadUsers();
-      loadPendingRequests();
-      loadFeedPosts();
-      loadDiarioEntries();
-      loadCollectibles();
-      checkDailyReward();
-      
-    } else {
-      notLogged.style.display = 'block';
-      logged.style.display = 'none';
-      mainContent.style.display = 'none';
-      footer.innerHTML = '🌙 modo solitario disponible';
-    }
+    document.getElementById('viewRegistered').style.display = 'none';
+    document.getElementById('viewNotRegistered').style.display = 'flex';
+    document.getElementById('mainDashboard').style.display = 'none';
+    
+    showNotification('🌙 sesión cerrada', 'info', '💤');
   }
 
-  // ========== 1. MÓDULO DE USUARIOS ==========
-  function loadUsers() {
-    onValue(ref(db, 'users'), (snapshot) => {
-      if (!snapshot.exists()) return;
-      
-      const users = snapshot.val();
-      const onlineCount = Object.values(users).filter(u => u.online).length;
-      document.getElementById('onlineCount').innerText = onlineCount;
-      
-      // Lista de usuarios para conectar
-      const searchTerm = document.getElementById('userSearchInput')?.value?.toLowerCase() || '';
-      let html = '';
-      
-      Object.entries(users).forEach(([id, user]) => {
-        if (id === currentUser.id) return; // no mostrarse a sí mismo
-        
-        const alias = user.alias || 'usuario';
-        if (searchTerm && !alias.toLowerCase().includes(searchTerm)) return;
-        
-        html += `
-          <div class="user-card">
-            <div style="display: flex; align-items: center; gap: 15px;">
-              <div class="avatar avatar-sm" style="background: linear-gradient(145deg, #ffb8c9, #ff90a5);">
-                ${alias.substring(0,2).toUpperCase()}
-              </div>
-              <div>
-                <div style="font-weight: 700;">${alias}</div>
-                <div style="display: flex; align-items: center; gap: 8px; margin-top: 5px;">
-                  <span class="badge ${user.online ? 'badge-online' : ''}" style="${!user.online ? 'background: #e2e2e2;' : ''}">
-                    <i class="fas fa-circle" style="font-size: 0.6rem;"></i> ${user.online ? 'conectada' : 'desconectada'}
-                  </span>
-                  <span class="badge"><i class="fas fa-smile"></i> ${user.mood || 'feliz'}</span>
-                </div>
-              </div>
-            </div>
-            <button class="btn btn-outline send-request-btn" data-userid="${id}" data-alias="${alias}" style="padding: 10px 20px;">
-              <i class="fas fa-user-plus"></i>
-            </button>
-          </div>
-        `;
-      });
-      
-      document.getElementById('usersListContainer').innerHTML = html || '<p style="color: #a8767e; text-align: center;">no hay usuarios</p>';
-      
-      // Event listeners para enviar solicitudes
-      document.querySelectorAll('.send-request-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          sendFriendRequest(btn.dataset.userid, btn.dataset.alias);
-        });
-      });
-    });
+  function updateUIBeforeLogin() {
+    document.getElementById('viewNotRegistered').style.display = 'none';
+    document.getElementById('viewRegistered').style.display = 'block';
+    document.getElementById('mainDashboard').style.display = 'block';
+    
+    document.getElementById('userNameDisplay').textContent = AppState.user.alias;
+    document.getElementById('userAvatar').innerHTML = AppState.user.alias.substring(0,2).toUpperCase();
+    document.getElementById('userMoodDisplay').innerHTML = `<i class="fas fa-smile"></i> ${AppState.user.mood}`;
+    document.getElementById('userJoinDate').innerHTML = `<i class="fas fa-calendar"></i> ${formatTimeAgo(AppState.user.registeredAt)}`;
   }
 
-  // ========== 2. SISTEMA DE CONEXIONES ==========
+  // ========== 🤝 MÓDULO 2: CONEXIONES Y SOLICITUDES ==========
+  
+  // Enviar solicitud de amistad
   async function sendFriendRequest(toUserId, toAlias) {
-    if (!currentUser.isLoggedIn) return;
+    if (!AppState.user.isLoggedIn) return;
     
-    const requestId = `${currentUser.id}_${toUserId}`;
+    const requestId = `${AppState.user.id}_${toUserId}`;
     const requestRef = ref(db, `friendRequests/${requestId}`);
     
-    // Verificar si ya existe
     const snapshot = await get(requestRef);
     if (snapshot.exists()) {
-      showNotification('solicitud ya enviada');
+      showNotification('solicitud ya enviada', 'info', '💌');
       return;
     }
     
     await set(requestRef, {
-      from: currentUser.id,
-      fromAlias: currentUser.alias,
+      from: AppState.user.id,
+      fromAlias: AppState.user.alias,
       to: toUserId,
       toAlias: toAlias,
       status: 'pending',
       timestamp: Date.now()
     });
     
-    showNotification(`solicitud enviada a ${toAlias}`);
+    showNotification(`solicitud enviada a ${toAlias}`, 'success', '💕');
   }
 
-  async function loadPendingRequests() {
-    if (!currentUser.isLoggedIn) return;
+  // Aceptar solicitud
+  async function acceptFriendRequest(fromUserId) {
+    const requestId = `${fromUserId}_${AppState.user.id}`;
     
-    const requestsRef = ref(db, 'friendRequests');
-    const snapshot = await get(requestsRef);
+    // Crear conexión bidireccional
+    await set(ref(db, `connections/${AppState.user.id}/${fromUserId}`), {
+      userId: fromUserId,
+      connectedAt: Date.now()
+    });
+    
+    await set(ref(db, `connections/${fromUserId}/${AppState.user.id}`), {
+      userId: AppState.user.id,
+      connectedAt: Date.now()
+    });
+    
+    // Eliminar solicitud
+    await remove(ref(db, `friendRequests/${requestId}`));
+    
+    // Actualizar estadísticas
+    await runTransaction(ref(db, `stats/${AppState.user.id}/connections`), (v) => (v || 0) + 1);
+    
+    showNotification('solicitud aceptada 💕', 'success', '🤝');
+    loadPendingRequests();
+    loadChatContacts();
+    loadUserStats();
+  }
+
+  // Rechazar solicitud
+  async function rejectFriendRequest(fromUserId) {
+    const requestId = `${fromUserId}_${AppState.user.id}`;
+    await remove(ref(db, `friendRequests/${requestId}`));
+    showNotification('solicitud rechazada', 'info', '💔');
+    loadPendingRequests();
+  }
+
+  // Cargar solicitudes pendientes
+  async function loadPendingRequests() {
+    if (!AppState.user.isLoggedIn) return;
+    
+    const snapshot = await get(ref(db, 'friendRequests'));
     
     if (!snapshot.exists()) {
-      document.getElementById('pendingRequestsContainer').innerHTML = '<p style="color: #a8767e; text-align: center;">no hay solicitudes</p>';
-      document.getElementById('pendingRequestsBadge').innerText = '0';
+      document.getElementById('pendingRequestsContainer').innerHTML = '<p style="color: var(--color-text-muted); text-align: center;">no hay solicitudes pendientes</p>';
+      document.getElementById('pendingRequestsBadge').textContent = '0';
       return;
     }
     
     const requests = snapshot.val();
     const pendingToMe = Object.entries(requests)
-      .filter(([id, req]) => req.to === currentUser.id && req.status === 'pending')
+      .filter(([id, req]) => req.to === AppState.user.id && req.status === 'pending')
       .map(([id, req]) => req);
     
-    document.getElementById('pendingRequestsBadge').innerText = pendingToMe.length;
+    document.getElementById('pendingRequestsBadge').textContent = pendingToMe.length;
     
     if (pendingToMe.length === 0) {
-      document.getElementById('pendingRequestsContainer').innerHTML = '<p style="color: #a8767e; text-align: center;">no hay solicitudes</p>';
+      document.getElementById('pendingRequestsContainer').innerHTML = '<p style="color: var(--color-text-muted); text-align: center;">no hay solicitudes pendientes</p>';
       return;
     }
     
@@ -816,15 +1219,21 @@
       html += `
         <div class="user-card" style="margin-bottom: 12px;">
           <div style="display: flex; align-items: center; gap: 15px;">
-            <div class="avatar avatar-sm">${req.fromAlias.substring(0,2).toUpperCase()}</div>
+            <div class="avatar avatar-xs" style="background: linear-gradient(145deg, #ffb8c9, #ff90a5);">
+              ${req.fromAlias.substring(0,2).toUpperCase()}
+            </div>
             <div>
               <div style="font-weight: 700;">${req.fromAlias}</div>
-              <div style="font-size: 0.8rem;">quiere conectarse</div>
+              <div style="font-size: 0.7rem; color: var(--color-text-muted);">quiere conectarse</div>
             </div>
           </div>
           <div style="display: flex; gap: 8px;">
-            <button class="btn btn-success accept-request-btn" data-from="${req.from}" style="padding: 8px 16px;">aceptar</button>
-            <button class="btn reject-request-btn" data-from="${req.from}" style="background: #ffe2ec; padding: 8px 16px;">rechazar</button>
+            <button class="btn btn-sm btn-success accept-request" data-from="${req.from}" style="padding: 8px 16px;">
+              <i class="fas fa-check"></i>
+            </button>
+            <button class="btn btn-sm reject-request" data-from="${req.from}" style="background: #ffe2ec; padding: 8px 16px;">
+              <i class="fas fa-times"></i>
+            </button>
           </div>
         </div>
       `;
@@ -833,86 +1242,59 @@
     document.getElementById('pendingRequestsContainer').innerHTML = html;
     
     // Event listeners
-    document.querySelectorAll('.accept-request-btn').forEach(btn => {
-      btn.addEventListener('click', async () => {
-        const fromUserId = btn.dataset.from;
-        await acceptFriendRequest(fromUserId);
-      });
+    document.querySelectorAll('.accept-request').forEach(btn => {
+      btn.addEventListener('click', () => acceptFriendRequest(btn.dataset.from));
     });
     
-    document.querySelectorAll('.reject-request-btn').forEach(btn => {
-      btn.addEventListener('click', async () => {
-        const fromUserId = btn.dataset.from;
-        await rejectFriendRequest(fromUserId);
-      });
+    document.querySelectorAll('.reject-request').forEach(btn => {
+      btn.addEventListener('click', () => rejectFriendRequest(btn.dataset.from));
     });
   }
 
-  async function acceptFriendRequest(fromUserId) {
-    const requestId = `${fromUserId}_${currentUser.id}`;
-    
-    // Crear conexión bidireccional
-    await set(ref(db, `connections/${currentUser.id}/${fromUserId}`), {
-      userId: fromUserId,
-      connectedAt: Date.now()
-    });
-    
-    await set(ref(db, `connections/${fromUserId}/${currentUser.id}`), {
-      userId: currentUser.id,
-      connectedAt: Date.now()
-    });
-    
-    // Eliminar solicitud
-    await remove(ref(db, `friendRequests/${requestId}`));
-    
-    showNotification('solicitud aceptada 💕');
-    loadPendingRequests();
-    loadChatContacts();
-  }
-
-  async function rejectFriendRequest(fromUserId) {
-    const requestId = `${fromUserId}_${currentUser.id}`;
-    await remove(ref(db, `friendRequests/${requestId}`));
-    showNotification('solicitud rechazada');
-    loadPendingRequests();
-  }
-
+  // Cargar lista de conexiones
   async function loadConnections() {
-    if (!currentUser.isLoggedIn) return [];
+    if (!AppState.user.isLoggedIn) return [];
     
-    const snapshot = await get(ref(db, `connections/${currentUser.id}`));
+    const snapshot = await get(ref(db, `connections/${AppState.user.id}`));
     if (!snapshot.exists()) return [];
     
     return Object.keys(snapshot.val());
   }
 
-  // ========== 3. CHAT PRIVADO ==========
+  // ========== 💬 MÓDULO 3: CHAT PRIVADO EN TIEMPO REAL ==========
+  
+  // Cargar contactos para chat
   async function loadChatContacts() {
-    if (!currentUser.isLoggedIn) return;
+    if (!AppState.user.isLoggedIn) return;
     
     const connections = await loadConnections();
-    const select = document.getElementById('chatUserSelect');
+    const select = document.getElementById('chatContactSelect');
     
-    let options = '<option value="">selecciona un contacto</option>';
+    let options = '<option value="">💬 selecciona un contacto</option>';
     
     for (const userId of connections) {
-      const userSnapshot = await get(ref(db, `users/${userId}`));
-      if (userSnapshot.exists()) {
-        const user = userSnapshot.val();
-        options += `<option value="${userId}">💬 ${user.alias}</option>`;
+      const snapshot = await get(ref(db, `users/${userId}`));
+      if (snapshot.exists()) {
+        const user = snapshot.val();
+        const online = user.online ? '🟢' : '⚪';
+        options += `<option value="${userId}">${online} ${user.alias}</option>`;
       }
     }
     
     select.innerHTML = options;
+    AppState.stats.connectionsCount = connections.length;
+    document.getElementById('statsConnections').textContent = connections.length;
   }
 
+  // Cargar mensajes de chat
   function loadChatMessages(otherUserId) {
     if (!otherUserId) {
-      document.getElementById('chatMessagesContainer').innerHTML = '<p style="color: #a8767e; text-align: center;">selecciona un contacto</p>';
+      document.getElementById('chatMessagesContainer').innerHTML = '<p style="color: var(--color-text-muted); text-align: center;">selecciona un contacto para chatear</p>';
       return;
     }
     
-    const chatId = [currentUser.id, otherUserId].sort().join('_');
+    AppState.ui.currentChat = otherUserId;
+    const chatId = [AppState.user.id, otherUserId].sort().join('_');
     const messagesRef = ref(db, `chats/${chatId}`);
     
     onValue(messagesRef, (snapshot) => {
@@ -920,7 +1302,7 @@
       const container = document.getElementById('chatMessagesContainer');
       
       if (!messages) {
-        container.innerHTML = '<p style="color: #a8767e; text-align: center;">no hay mensajes aún</p>';
+        container.innerHTML = '<p style="color: var(--color-text-muted); text-align: center;">no hay mensajes aún ✨</p>';
         return;
       }
       
@@ -928,16 +1310,24 @@
         .sort((a,b) => a[1].timestamp - b[1].timestamp)
         .map(([id, msg]) => msg);
       
+      AppState.stats.messagesCount = messagesArray.length;
+      document.getElementById('statsMessages').textContent = messagesArray.length;
+      
       let html = '';
       messagesArray.forEach(msg => {
-        const isMine = msg.from === currentUser.id;
+        const isMine = msg.from === AppState.user.id;
         html += `
           <div style="display: flex; flex-direction: column; ${isMine ? 'align-items: flex-end;' : 'align-items: flex-start;'}">
             <div class="${isMine ? 'chat-bubble-mine' : 'chat-bubble-other'}">
-              <div style="font-size: 0.75rem; margin-bottom: 5px; ${isMine ? 'color: rgba(255,255,255,0.9);' : 'color: #a8767e;'}">
-                ${isMine ? 'tú' : msg.fromAlias} · ${formatTime(msg.timestamp)}
+              <div style="display: flex; justify-content: space-between; gap: 15px; margin-bottom: 5px;">
+                <span style="font-size: 0.7rem; ${isMine ? 'color: rgba(255,255,255,0.9);' : 'color: var(--color-text-muted);'}">
+                  ${isMine ? 'tú' : msg.fromAlias}
+                </span>
+                <span style="font-size: 0.6rem; ${isMine ? 'color: rgba(255,255,255,0.7);' : 'color: var(--color-text-muted);'}">
+                  ${formatChatTime(msg.timestamp)}
+                </span>
               </div>
-              <div style="font-size: 1rem;">${msg.text}</div>
+              <div style="font-size: 0.95rem;">${msg.text}</div>
             </div>
           </div>
         `;
@@ -948,43 +1338,58 @@
     });
   }
 
+  // Enviar mensaje
   async function sendMessage() {
-    if (!currentUser.isLoggedIn) return;
+    if (!AppState.user.isLoggedIn) {
+      showNotification('inicia sesión para chatear', 'info', '💬');
+      return;
+    }
     
-    const otherUserId = document.getElementById('chatUserSelect').value;
+    const otherUserId = document.getElementById('chatContactSelect').value;
     if (!otherUserId) {
-      showNotification('selecciona un contacto');
+      showNotification('selecciona un contacto', 'info', '💭');
       return;
     }
     
     const text = document.getElementById('chatMessageInput').value.trim();
     if (!text) return;
     
-    const chatId = [currentUser.id, otherUserId].sort().join('_');
+    const chatId = [AppState.user.id, otherUserId].sort().join('_');
     const messageRef = push(ref(db, `chats/${chatId}`));
     
     await set(messageRef, {
-      from: currentUser.id,
-      fromAlias: currentUser.alias,
+      from: AppState.user.id,
+      fromAlias: AppState.user.alias,
       to: otherUserId,
       text: text,
       timestamp: Date.now()
     });
     
     document.getElementById('chatMessageInput').value = '';
+    
+    // Actualizar estadísticas
+    await runTransaction(ref(db, `stats/${AppState.user.id}/messages`), (v) => (v || 0) + 1);
   }
 
-  // ========== 4. FEED SOCIAL ==========
+  // ========== 📰 MÓDULO 4: FEED SOCIAL CON LIKES ==========
+  
+  // Publicar en feed
   async function publishFeedPost() {
-    if (!currentUser.isLoggedIn) return;
+    if (!AppState.user.isLoggedIn) {
+      showNotification('inicia sesión para publicar', 'info', '📝');
+      return;
+    }
     
     const text = document.getElementById('feedPostInput').value.trim();
-    if (!text) return;
+    if (!text) {
+      showNotification('escribe algo bonito', 'info', '💭');
+      return;
+    }
     
     const postRef = push(ref(db, 'feed'));
     await set(postRef, {
-      alias: currentUser.alias,
-      userId: currentUser.id,
+      alias: AppState.user.alias,
+      userId: AppState.user.id,
       text: text,
       timestamp: Date.now(),
       likes: 0,
@@ -992,38 +1397,88 @@
     });
     
     document.getElementById('feedPostInput').value = '';
-    showNotification('pensamiento publicado ✨');
+    showNotification('pensamiento compartido ✨', 'success', '📰');
   }
 
+  // Dar/quitar like
+  async function toggleLike(postId) {
+    if (!AppState.user.isLoggedIn) {
+      showNotification('inicia sesión para dar like', 'info', '❤️');
+      return;
+    }
+    
+    const postRef = ref(db, `feed/${postId}`);
+    const snapshot = await get(postRef);
+    
+    if (snapshot.exists()) {
+      const post = snapshot.val();
+      const likedBy = post.likedBy || {};
+      
+      if (likedBy[AppState.user.id]) {
+        // Unlike
+        delete likedBy[AppState.user.id];
+        await update(postRef, {
+          likes: (post.likes || 0) - 1,
+          likedBy: likedBy
+        });
+      } else {
+        // Like
+        likedBy[AppState.user.id] = true;
+        await update(postRef, {
+          likes: (post.likes || 0) + 1,
+          likedBy: likedBy
+        });
+        showNotification('❤️', 'love', '💖');
+      }
+    }
+  }
+
+  // Cargar feed
   function loadFeedPosts() {
     const feedRef = ref(db, 'feed');
     
     onValue(feedRef, (snapshot) => {
       if (!snapshot.exists()) {
-        document.getElementById('feedPostsContainer').innerHTML = '<p style="color: #a8767e; text-align: center;">aún no hay pensamientos</p>';
+        document.getElementById('feedPostsContainer').innerHTML = `
+          <div style="text-align: center; padding: 40px; background: white; border-radius: 40px; border: 4px solid var(--color-border);">
+            <span style="font-size: 3rem;">🌸</span>
+            <p style="margin-top: 15px; color: var(--color-text-muted);">aún no hay pensamientos</p>
+            <p style="font-size: 0.9rem; margin-top: 8px;">sé la primera en compartir algo</p>
+          </div>
+        `;
         return;
       }
       
       const posts = Object.entries(snapshot.val())
         .sort((a,b) => b[1].timestamp - a[1].timestamp)
-        .slice(0, 10);
+        .slice(0, 15);
+      
+      if (posts.length === 0) {
+        document.getElementById('feedPostsContainer').innerHTML = '<p style="color: var(--color-text-muted); text-align: center;">no hay posts</p>';
+        return;
+      }
       
       let html = '';
       posts.forEach(([id, post]) => {
-        const userLiked = post.likedBy && post.likedBy[currentUser.id];
+        const userLiked = post.likedBy && post.likedBy[AppState.user.id];
+        const timeAgo = formatTimeAgo(post.timestamp);
         
         html += `
-          <div style="background: white; border-radius: 30px; padding: 22px; margin-bottom: 18px; border: 3px solid #ffe2ec;">
-            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
-              <div class="avatar avatar-sm">${post.alias.substring(0,2).toUpperCase()}</div>
+          <div class="feed-post">
+            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+              <div class="avatar avatar-xs" style="background: linear-gradient(145deg, #ffb8c9, #ff90a5);">
+                ${post.alias.substring(0,2).toUpperCase()}
+              </div>
               <div>
-                <span style="font-weight: 700;">${post.alias}</span>
-                <span style="display: block; font-size: 0.7rem; color: #a8767e;">${new Date(post.timestamp).toLocaleString()}</span>
+                <span style="font-weight: 700; font-size: 1rem;">${post.alias}</span>
+                <span style="display: block; font-size: 0.65rem; color: var(--color-text-muted);">${timeAgo}</span>
               </div>
             </div>
-            <p style="margin: 12px 0 16px 8px; font-size: 1.1rem;">${post.text}</p>
+            
+            <p style="margin: 12px 0 20px 8px; font-size: 1.05rem; line-height: 1.5;">${post.text}</p>
+            
             <div style="display: flex; align-items: center; gap: 15px;">
-              <button class="btn like-btn" data-postid="${id}" style="background: ${userLiked ? '#ff7a8f' : '#ffe2ec'}; color: ${userLiked ? 'white' : '#4a3035'}; padding: 8px 20px;">
+              <button class="btn btn-sm like-btn" data-postid="${id}" style="background: ${userLiked ? 'var(--color-primary)' : '#ffe2ec'}; color: ${userLiked ? 'white' : 'var(--color-text)'};">
                 <i class="fas fa-heart"></i> ${post.likes || 0}
               </button>
             </div>
@@ -1033,302 +1488,390 @@
       
       document.getElementById('feedPostsContainer').innerHTML = html;
       
-      // Like functionality
+      // Event listeners para likes
       document.querySelectorAll('.like-btn').forEach(btn => {
-        btn.addEventListener('click', async () => {
-          const postId = btn.dataset.postid;
-          await likePost(postId);
-        });
+        btn.addEventListener('click', () => toggleLike(btn.dataset.postid));
       });
     });
   }
 
-  async function likePost(postId) {
-    if (!currentUser.isLoggedIn) return;
-    
-    const postRef = ref(db, `feed/${postId}`);
-    const snapshot = await get(postRef);
-    
-    if (snapshot.exists()) {
-      const post = snapshot.val();
-      const likedBy = post.likedBy || {};
-      
-      if (likedBy[currentUser.id]) {
-        // Unlike
-        delete likedBy[currentUser.id];
-        await update(postRef, {
-          likes: (post.likes || 0) - 1,
-          likedBy: likedBy
-        });
-      } else {
-        // Like
-        likedBy[currentUser.id] = true;
-        await update(postRef, {
-          likes: (post.likes || 0) + 1,
-          likedBy: likedBy
-        });
-      }
-    }
-  }
-
-  // ========== 5. MODO SOLITARIO - DIARIO PRIVADO ==========
+  // ========== 🌙 MÓDULO 5: MODO SOLITARIO - DIARIO PRIVADO ==========
+  
+  // Guardar entrada en diario
   async function saveDiarioEntry() {
-    if (!currentUser.isLoggedIn) return;
+    if (!AppState.user.isLoggedIn) return;
     
     const text = document.getElementById('diarioEntryInput').value.trim();
-    if (!text) return;
+    if (!text) {
+      showNotification('escribe algo en tu diario', 'info', '📔');
+      return;
+    }
     
-    const entryRef = push(ref(db, `diario/${currentUser.id}`));
+    const entryRef = push(ref(db, `diario/${AppState.user.id}`));
     await set(entryRef, {
       text: text,
       timestamp: Date.now()
     });
     
     document.getElementById('diarioEntryInput').value = '';
-    showNotification('guardado en tu diario 📔');
+    showNotification('guardado en tu diario 📔', 'success', '🌙');
+    
+    // Actualizar estadísticas
+    const snapshot = await get(ref(db, `diario/${AppState.user.id}`));
+    const count = snapshot.exists() ? Object.keys(snapshot.val()).length : 0;
+    await set(ref(db, `stats/${AppState.user.id}/diarioEntries`), count);
+    
     loadDiarioEntries();
   }
 
+  // Cargar entradas del diario
   async function loadDiarioEntries() {
-    if (!currentUser.isLoggedIn) return;
+    if (!AppState.user.isLoggedIn) return;
     
-    const snapshot = await get(ref(db, `diario/${currentUser.id}`));
+    const snapshot = await get(ref(db, `diario/${AppState.user.id}`));
     
     if (!snapshot.exists()) {
-      document.getElementById('diarioEntriesContainer').innerHTML = '<p style="color: #a8767e; text-align: center;">aún no hay entradas en tu diario</p>';
-      document.getElementById('diarioFullEntries').innerHTML = '<p style="color: #a8767e; text-align: center;">aún no hay entradas</p>';
+      document.getElementById('diarioEntriesPreview').innerHTML = '<p style="color: var(--color-text-muted); text-align: center; padding: 20px;">aún no hay entradas en tu diario</p>';
+      document.getElementById('diarioFullEntries').innerHTML = '<p style="color: var(--color-text-muted); text-align: center;">aún no has escrito nada</p>';
+      document.getElementById('statsDiario').textContent = '0';
       return;
     }
     
     const entries = Object.entries(snapshot.val())
-      .sort((a,b) => b[1].timestamp - a[1].timestamp)
-      .slice(0, 5);
+      .sort((a,b) => b[1].timestamp - a[1].timestamp);
     
-    let html = '';
-    let fullHtml = '';
+    AppState.stats.diarioCount = entries.length;
+    document.getElementById('statsDiario').textContent = entries.length;
     
-    entries.forEach(([id, entry]) => {
-      const date = new Date(entry.timestamp).toLocaleString();
-      html += `
-        <div class="diario-entry">
-          <p style="font-size: 0.8rem; color: #a8767e; margin-bottom: 8px;">📅 ${date}</p>
-          <p>${entry.text}</p>
-        </div>
-      `;
-      
-      fullHtml += `
-        <div class="diario-entry" style="margin-bottom: 20px;">
-          <p style="font-size: 0.8rem; color: #a8767e; margin-bottom: 8px;">📅 ${date}</p>
-          <p style="font-size: 1.1rem;">${entry.text}</p>
+    // Preview (últimas 3)
+    let previewHtml = '';
+    entries.slice(0, 3).forEach(([id, entry]) => {
+      previewHtml += `
+        <div class="diario-entry" style="padding: 15px;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+            <span style="font-size: 0.7rem; color: var(--color-text-muted);">
+              <i class="fas fa-clock"></i> ${formatTimeAgo(entry.timestamp)}
+            </span>
+          </div>
+          <p style="font-size: 0.95rem;">${entry.text}</p>
         </div>
       `;
     });
     
-    document.getElementById('diarioEntriesContainer').innerHTML = html || '<p style="color: #a8767e;">no hay entradas</p>';
-    document.getElementById('diarioFullEntries').innerHTML = fullHtml || '<p style="color: #a8767e;">no hay entradas</p>';
+    // Vista completa
+    let fullHtml = '';
+    entries.forEach(([id, entry]) => {
+      const date = new Date(entry.timestamp).toLocaleString('es-ES', {
+        day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit'
+      });
+      fullHtml += `
+        <div class="diario-entry" style="margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <span style="font-size: 0.8rem; color: var(--color-text-muted);">
+              <i class="fas fa-calendar-alt"></i> ${date}
+            </span>
+          </div>
+          <p style="font-size: 1.1rem; line-height: 1.6;">${entry.text}</p>
+        </div>
+      `;
+    });
+    
+    document.getElementById('diarioEntriesPreview').innerHTML = previewHtml || '<p style="color: var(--color-text-muted);">no hay entradas</p>';
+    document.getElementById('diarioFullEntries').innerHTML = fullHtml || '<p style="color: var(--color-text-muted);">no hay entradas</p>';
   }
 
-  // ========== 6. JUEGOS Y RECOMPENSAS ==========
-  // Juego de reflejos
-  let reactionActive = false;
-  let reactionStartTime = null;
-  let bestTime = localStorage.getItem('marleysBestReaction') || null;
+  // ========== 🎮 MÓDULO 6: JUEGOS Y RECOMPENSAS ==========
   
-  if (bestTime) document.getElementById('miniBestTime').innerText = bestTime;
-
-  function startMiniReaction() {
-    if (!currentUser.isLoggedIn) {
-      showNotification('inicia sesión para jugar');
+  // Juego de reflejos
+  function startReactionGame() {
+    if (!AppState.user.isLoggedIn) {
+      showNotification('inicia sesión para jugar', 'info', '⚡');
       return;
     }
     
-    if (reactionActive) return;
+    if (AppState.game.reactionActive) return;
     
-    reactionActive = true;
-    const box = document.getElementById('miniReactionBox');
-    const btn = document.getElementById('miniReactionBtn');
+    AppState.game.reactionActive = true;
+    const box = document.getElementById('reactionGameBox');
+    const btn = document.getElementById('startReactionBtn');
     
     box.innerText = '🌸 espera...';
     box.style.background = '#ffccd5';
+    box.style.cursor = 'default';
     btn.disabled = true;
     
+    const delay = Math.random() * 2500 + 1500;
+    
     setTimeout(() => {
-      if (!reactionActive) return;
+      if (!AppState.game.reactionActive) return;
       
-      reactionStartTime = Date.now();
-      box.innerText = '💥 TOCA!';
+      AppState.game.reactionStartTime = Date.now();
+      box.innerText = '💥 TOCA AHORA!';
       box.style.background = '#ffa5b6';
       box.style.cursor = 'pointer';
       
       box.onclick = () => {
-        const time = Date.now() - reactionStartTime;
-        reactionActive = false;
+        const time = Date.now() - AppState.game.reactionStartTime;
+        AppState.game.reactionActive = false;
         box.innerText = `⚡ ${time} ms`;
         box.onclick = null;
         btn.disabled = false;
         
-        if (!bestTime || time < parseInt(bestTime)) {
-          bestTime = time;
+        if (!AppState.game.bestTime || time < parseInt(AppState.game.bestTime)) {
+          AppState.game.bestTime = time;
           localStorage.setItem('marleysBestReaction', time);
-          document.getElementById('miniBestTime').innerText = time;
+          document.getElementById('reactionBestTime').textContent = time;
           
           // Recompensa por récord
-          addCollectible('⚡', 'récord reflejos');
-          showNotification('🏆 nuevo récord! +⚡', 'reward');
+          addCollectible('⚡', 1);
+          showNotification('🏆 ¡nuevo récord! +⚡', 'reward', '🏆');
         }
+        
+        // Actualizar estadísticas
+        runTransaction(ref(db, `stats/${AppState.user.id}/reactions`), (v) => (v || 0) + 1);
       };
-    }, Math.random() * 2000 + 1500);
+    }, delay);
   }
 
   // Recompensa diaria
-  async function checkDailyReward() {
-    if (!currentUser.isLoggedIn) return;
+  async function claimDailyReward() {
+    if (!AppState.user.isLoggedIn) {
+      showNotification('inicia sesión', 'info', '🎁');
+      return;
+    }
     
-    const lastClaim = localStorage.getItem('marleysLastReward');
     const today = new Date().toDateString();
+    const lastClaim = localStorage.getItem('marleysLastReward');
     
     if (lastClaim === today) {
-      document.getElementById('dailyRewardEmoji').innerText = '✅';
-      document.getElementById('dailyRewardMessage').innerText = 'ya reclamaste hoy';
+      showNotification('ya reclamaste hoy', 'info', '✅');
+      return;
+    }
+    
+    localStorage.setItem('marleysLastReward', today);
+    
+    // Recompensa aleatoria
+    const rewards = [
+      { emoji: '🌸', name: 'flor', amount: 1 },
+      { emoji: '✨', name: 'estrella', amount: 1 },
+      { emoji: '💖', name: 'corazón', amount: 1 },
+      { emoji: '🦋', name: 'mariposa', amount: 1 }
+    ];
+    
+    const reward = rewards[Math.floor(Math.random() * rewards.length)];
+    await addCollectible(reward.emoji, reward.amount);
+    
+    document.getElementById('dailyRewardEmoji').textContent = '✅';
+    document.getElementById('dailyRewardMessage').textContent = '¡reclamada hoy!';
+    document.getElementById('claimDailyRewardBtn').disabled = true;
+    
+    showNotification(`🎁 recompensa: ${reward.emoji} x${reward.amount}`, 'reward', '🎁');
+  }
+
+  // Verificar estado de recompensa diaria
+  function checkDailyRewardStatus() {
+    const today = new Date().toDateString();
+    const lastClaim = localStorage.getItem('marleysLastReward');
+    
+    if (lastClaim === today) {
+      document.getElementById('dailyRewardEmoji').textContent = '✅';
+      document.getElementById('dailyRewardMessage').textContent = 'reclamada hoy';
       document.getElementById('claimDailyRewardBtn').disabled = true;
     } else {
-      document.getElementById('dailyRewardEmoji').innerText = '🎁';
-      document.getElementById('dailyRewardMessage').innerText = '¡reclama tu recompensa!';
+      document.getElementById('dailyRewardEmoji').textContent = '🎁';
+      document.getElementById('dailyRewardMessage').textContent = '¡reclama tu regalo!';
       document.getElementById('claimDailyRewardBtn').disabled = false;
     }
   }
 
-  async function claimDailyReward() {
-    if (!currentUser.isLoggedIn) return;
+  // ========== 🏆 MÓDULO 7: COLECCIONABLES Y LOGROS ==========
+  
+  // Añadir coleccionable
+  async function addCollectible(type, amount = 1) {
+    if (!AppState.user.isLoggedIn) return;
     
-    const today = new Date().toDateString();
-    localStorage.setItem('marleysLastReward', today);
-    
-    // Dar coleccionable aleatorio
-    const rewards = ['🌸', '✨', '💖', '🦋', '🌟'];
-    const reward = rewards[Math.floor(Math.random() * rewards.length)];
-    
-    await addCollectible(reward, 'recompensa diaria');
-    
-    document.getElementById('dailyRewardEmoji').innerText = '✅';
-    document.getElementById('dailyRewardMessage').innerText = '¡reclamada!';
-    document.getElementById('claimDailyRewardBtn').disabled = true;
-    
-    showNotification(`🎁 reclamaste: ${reward}`, 'reward');
-  }
-
-  // Coleccionables
-  async function loadCollectibles() {
-    if (!currentUser.isLoggedIn) return;
-    
-    const snapshot = await get(ref(db, `collectibles/${currentUser.id}`));
-    
-    if (!snapshot.exists()) {
-      document.getElementById('collectiblesContainer').innerHTML = '<span class="badge">🌸 1</span>';
-      return;
-    }
-    
-    const cols = snapshot.val();
-    let html = '';
-    
-    if (cols.flowers) html += `<span class="badge" style="background: #ffe2ec;">🌸 ${cols.flowers}</span>`;
-    if (cols.stars) html += `<span class="badge" style="background: #fff1c1;">✨ ${cols.stars}</span>`;
-    if (cols.hearts) html += `<span class="badge" style="background: #ffd6e0;">💖 ${cols.hearts}</span>`;
-    if (cols.lightning) html += `<span class="badge" style="background: #ffe0b5;">⚡ ${cols.lightning}</span>`;
-    
-    document.getElementById('collectiblesContainer').innerHTML = html || '<span class="badge">🌸 1</span>';
-  }
-
-  async function addCollectible(type, reason) {
-    if (!currentUser.isLoggedIn) return;
-    
-    const collectibleRef = ref(db, `collectibles/${currentUser.id}`);
+    const collectibleRef = ref(db, `collectibles/${AppState.user.id}`);
     const snapshot = await get(collectibleRef);
     
-    let collectibles = snapshot.exists() ? snapshot.val() : { flowers: 1, stars: 0, hearts: 0 };
+    let collectibles = snapshot.exists() ? snapshot.val() : {
+      flowers: 0,
+      stars: 0,
+      hearts: 0,
+      lightning: 0
+    };
     
-    if (type === '🌸') collectibles.flowers = (collectibles.flowers || 0) + 1;
-    if (type === '✨') collectibles.stars = (collectibles.stars || 0) + 1;
-    if (type === '💖') collectibles.hearts = (collectibles.hearts || 0) + 1;
-    if (type === '⚡') collectibles.lightning = (collectibles.lightning || 0) + 1;
+    if (type === '🌸') collectibles.flowers = (collectibles.flowers || 0) + amount;
+    if (type === '✨') collectibles.stars = (collectibles.stars || 0) + amount;
+    if (type === '💖') collectibles.hearts = (collectibles.hearts || 0) + amount;
+    if (type === '⚡') collectibles.lightning = (collectibles.lightning || 0) + amount;
+    if (type === '🦋') collectibles.butterflies = (collectibles.butterflies || 0) + amount;
     
     await set(collectibleRef, collectibles);
     loadCollectibles();
   }
 
-  // ========== 7. CAMBIAR ESTADO EMOCIONAL ==========
-  async function setMood(mood) {
-    if (!currentUser.isLoggedIn) return;
+  // Cargar coleccionables
+  async function loadCollectibles() {
+    if (!AppState.user.isLoggedIn) return;
     
-    currentUser.mood = mood;
-    await update(ref(db, `users/${currentUser.id}`), { mood: mood });
+    const snapshot = await get(ref(db, `collectibles/${AppState.user.id}`));
     
-    const moodNames = { feliz: '😊 feliz', tranquila: '😌 tranquila', nostalgica: '🥺 nostálgica', energetica: '⚡ energética' };
-    document.getElementById('userMoodBadge').innerHTML = `<i class="fas fa-smile"></i> ${moodNames[mood]}`;
-    showNotification(`estado actualizado: ${moodNames[mood]}`);
+    if (!snapshot.exists()) {
+      document.getElementById('collectiblesContainer').innerHTML = `
+        <span class="collectible"><span style="font-size: 1.5rem;">🌸</span> 0</span>
+      `;
+      return;
+    }
+    
+    const cols = snapshot.val();
+    let total = 0;
+    let html = '';
+    
+    if (cols.flowers) {
+      html += `<span class="collectible"><span style="font-size: 1.5rem;">🌸</span> ${cols.flowers}</span>`;
+      total += cols.flowers;
+    }
+    if (cols.stars) {
+      html += `<span class="collectible"><span style="font-size: 1.5rem;">✨</span> ${cols.stars}</span>`;
+      total += cols.stars;
+    }
+    if (cols.hearts) {
+      html += `<span class="collectible"><span style="font-size: 1.5rem;">💖</span> ${cols.hearts}</span>`;
+      total += cols.hearts;
+    }
+    if (cols.lightning) {
+      html += `<span class="collectible"><span style="font-size: 1.5rem;">⚡</span> ${cols.lightning}</span>`;
+      total += cols.lightning;
+    }
+    if (cols.butterflies) {
+      html += `<span class="collectible"><span style="font-size: 1.5rem;">🦋</span> ${cols.butterflies}</span>`;
+      total += cols.butterflies;
+    }
+    
+    AppState.stats.collectiblesCount = total;
+    document.getElementById('statsCollectibles').textContent = total;
+    document.getElementById('collectiblesContainer').innerHTML = html || '<span class="collectible">🌸 0</span>';
   }
 
-  // ========== 8. EVENT LISTENERS ==========
-  function setupEventListeners() {
-    // Registro
-    document.getElementById('registerBtn').addEventListener('click', () => {
-      register(document.getElementById('registerAliasInput').value);
-    });
+  // ========== 📊 MÓDULO 8: ESTADÍSTICAS Y PROGRESO ==========
+  
+  async function loadUserStats() {
+    if (!AppState.user.isLoggedIn) return;
     
-    // Logout
-    document.getElementById('logoutBtn').addEventListener('click', logout);
+    const snapshot = await get(ref(db, `stats/${AppState.user.id}`));
     
-    // Búsqueda de usuarios
-    document.getElementById('userSearchInput')?.addEventListener('input', loadUsers);
+    if (snapshot.exists()) {
+      const stats = snapshot.val();
+      document.getElementById('statsMessages').textContent = stats.messages || 0;
+      document.getElementById('statsConnections').textContent = stats.connections || 0;
+      document.getElementById('statsDiario').textContent = stats.diaryEntries || 0;
+    }
+  }
+
+  // ========== 🚀 CARGA DE TODOS LOS MÓDULOS ==========
+  
+  function loadAllModules() {
+    if (!AppState.user.isLoggedIn) return;
     
-    // Chat
-    document.getElementById('chatUserSelect').addEventListener('change', (e) => {
-      loadChatMessages(e.target.value);
-    });
+    // Módulo 1: Usuarios
+    loadUsers();
     
-    document.getElementById('sendMessageBtn').addEventListener('click', sendMessage);
+    // Módulo 2: Solicitudes
+    loadPendingRequests();
     
-    document.getElementById('chatMessageInput').addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') sendMessage();
-    });
+    // Módulo 3: Chat
+    loadChatContacts();
     
-    // Feed
-    document.getElementById('publishFeedBtn').addEventListener('click', publishFeedPost);
+    // Módulo 4: Feed
+    loadFeedPosts();
     
-    // Diario
-    document.getElementById('saveDiarioBtn').addEventListener('click', saveDiarioEntry);
+    // Módulo 5: Diario
+    loadDiarioEntries();
     
-    document.getElementById('openDiarioBtn').addEventListener('click', () => {
-      document.getElementById('diarioModal').style.display = 'flex';
-      loadDiarioEntries();
-    });
+    // Módulo 6: Juegos
+    checkDailyRewardStatus();
+    if (AppState.game.bestTime) {
+      document.getElementById('reactionBestTime').textContent = AppState.game.bestTime;
+    }
     
-    document.getElementById('closeDiarioModalBtn').addEventListener('click', () => {
-      document.getElementById('diarioModal').style.display = 'none';
-    });
+    // Módulo 7: Coleccionables
+    loadCollectibles();
     
-    // Juegos
-    document.getElementById('miniReactionBtn').addEventListener('click', startMiniReaction);
-    document.getElementById('claimDailyRewardBtn').addEventListener('click', claimDailyReward);
+    // Módulo 8: Estadísticas
+    loadUserStats();
     
-    // Estados de ánimo
-    document.querySelectorAll('.mood-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        setMood(btn.dataset.mood);
-      });
-    });
-    
-    // Cerrar modal al hacer click fuera
-    document.getElementById('diarioModal').addEventListener('click', (e) => {
-      if (e.target === document.getElementById('diarioModal')) {
-        document.getElementById('diarioModal').style.display = 'none';
+    // Usuarios online
+    setupUsersOnlineListener();
+  }
+
+  // Listener de usuarios online
+  function setupUsersOnlineListener() {
+    onValue(ref(db, 'users'), (snapshot) => {
+      if (snapshot.exists()) {
+        const users = Object.values(snapshot.val()).filter(u => u.online).length;
+        document.getElementById('onlineCount').textContent = users;
       }
     });
   }
 
-  // ========== INICIALIZACIÓN ==========
-  async function init() {
-    console.log("🌸 Iniciando Marleys Social...");
+  // Cargar lista de usuarios
+  function loadUsers() {
+    const usersRef = ref(db, 'users');
+    
+    onValue(usersRef, (snapshot) => {
+      if (!snapshot.exists()) return;
+      
+      const users = snapshot.val();
+      const searchTerm = document.getElementById('userSearchInput')?.value?.toLowerCase() || '';
+      
+      let html = '';
+      
+      Object.entries(users).forEach(([id, user]) => {
+        if (id === AppState.user.id) return;
+        
+        const alias = user.alias || 'usuario';
+        if (searchTerm && !alias.toLowerCase().includes(searchTerm)) return;
+        
+        html += `
+          <div class="user-card">
+            <div style="display: flex; align-items: center; gap: 15px;">
+              <div class="avatar avatar-xs" style="background: linear-gradient(145deg, #ffb8c9, #ff90a5);">
+                ${alias.substring(0,2).toUpperCase()}
+              </div>
+              <div>
+                <div style="font-weight: 700; font-size: 0.95rem;">${alias}</div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-top: 5px;">
+                  <span class="badge ${user.online ? 'badge-online' : 'badge-offline'}" style="padding: 4px 12px;">
+                    <i class="fas fa-circle" style="font-size: 0.5rem;"></i> ${user.online ? 'conectada' : 'desconectada'}
+                  </span>
+                  <span class="badge" style="padding: 4px 12px;">
+                    <i class="fas fa-smile"></i> ${user.mood || 'feliz'}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-sm btn-outline send-request-btn" data-userid="${id}" data-alias="${alias}" style="padding: 8px 16px;">
+              <i class="fas fa-user-plus"></i>
+            </button>
+          </div>
+        `;
+      });
+      
+      document.getElementById('usersListContainer').innerHTML = html || '<p style="color: var(--color-text-muted); text-align: center;">no hay usuarios</p>';
+      
+      // Event listeners para solicitudes
+      document.querySelectorAll('.send-request-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          sendFriendRequest(btn.dataset.userid, btn.dataset.alias);
+        });
+      });
+    });
+  }
+
+  // ========== 🎯 INICIALIZACIÓN ==========
+  
+  async function initApp() {
+    console.log("🌸 Inicializando Red Social Emocional...");
     
     // Cargar usuario guardado
     const saved = localStorage.getItem('marleysSocialUser');
@@ -1336,11 +1879,13 @@
       try {
         const u = JSON.parse(saved);
         if (u && u.id && u.alias) {
-          currentUser = {
+          AppState.user = {
             id: u.id,
             alias: u.alias,
             isLoggedIn: true,
-            mood: 'feliz'
+            mood: 'feliz',
+            registeredAt: Date.now(),
+            lastActive: Date.now()
           };
           
           await set(ref(db, `users/${u.id}`), {
@@ -1355,21 +1900,91 @@
             online: false,
             lastActive: Date.now()
           });
+          
+          updateUIBeforeLogin();
+          loadAllModules();
         }
       } catch (e) {
-        console.error(e);
+        console.error("Error cargando usuario:", e);
+        localStorage.removeItem('marleysSocialUser');
       }
     }
     
-    updateUI();
+    // Event Listeners
     setupEventListeners();
-    
-    if (currentUser.isLoggedIn) {
-      loadChatContacts();
-    }
   }
 
-  init();
+  function setupEventListeners() {
+    // Registro
+    document.getElementById('registerBtn').addEventListener('click', () => {
+      registerUser(document.getElementById('registerAliasInput').value);
+    });
+    
+    // Logout
+    document.getElementById('logoutBtn').addEventListener('click', logoutUser);
+    
+    // Búsqueda de usuarios
+    document.getElementById('userSearchInput').addEventListener('input', loadUsers);
+    
+    // Chat
+    document.getElementById('chatContactSelect').addEventListener('change', (e) => {
+      loadChatMessages(e.target.value);
+    });
+    
+    document.getElementById('sendMessageBtn').addEventListener('click', sendMessage);
+    
+    document.getElementById('chatMessageInput').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+    
+    // Feed
+    document.getElementById('publishFeedBtn').addEventListener('click', publishFeedPost);
+    
+    // Diario
+    document.getElementById('saveDiarioBtn').addEventListener('click', saveDiarioEntry);
+    
+    document.getElementById('openDiarioModalBtn').addEventListener('click', () => {
+      document.getElementById('diarioFullModal').classList.add('active');
+      loadDiarioEntries();
+    });
+    
+    document.getElementById('viewFullDiarioBtn').addEventListener('click', () => {
+      document.getElementById('diarioFullModal').classList.add('active');
+      loadDiarioEntries();
+    });
+    
+    document.getElementById('closeDiarioModalBtn').addEventListener('click', () => {
+      document.getElementById('diarioFullModal').classList.remove('active');
+    });
+    
+    // Juegos
+    document.getElementById('startReactionBtn').addEventListener('click', startReactionGame);
+    document.getElementById('claimDailyRewardBtn').addEventListener('click', claimDailyReward);
+    
+    // Estados de ánimo
+    document.querySelectorAll('.mood-btn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const mood = btn.dataset.mood;
+        AppState.user.mood = mood;
+        await update(ref(db, `users/${AppState.user.id}`), { mood });
+        document.getElementById('userMoodDisplay').innerHTML = `<i class="fas fa-smile"></i> ${mood}`;
+        showNotification(`estado: ${mood}`, 'success', '💗');
+      });
+    });
+    
+    // Cerrar modales al hacer click fuera
+    document.getElementById('diarioFullModal').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('diarioFullModal')) {
+        document.getElementById('diarioFullModal').classList.remove('active');
+      }
+    });
+  }
+
+  // Iniciar la aplicación
+  initApp();
 
 </script>
 
