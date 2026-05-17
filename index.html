@@ -51,7 +51,7 @@
         }
 
         .header {
-            margin-bottom: 18px;
+            margin-bottom: 16px;
         }
 
         .header-emoji {
@@ -68,7 +68,7 @@
         h1 {
             font-size: 1.8rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #ff6b9d, #ffa5b3, #ffb8c9);
+            background: linear-gradient(135deg, #ff6b9d, #ffa5b3, #c084fc);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -81,11 +81,12 @@
             font-weight: 500;
         }
 
+        /* SELECCIÓN DE JUGADOR */
         .player-select {
             background: rgba(255, 255, 255, 0.06);
             border-radius: 25px;
             padding: 12px;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
@@ -133,17 +134,40 @@
             box-shadow: 0 0 20px rgba(192, 132, 252, 0.3);
         }
 
-        .player-btn:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
+        /* INDICADOR DE TURNO */
+        .turn-indicator {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 6px;
+            padding: 8px 16px;
+            background: rgba(255,255,255,0.04);
+            border-radius: 50px;
+            display: inline-block;
         }
 
+        .turn-indicator strong {
+            color: #ff8faa;
+        }
+
+        .awaiting-text {
+            color: #ffb800;
+            font-weight: 700;
+            animation: pulse 1.5s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* CARTA */
         .card-display {
             background: rgba(255, 255, 255, 0.06);
             border-radius: 25px;
             padding: 25px 18px;
             margin: 14px 0;
-            min-height: 120px;
+            min-height: 110px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -182,12 +206,13 @@
             border: 1px solid rgba(255, 107, 157, 0.4);
         }
 
+        /* BOTONES */
         .button-group {
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
             justify-content: center;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
         }
 
         .btn {
@@ -208,13 +233,19 @@
             border: 2px solid transparent;
         }
 
+        .btn:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
         .btn-verdad {
             background: rgba(72, 199, 142, 0.2);
             color: #7ac9a0;
             border-color: rgba(72, 199, 142, 0.4);
         }
 
-        .btn-verdad:hover {
+        .btn-verdad:hover:not(:disabled) {
             background: rgba(72, 199, 142, 0.35);
             transform: translateY(-2px);
         }
@@ -225,7 +256,7 @@
             border-color: rgba(255, 107, 157, 0.4);
         }
 
-        .btn-reto:hover {
+        .btn-reto:hover:not(:disabled) {
             background: rgba(255, 107, 157, 0.35);
             transform: translateY(-2px);
         }
@@ -239,31 +270,21 @@
             width: 100%;
         }
 
-        .btn-random:hover {
+        .btn-random:hover:not(:disabled) {
             background: rgba(192, 132, 252, 0.35);
             transform: translateY(-2px);
         }
 
-        .btn:active {
+        .btn:active:not(:disabled) {
             transform: scale(0.96);
         }
 
-        .turn-indicator {
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.6);
-            margin-bottom: 8px;
-        }
-
-        .turn-indicator strong {
-            color: #ff8faa;
-        }
-
-        /* CHAT INTEGRADO */
+        /* CHAT */
         .chat-section {
             background: rgba(255, 255, 255, 0.04);
             border-radius: 25px;
             padding: 14px;
-            margin-top: 14px;
+            margin-top: 12px;
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
@@ -271,15 +292,16 @@
             color: rgba(255, 255, 255, 0.7);
             font-size: 0.85rem;
             font-weight: 700;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
             gap: 6px;
             justify-content: center;
+            flex-wrap: wrap;
         }
 
         .chat-messages {
-            max-height: 200px;
+            max-height: 180px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
@@ -361,6 +383,11 @@
             color: rgba(255, 255, 255, 0.35);
         }
 
+        .chat-input:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
         .chat-send-btn {
             padding: 10px 18px;
             border-radius: 50px;
@@ -373,19 +400,20 @@
             border: 1px solid rgba(255, 107, 157, 0.4);
         }
 
-        .chat-send-btn:hover {
+        .chat-send-btn:hover:not(:disabled) {
             background: rgba(255, 107, 157, 0.5);
         }
 
-        .chat-messages::-webkit-scrollbar {
-            width: 4px;
+        .chat-send-btn:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
         }
-        .chat-messages::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        .chat-messages::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 10px;
+
+        .chat-hint {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.4);
+            margin-top: 6px;
+            text-align: center;
         }
 
         .online-dot {
@@ -397,6 +425,17 @@
         }
         .online-dot.online { background: #7ac9a0; box-shadow: 0 0 8px #7ac9a0; }
         .online-dot.offline { background: #666; }
+
+        .chat-messages::-webkit-scrollbar {
+            width: 4px;
+        }
+        .chat-messages::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+        }
 
         @media (max-width: 400px) {
             .game-container { padding: 16px 12px; border-radius: 28px; }
@@ -427,7 +466,7 @@
 
         <!-- INDICADOR DE TURNO -->
         <p class="turn-indicator" id="turnMessage">
-            🎯 Turno de: <strong id="currentPlayerText">Nayelys</strong>
+            🎯 <span id="turnText">Turno de: <strong id="currentPlayerText">Nayelys</strong></span>
         </p>
 
         <!-- CARTA -->
@@ -440,30 +479,31 @@
 
         <!-- BOTONES -->
         <div class="button-group">
-            <button class="btn btn-verdad" id="btnVerdad">💚 Verdad</button>
-            <button class="btn btn-reto" id="btnReto">🔥 Reto</button>
+            <button class="btn btn-verdad" id="btnVerdad" disabled>💚 Verdad</button>
+            <button class="btn btn-reto" id="btnReto" disabled>🔥 Reto</button>
         </div>
-        <button class="btn btn-random" id="btnRandom">🎲 ¡Sorpresa!</button>
+        <button class="btn btn-random" id="btnRandom" disabled>🎲 ¡Sorpresa!</button>
 
         <!-- CHAT PARA RESPONDER -->
         <div class="chat-section">
             <div class="chat-title">
-                💬 Chat de respuestas 
+                💬 Chat 
                 <span id="onlineStatus"></span>
             </div>
             <div class="chat-messages" id="chatMessages">
                 <p style="color:rgba(255,255,255,0.3);text-align:center;font-size:0.8rem;">Responde aquí las verdades o retos...</p>
             </div>
             <div class="chat-input-area">
-                <input type="text" class="chat-input" id="chatInput" placeholder="Escribe tu respuesta..." maxlength="300">
-                <button class="chat-send-btn" id="chatSendBtn">📩</button>
+                <input type="text" class="chat-input" id="chatInput" placeholder="Escribe tu respuesta..." maxlength="300" disabled>
+                <button class="chat-send-btn" id="chatSendBtn" disabled>📩</button>
             </div>
+            <p class="chat-hint" id="chatHint">⏳ Espera tu turno para responder</p>
         </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, set, onValue, push, onDisconnect, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, set, onValue, push, onDisconnect, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyByB_5gP3sDwbCmVWbiB5CQXHzsKhcDvoo",
@@ -508,8 +548,8 @@
         ];
 
         const retos = [
-            "📸 Tómate un selfie con la cara más divertida que puedas y compártelo",
-            "🎤 Canta el coro de tu canción favorita (audio o video)",
+            "📸 Tómate un selfie con la cara más divertida que puedas",
+            "🎤 Canta el coro de tu canción favorita",
             "💃 Baila 15 segundos sin música",
             "📝 Escribe un pequeño poema de 4 líneas para tu pareja",
             "🗣️ Di 'te quiero' en 5 idiomas diferentes",
@@ -530,18 +570,19 @@
             "🧸 Abraza algo suave y di que es tu pareja",
             "💖 Di tres cosas que amas de ti mismo/a en voz alta",
             "😱 Confiesa algo que nunca hayas dicho en voz alta",
-            "📞 Llama a tu pareja y dile algo bonito (si están lejos)",
             "🪞 Haz una mueca graciosa frente al espejo",
-            "🌟 Dedica una canción a tu pareja ya mismo"
+            "🌟 Dedica una canción a tu pareja ya mismo",
+            "🙈 Tápate los ojos y describe a tu pareja de memoria"
         ];
 
         // ========== ESTADO ==========
         const state = {
-            myPlayer: 'andrey', // 'andrey' o 'nayelys'
-            myId: null,
-            turnPlayer: 'nayelys', // quién debe responder (el otro elige)
+            myPlayer: 'andrey',
+            turnPlayer: 'nayelys', // quien debe RESPONDER
             currentCard: null,
-            currentType: null
+            currentType: null,
+            waitingForResponse: false, // si hay una carta activa esperando respuesta
+            lastMessageTimestamp: 0
         };
 
         // ========== DOM ==========
@@ -552,9 +593,11 @@
         const cardLabel = document.getElementById('cardLabel');
         const currentPlayerText = document.getElementById('currentPlayerText');
         const turnMessage = document.getElementById('turnMessage');
+        const turnText = document.getElementById('turnText');
         const chatMessages = document.getElementById('chatMessages');
         const chatInput = document.getElementById('chatInput');
         const chatSendBtn = document.getElementById('chatSendBtn');
+        const chatHint = document.getElementById('chatHint');
         const onlineStatus = document.getElementById('onlineStatus');
 
         const btnVerdad = document.getElementById('btnVerdad');
@@ -575,26 +618,97 @@
             return `${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}`;
         }
 
-        // Escuchar cambios en el juego desde Firebase
+        function updateTurnUI() {
+            currentPlayerText.textContent = state.turnPlayer === 'nayelys' ? 'Nayelys' : 'Andrey';
+            
+            // ¿Soy yo quien debe responder?
+            const isMyTurn = state.myPlayer === state.turnPlayer;
+            // ¿Hay una carta activa?
+            const hasCard = state.currentCard !== null;
+            
+            if (hasCard) {
+                // Hay una carta en juego
+                if (isMyTurn) {
+                    // Yo debo responder
+                    turnText.innerHTML = '⚠️ <span class="awaiting-text">¡Debes responder!</span> <strong>' + 
+                        (state.turnPlayer === 'nayelys' ? 'Nayelys' : 'Andrey') + '</strong>';
+                    chatInput.disabled = false;
+                    chatSendBtn.disabled = false;
+                    chatHint.textContent = '✍️ Escribe tu respuesta y presiona enviar';
+                    chatInput.placeholder = 'Escribe tu respuesta a la verdad o reto...';
+                    chatInput.focus();
+                } else {
+                    // El otro debe responder
+                    turnText.innerHTML = '⏳ Esperando respuesta de <strong>' + 
+                        (state.turnPlayer === 'nayelys' ? 'Nayelys' : 'Andrey') + '</strong>...';
+                    chatInput.disabled = true;
+                    chatSendBtn.disabled = true;
+                    chatHint.textContent = '👀 Espera a que responda...';
+                    chatInput.placeholder = 'Espera tu turno...';
+                }
+                
+                // Los botones de elegir están deshabilitados mientras hay carta activa
+                btnVerdad.disabled = true;
+                btnReto.disabled = true;
+                btnRandom.disabled = true;
+                
+            } else {
+                // No hay carta, alguien debe elegir
+                const canChoose = state.myPlayer !== state.turnPlayer;
+                
+                btnVerdad.disabled = !canChoose;
+                btnReto.disabled = !canChoose;
+                btnRandom.disabled = !canChoose;
+                
+                chatInput.disabled = true;
+                chatSendBtn.disabled = true;
+                
+                if (canChoose) {
+                    turnText.innerHTML = '🎯 Elige para <strong>' + 
+                        (state.turnPlayer === 'nayelys' ? 'Nayelys' : 'Andrey') + '</strong>';
+                    chatHint.textContent = '🃏 Elige Verdad o Reto';
+                    chatInput.placeholder = 'Elige una carta primero...';
+                } else {
+                    turnText.innerHTML = '⏳ Espera que <strong>' + 
+                        (state.turnPlayer === 'nayelys' ? 'Andrey' : 'Nayelys') + '</strong> elija para ti...';
+                    chatHint.textContent = '⌛ Tu pareja está eligiendo...';
+                    chatInput.placeholder = 'Espera que elijan...';
+                }
+            }
+        }
+
+        // Escuchar cambios en el juego
         function listenGame() {
             const gameRef = ref(db, 'verdadoreto/game');
             onValue(gameRef, (snap) => {
-                if (!snap.exists()) return;
+                if (!snap.exists()) {
+                    // Inicializar
+                    set(gameRef, {
+                        currentCard: null,
+                        currentType: null,
+                        turnPlayer: 'nayelys',
+                        timestamp: Date.now()
+                    });
+                    return;
+                }
+                
                 const game = snap.val();
                 
                 state.turnPlayer = game.turnPlayer || 'nayelys';
                 state.currentCard = game.currentCard || null;
                 state.currentType = game.currentType || null;
+                state.waitingForResponse = game.currentCard !== null;
                 
-                updateTurnUI();
-                
+                // Actualizar carta visual
                 if (game.currentCard) {
                     cardContent.textContent = game.currentCard;
                     if (game.currentType === 'verdad') {
-                        cardLabel.innerHTML = '<span class="card-label label-verdad">💚 Verdad</span>';
+                        cardLabel.innerHTML = '<span class="card-label label-verdad">💚 Verdad para ' + 
+                            (state.turnPlayer === 'nayelys' ? 'Nayelys' : 'Andrey') + '</span>';
                         cardDisplay.style.borderColor = 'rgba(72, 199, 142, 0.4)';
                     } else {
-                        cardLabel.innerHTML = '<span class="card-label label-reto">🔥 Reto</span>';
+                        cardLabel.innerHTML = '<span class="card-label label-reto">🔥 Reto para ' + 
+                            (state.turnPlayer === 'nayelys' ? 'Nayelys' : 'Andrey') + '</span>';
                         cardDisplay.style.borderColor = 'rgba(255, 107, 157, 0.4)';
                     }
                 } else {
@@ -602,6 +716,8 @@
                     cardLabel.innerHTML = '';
                     cardDisplay.style.borderColor = 'rgba(255, 255, 255, 0.1)';
                 }
+                
+                updateTurnUI();
             });
         }
 
@@ -628,7 +744,34 @@
                 });
                 
                 scrollChatToBottom();
+                
+                // Detectar si el último mensaje es una respuesta del turnPlayer actual
+                if (messages.length > 0 && state.waitingForResponse) {
+                    const lastMsg = messages[messages.length - 1];
+                    // Si el último mensaje es de la persona que debía responder
+                    if (lastMsg.from === state.turnPlayer && lastMsg.timestamp > state.lastMessageTimestamp) {
+                        state.lastMessageTimestamp = lastMsg.timestamp;
+                        // La persona respondió -> limpiar carta y cambiar turno
+                        handleResponseReceived();
+                    }
+                }
             });
+        }
+
+        async function handleResponseReceived() {
+            // Cambiar turno: el que respondió ahora elige para el otro
+            const nextPlayer = state.turnPlayer === 'nayelys' ? 'andrey' : 'nayelys';
+            
+            await set(ref(db, 'verdadoreto/game'), {
+                currentCard: null,
+                currentType: null,
+                turnPlayer: nextPlayer,
+                timestamp: Date.now()
+            });
+            
+            state.waitingForResponse = false;
+            state.lastMessageTimestamp = Date.now();
+            updateTurnUI();
         }
 
         // Escuchar presencia online
@@ -636,7 +779,7 @@
             const presenceRef = ref(db, 'verdadoreto/presence');
             onValue(presenceRef, (snap) => {
                 if (!snap.exists()) {
-                    onlineStatus.innerHTML = '<span class="online-dot offline"></span> Nadie conectado';
+                    onlineStatus.innerHTML = '<span class="online-dot offline"></span> Nadie';
                     return;
                 }
                 const p = snap.val();
@@ -650,34 +793,21 @@
             });
         }
 
-        function updateTurnUI() {
-            currentPlayerText.textContent = state.turnPlayer === 'nayelys' ? 'Nayelys' : 'Andrey';
-            
-            // Habilitar/deshabilitar botones según quién elige
-            const canChoose = state.myPlayer !== state.turnPlayer;
-            btnVerdad.disabled = !canChoose;
-            btnReto.disabled = !canChoose;
-            btnRandom.disabled = !canChoose;
-            
-            if (!canChoose) {
-                turnMessage.innerHTML = '⏳ Espera que <strong>' + (state.turnPlayer === 'nayelys' ? 'Nayelys' : 'Andrey') + '</strong> responda...';
-            } else {
-                turnMessage.innerHTML = '🎯 Turno de: <strong>' + (state.turnPlayer === 'nayelys' ? 'Nayelys' : 'Andrey') + '</strong> (tú eliges)';
-            }
-        }
-
         async function drawCard(type) {
             const pregunta = type === 'verdad' ? getRandomItem(verdades) : getRandomItem(retos);
             
-            // El que responde es el turnPlayer actual, luego se cambia
-            const nextPlayer = state.turnPlayer === 'nayelys' ? 'andrey' : 'nayelys';
-            
+            // El turnPlayer actual es quien debe RESPONDER
+            // No cambiamos turnPlayer aún, solo ponemos la carta
             await set(ref(db, 'verdadoreto/game'), {
                 currentCard: pregunta,
                 currentType: type,
-                turnPlayer: nextPlayer,
+                turnPlayer: state.turnPlayer, // misma persona responde
                 timestamp: Date.now()
             });
+            
+            state.waitingForResponse = true;
+            state.lastMessageTimestamp = Date.now();
+            updateTurnUI();
         }
 
         async function drawRandom() {
@@ -689,6 +819,11 @@
             const text = chatInput.value.trim();
             if (!text) return;
             
+            // Solo puede enviar si es su turno y hay carta activa
+            if (!state.waitingForResponse || state.myPlayer !== state.turnPlayer) {
+                return;
+            }
+            
             const msgRef = push(ref(db, 'verdadoreto/chat'));
             await set(msgRef, {
                 from: state.myPlayer,
@@ -697,18 +832,19 @@
             });
             
             chatInput.value = '';
+            
+            // Después de enviar, limpiar carta y cambiar turno
+            await handleResponseReceived();
         }
 
         async function setPresence() {
             const myRef = ref(db, `verdadoreto/presence/${state.myPlayer}`);
             await set(myRef, Date.now());
             
-            // Actualizar cada 15 segundos
             setInterval(async () => {
                 await set(myRef, Date.now());
             }, 15000);
             
-            // Limpiar al desconectar
             onDisconnect(myRef).set(0);
         }
 
@@ -718,12 +854,9 @@
             btnSoyAndrey.classList.toggle('active', player === 'andrey');
             btnSoyNayelys.classList.toggle('active', player === 'nayelys');
             
-            // Guardar preferencia
             localStorage.setItem('verdadoreto_player', player);
             
-            // Reiniciar presencia
             setPresence();
-            
             updateTurnUI();
         }
 
@@ -742,7 +875,6 @@
 
         // ========== INICIALIZACIÓN ==========
         function init() {
-            // Cargar preferencia guardada
             const saved = localStorage.getItem('verdadoreto_player');
             if (saved === 'nayelys') {
                 selectPlayer('nayelys');
@@ -754,7 +886,6 @@
             listenChat();
             listenPresence();
             setPresence();
-            updateTurnUI();
             
             console.log('💕 Verdad o Reto · Andrey & Nayelys · Conectado');
         }
