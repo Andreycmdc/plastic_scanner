@@ -3,7 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>💕 Verdad o Reto · Nayelis</title>
+    <title>💕 Verdad o Reto · Andrey & Nayelys</title>
+    
+    <script type="importmap">
+        {
+            "imports": {
+                "firebase/app": "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js",
+                "firebase/database": "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js"
+            }
+        }
+    </script>
     
     <style>
         * {
@@ -14,14 +23,14 @@
 
         body {
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: linear-gradient(135deg, #ffecd2, #fcb69f, #ff9a9e);
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 16px;
-            animation: gradientBG 12s ease infinite;
+            padding: 10px;
             background-size: 300% 300%;
+            animation: gradientBG 15s ease infinite;
         }
 
         @keyframes gradientBG {
@@ -30,302 +39,446 @@
         }
 
         .game-container {
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(20px);
-            border-radius: 40px;
-            padding: 30px 24px;
-            max-width: 480px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(30px);
+            border-radius: 35px;
+            padding: 20px 18px;
+            max-width: 500px;
             width: 100%;
-            box-shadow: 0 25px 50px rgba(180, 60, 80, 0.25);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
             text-align: center;
-            border: 3px solid rgba(255, 255, 255, 0.8);
-            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .header {
+            margin-bottom: 18px;
         }
 
         .header-emoji {
-            font-size: 4rem;
+            font-size: 3.5rem;
             display: block;
-            margin-bottom: 6px;
             animation: float 3s ease-in-out infinite;
         }
 
         @keyframes float {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-12px); }
+            50% { transform: translateY(-10px); }
         }
 
         h1 {
-            font-size: 2.2rem;
+            font-size: 1.8rem;
             font-weight: 800;
-            color: #b3405a;
-            margin-bottom: 4px;
-            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #ff6b9d, #ffa5b3, #ffb8c9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 4px 0;
         }
 
         .subtitle {
-            color: #cc6b7a;
-            font-size: 1.1rem;
-            margin-bottom: 25px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
             font-weight: 500;
+        }
+
+        .player-select {
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 25px;
+            padding: 12px;
+            margin-bottom: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .player-select p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.8rem;
+            margin-bottom: 8px;
+        }
+
+        .player-buttons {
             display: flex;
-            align-items: center;
+            gap: 10px;
             justify-content: center;
-            gap: 6px;
-            flex-wrap: wrap;
+        }
+
+        .player-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 50px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .player-btn.andrey {
+            border-color: #ff6b9d;
+        }
+        .player-btn.nayelys {
+            border-color: #c084fc;
+        }
+
+        .player-btn.active {
+            background: rgba(255, 107, 157, 0.25);
+            border-color: #ff6b9d;
+            color: white;
+            box-shadow: 0 0 20px rgba(255, 107, 157, 0.3);
+        }
+        .player-btn.nayelys.active {
+            background: rgba(192, 132, 252, 0.25);
+            border-color: #c084fc;
+            box-shadow: 0 0 20px rgba(192, 132, 252, 0.3);
+        }
+
+        .player-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
         }
 
         .card-display {
-            background: white;
-            border-radius: 30px;
-            padding: 32px 20px;
-            margin: 20px 0 24px;
-            min-height: 150px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 25px;
+            padding: 25px 18px;
+            margin: 14px 0;
+            min-height: 120px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 3px solid #ffe0e6;
-            box-shadow: 0 10px 20px rgba(200, 80, 100, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.1);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             word-break: break-word;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card-display::before {
-            content: "";
-            position: absolute;
-            top: -20px;
-            right: -20px;
-            width: 80px;
-            height: 80px;
-            background: #fff0f3;
-            border-radius: 50%;
-            opacity: 0.5;
         }
 
         .card-content {
-            font-size: 1.35rem;
+            font-size: 1.15rem;
             font-weight: 600;
-            color: #4a2c35;
+            color: rgba(255, 255, 255, 0.9);
             line-height: 1.5;
-            position: relative;
-            z-index: 1;
         }
 
         .card-label {
             display: inline-block;
-            background: #ff7a8f;
-            color: white;
-            padding: 6px 20px;
+            padding: 5px 18px;
             border-radius: 50px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 700;
             letter-spacing: 0.5px;
-            margin-bottom: 16px;
+            margin-bottom: 8px;
             text-transform: uppercase;
         }
 
         .label-verdad {
-            background: #7ac9a0;
+            background: rgba(72, 199, 142, 0.25);
+            color: #7ac9a0;
+            border: 1px solid rgba(72, 199, 142, 0.4);
         }
 
         .label-reto {
-            background: #ff7a8f;
+            background: rgba(255, 107, 157, 0.25);
+            color: #ff8faa;
+            border: 1px solid rgba(255, 107, 157, 0.4);
         }
 
         .button-group {
             display: flex;
-            gap: 14px;
+            gap: 10px;
             flex-wrap: wrap;
             justify-content: center;
+            margin-bottom: 14px;
         }
 
         .btn {
             border: none;
-            padding: 16px 26px;
-            border-radius: 60px;
+            padding: 14px 22px;
+            border-radius: 50px;
             font-weight: 700;
-            font-size: 1rem;
+            font-size: 0.9rem;
             cursor: pointer;
             transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1.2);
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 6px;
             flex: 1 1 auto;
-            min-width: 130px;
+            min-width: 100px;
             letter-spacing: 0.3px;
             border: 2px solid transparent;
         }
 
         .btn-verdad {
-            background: #c7f0db;
-            color: #1f5a3a;
-            box-shadow: 0 8px 0 #8ec9a8;
+            background: rgba(72, 199, 142, 0.2);
+            color: #7ac9a0;
+            border-color: rgba(72, 199, 142, 0.4);
         }
 
         .btn-verdad:hover {
-            background: #b0e6ca;
-            transform: translateY(-3px);
-            box-shadow: 0 12px 0 #8ec9a8;
-        }
-
-        .btn-verdad:active {
-            transform: translateY(4px);
-            box-shadow: 0 4px 0 #8ec9a8;
+            background: rgba(72, 199, 142, 0.35);
+            transform: translateY(-2px);
         }
 
         .btn-reto {
-            background: #ffb6c1;
-            color: #7a2e3b;
-            box-shadow: 0 8px 0 #e8939f;
+            background: rgba(255, 107, 157, 0.2);
+            color: #ff8faa;
+            border-color: rgba(255, 107, 157, 0.4);
         }
 
         .btn-reto:hover {
-            background: #ffa5b3;
-            transform: translateY(-3px);
-            box-shadow: 0 12px 0 #e8939f;
-        }
-
-        .btn-reto:active {
-            transform: translateY(4px);
-            box-shadow: 0 4px 0 #e8939f;
+            background: rgba(255, 107, 157, 0.35);
+            transform: translateY(-2px);
         }
 
         .btn-random {
-            background: white;
-            color: #b3405a;
-            border: 3px solid #ffb6c1;
-            box-shadow: 0 8px 0 #ffe0e6;
-            font-size: 1.2rem;
-            padding: 18px 28px;
+            background: rgba(192, 132, 252, 0.2);
+            color: #c084fc;
+            border-color: rgba(192, 132, 252, 0.4);
+            font-size: 1rem;
+            padding: 15px;
             width: 100%;
-            margin-top: 6px;
-            justify-content: center;
         }
 
         .btn-random:hover {
-            background: #fff5f7;
-            transform: translateY(-3px);
-            box-shadow: 0 12px 0 #ffe0e6;
+            background: rgba(192, 132, 252, 0.35);
+            transform: translateY(-2px);
         }
 
-        .btn-random:active {
-            transform: translateY(4px);
-            box-shadow: 0 4px 0 #ffe0e6;
-        }
-
-        .player-indicator {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-        .player-badge {
-            background: white;
-            padding: 10px 20px;
-            border-radius: 50px;
-            font-weight: 700;
-            border: 2px solid #ffe0e6;
-            transition: all 0.3s;
-            cursor: pointer;
-            font-size: 0.9rem;
-        }
-
-        .player-badge.active {
-            background: #ff7a8f;
-            color: white;
-            border-color: #ff7a8f;
-            box-shadow: 0 6px 0 #b3405a;
-            transform: scale(1.05);
+        .btn:active {
+            transform: scale(0.96);
         }
 
         .turn-indicator {
-            font-size: 0.9rem;
-            color: #886060;
-            margin-top: 18px;
-            font-weight: 500;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 8px;
         }
 
-        .counter {
-            background: #fff0f3;
-            padding: 8px 18px;
-            border-radius: 40px;
-            display: inline-block;
+        .turn-indicator strong {
+            color: #ff8faa;
+        }
+
+        /* CHAT INTEGRADO */
+        .chat-section {
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 25px;
+            padding: 14px;
+            margin-top: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .chat-title {
+            color: rgba(255, 255, 255, 0.7);
             font-size: 0.85rem;
-            font-weight: 600;
-            color: #b3405a;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            justify-content: center;
+        }
+
+        .chat-messages {
+            max-height: 200px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 6px;
             margin-bottom: 10px;
         }
 
+        .chat-msg {
+            padding: 10px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            max-width: 85%;
+            word-break: break-word;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .chat-msg.andrey {
+            background: rgba(255, 107, 157, 0.2);
+            color: #ffb8c9;
+            align-self: flex-end;
+            margin-left: auto;
+            border: 1px solid rgba(255, 107, 157, 0.3);
+            border-radius: 20px 20px 4px 20px;
+        }
+
+        .chat-msg.nayelys {
+            background: rgba(192, 132, 252, 0.2);
+            color: #d8b4fe;
+            align-self: flex-start;
+            border: 1px solid rgba(192, 132, 252, 0.3);
+            border-radius: 20px 20px 20px 4px;
+        }
+
+        .chat-msg .msg-sender {
+            font-size: 0.7rem;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 2px;
+            opacity: 0.8;
+        }
+
+        .chat-msg .msg-time {
+            font-size: 0.6rem;
+            opacity: 0.5;
+            display: block;
+            margin-top: 4px;
+            text-align: right;
+        }
+
+        .chat-input-area {
+            display: flex;
+            gap: 8px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 10px 16px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.06);
+            color: white;
+            font-size: 0.85rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .chat-input:focus {
+            border-color: rgba(255, 107, 157, 0.5);
+            box-shadow: 0 0 15px rgba(255, 107, 157, 0.15);
+        }
+
+        .chat-input::placeholder {
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        .chat-send-btn {
+            padding: 10px 18px;
+            border-radius: 50px;
+            border: none;
+            background: rgba(255, 107, 157, 0.3);
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 107, 157, 0.4);
+        }
+
+        .chat-send-btn:hover {
+            background: rgba(255, 107, 157, 0.5);
+        }
+
+        .chat-messages::-webkit-scrollbar {
+            width: 4px;
+        }
+        .chat-messages::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+        }
+
+        .online-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 4px;
+        }
+        .online-dot.online { background: #7ac9a0; box-shadow: 0 0 8px #7ac9a0; }
+        .online-dot.offline { background: #666; }
+
         @media (max-width: 400px) {
-            .game-container {
-                padding: 22px 16px;
-            }
-            .btn {
-                padding: 14px 18px;
-                font-size: 0.9rem;
-            }
-            .card-content {
-                font-size: 1.15rem;
-            }
+            .game-container { padding: 16px 12px; border-radius: 28px; }
+            .btn { padding: 12px 14px; font-size: 0.8rem; }
+            .card-content { font-size: 1rem; }
+            h1 { font-size: 1.5rem; }
         }
     </style>
 </head>
 <body>
 
     <div class="game-container">
-        <span class="header-emoji">💘</span>
-        <h1>Verdad o Reto</h1>
-        <p class="subtitle">
-            <span>✨ para Nayelis ✨</span>
+        <!-- HEADER -->
+        <div class="header">
+            <span class="header-emoji">💘</span>
+            <h1>Verdad o Reto</h1>
+            <p class="subtitle">✨ Andrey & Nayelys ✨</p>
+        </div>
+
+        <!-- SELECCIÓN DE JUGADOR -->
+        <div class="player-select">
+            <p>👤 ¿Quién eres?</p>
+            <div class="player-buttons">
+                <button class="player-btn andrey active" id="btnSoyAndrey">💖 Andrey</button>
+                <button class="player-btn nayelys" id="btnSoyNayelys">🦋 Nayelys</button>
+            </div>
+        </div>
+
+        <!-- INDICADOR DE TURNO -->
+        <p class="turn-indicator" id="turnMessage">
+            🎯 Turno de: <strong id="currentPlayerText">Nayelys</strong>
         </p>
 
-        <!-- Indicador de turno -->
-        <div class="player-indicator">
-            <span class="player-badge active" id="badgeTu">🌸 Tú</span>
-            <span style="font-size: 1.5rem;">💞</span>
-            <span class="player-badge" id="badgeNayelis">🦋 Nayelis</span>
-        </div>
-
-        <!-- Contador de preguntas -->
-        <div class="counter">
-            🎲 Jugadas: <span id="playCount">0</span>
-        </div>
-
-        <!-- Carta de pregunta/reto -->
+        <!-- CARTA -->
+        <div id="cardLabel"></div>
         <div class="card-display" id="cardDisplay">
             <div class="card-content" id="cardContent">
                 Presiona un botón<br>para comenzar 💫
             </div>
         </div>
-        <div id="cardLabel" style="min-height: 28px;"></div>
 
-        <!-- Botones principales -->
+        <!-- BOTONES -->
         <div class="button-group">
-            <button class="btn btn-verdad" id="btnVerdad">
-                💚 Verdad
-            </button>
-            <button class="btn btn-reto" id="btnReto">
-                🔥 Reto
-            </button>
+            <button class="btn btn-verdad" id="btnVerdad">💚 Verdad</button>
+            <button class="btn btn-reto" id="btnReto">🔥 Reto</button>
         </div>
+        <button class="btn btn-random" id="btnRandom">🎲 ¡Sorpresa!</button>
 
-        <button class="btn btn-random" id="btnRandom">
-            🎲 ¡Sorpresa!
-        </button>
-
-        <p class="turn-indicator" id="turnMessage">
-            👆 Es turno de <strong id="currentPlayerText">Nayelis</strong>
-        </p>
+        <!-- CHAT PARA RESPONDER -->
+        <div class="chat-section">
+            <div class="chat-title">
+                💬 Chat de respuestas 
+                <span id="onlineStatus"></span>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <p style="color:rgba(255,255,255,0.3);text-align:center;font-size:0.8rem;">Responde aquí las verdades o retos...</p>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" class="chat-input" id="chatInput" placeholder="Escribe tu respuesta..." maxlength="300">
+                <button class="chat-send-btn" id="chatSendBtn">📩</button>
+            </div>
+        </div>
     </div>
 
-    <script>
-        // ========== PREGUNTAS PERSONALIZADAS PARA NAYELIS ==========
-        
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, set, onValue, push, onDisconnect, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyByB_5gP3sDwbCmVWbiB5CQXHzsKhcDvoo",
+            authDomain: "chist-4aac2.firebaseapp.com",
+            databaseURL: "https://chist-4aac2-default-rtdb.firebaseio.com",
+            projectId: "chist-4aac2",
+            storageBucket: "chist-4aac2.firebasestorage.app",
+            messagingSenderId: "64011595640",
+            appId: "1:64011595640:web:8fa8b005b916cf2af7628d"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // ========== PREGUNTAS ==========
         const verdades = [
             "¿Cuál fue el primer pensamiento que tuviste al despertar hoy?",
             "¿Qué canción te recuerda a nosotros y por qué?",
@@ -335,7 +488,7 @@
             "¿Cuál fue la primera cosa que notaste de mí cuando nos conocimos?",
             "¿Tienes algún sueño que aún no me hayas contado?",
             "¿Qué es algo que siempre has querido hacer pero no te has atrevido?",
-            "¿Cuál es tu recuerdo favorito de nuestra infancia juntos?",
+            "¿Cuál es tu recuerdo favorito de nosotros?",
             "¿Qué cualidad mía valoras más?",
             "Si pudieras cambiar algo de mí, ¿qué sería?",
             "¿Cuál fue el momento exacto en que supiste que me querías?",
@@ -355,151 +508,255 @@
         ];
 
         const retos = [
-            "📸 Tómate un selfie con la cara más divertida que puedas",
-            "🎤 Canta el coro de tu canción favorita",
-            "💃 Baila 15 segundos sin música y grábate",
-            "📝 Escribe un pequeño poema de 4 líneas para mí",
+            "📸 Tómate un selfie con la cara más divertida que puedas y compártelo",
+            "🎤 Canta el coro de tu canción favorita (audio o video)",
+            "💃 Baila 15 segundos sin música",
+            "📝 Escribe un pequeño poema de 4 líneas para tu pareja",
             "🗣️ Di 'te quiero' en 5 idiomas diferentes",
             "🐱 Imita a un animal durante 10 segundos",
             "👀 Mantén contacto visual con la cámara por 20 segundos sin reírte",
-            "🤗 Manda un audio diciendo lo primero que se te venga a la mente sobre nosotros",
-            "🎨 Dibuja algo rápido que nos represente y enséñamelo",
+            "🤗 Manda un audio diciendo lo primero que se te venga a la mente sobre ustedes",
+            "🎨 Dibuja algo rápido que los represente",
             "📖 Cuenta una anécdota graciosa tuya en 1 minuto",
-            "🪞 Haz una mueca frente al espejo y manda foto",
-            "🎵 Tararea una canción y haz que la adivine",
+            "🎵 Tararea una canción y haz que el otro la adivine",
             "💌 Escribe una carta corta de amor en 2 minutos y léela",
-            "🤸 Haz 5 saltos de tijera (jumping jacks) ahora mismo",
-            "📱 Enséñame la última foto que tomaste con el celular",
-            "🗓️ Planea nuestra próxima cita virtual en 30 segundos",
-            "🎭 Actúa una escena romántica de película (tú eliges cuál)",
-            "💬 Manda un mensaje a un amigo diciendo que me amas",
+            "🤸 Haz 5 saltos de tijera ahora mismo",
+            "📱 Muestra la última foto que tomaste con el celular",
+            "🗓️ Planea su próxima cita en 30 segundos",
+            "🎭 Actúa una escena romántica de película",
             "🖐️ Toca tu nariz con la lengua (inténtalo)",
-            "📢 Grita '¡Nayelis es increíble!' (si puedes)",
-            "🤫 Quédate en silencio absoluto por 15 segundos mirando la pantalla",
-            "🎁 Ofréceme un 'vale' por algo que harás por mí mañana",
-            "🧸 Abraza algo suave y di que soy yo",
-            "🎤 Haz tu mejor imitación de un personaje famoso",
-            "💖 Di tres cosas que amas de ti misma en voz alta"
+            "🤫 Quédate en silencio absoluto por 15 segundos",
+            "🎁 Ofrece un 'vale' por algo que harás por el otro mañana",
+            "🧸 Abraza algo suave y di que es tu pareja",
+            "💖 Di tres cosas que amas de ti mismo/a en voz alta",
+            "😱 Confiesa algo que nunca hayas dicho en voz alta",
+            "📞 Llama a tu pareja y dile algo bonito (si están lejos)",
+            "🪞 Haz una mueca graciosa frente al espejo",
+            "🌟 Dedica una canción a tu pareja ya mismo"
         ];
 
-        // ========== ESTADO DEL JUEGO ==========
-        
+        // ========== ESTADO ==========
         const state = {
-            currentPlayer: 'nayelis', // nayelis o tu
-            playCount: 0,
+            myPlayer: 'andrey', // 'andrey' o 'nayelys'
+            myId: null,
+            turnPlayer: 'nayelys', // quién debe responder (el otro elige)
             currentCard: null,
-            currentType: null // 'verdad' o 'reto'
+            currentType: null
         };
 
-        // ========== ELEMENTOS DEL DOM ==========
-        
-        const badgeTu = document.getElementById('badgeTu');
-        const badgeNayelis = document.getElementById('badgeNayelis');
+        // ========== DOM ==========
+        const btnSoyAndrey = document.getElementById('btnSoyAndrey');
+        const btnSoyNayelys = document.getElementById('btnSoyNayelys');
         const cardDisplay = document.getElementById('cardDisplay');
         const cardContent = document.getElementById('cardContent');
         const cardLabel = document.getElementById('cardLabel');
-        const playCountSpan = document.getElementById('playCount');
         const currentPlayerText = document.getElementById('currentPlayerText');
         const turnMessage = document.getElementById('turnMessage');
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const chatSendBtn = document.getElementById('chatSendBtn');
+        const onlineStatus = document.getElementById('onlineStatus');
 
         const btnVerdad = document.getElementById('btnVerdad');
         const btnReto = document.getElementById('btnReto');
         const btnRandom = document.getElementById('btnRandom');
 
-        // ========== FUNCIONES DEL JUEGO ==========
-        
+        // ========== FUNCIONES ==========
         function getRandomItem(arr) {
             return arr[Math.floor(Math.random() * arr.length)];
         }
 
-        function updateUI() {
-            // Actualizar badges de jugador activo
-            if (state.currentPlayer === 'tu') {
-                badgeTu.classList.add('active');
-                badgeNayelis.classList.remove('active');
-                currentPlayerText.textContent = 'Tú';
-            } else {
-                badgeNayelis.classList.add('active');
-                badgeTu.classList.remove('active');
-                currentPlayerText.textContent = 'Nayelis';
-            }
-            
-            // Actualizar contador
-            playCountSpan.textContent = state.playCount;
+        function scrollChatToBottom() {
+            chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
-        function drawCard(type) {
-            let pregunta;
-            
-            if (type === 'verdad') {
-                pregunta = getRandomItem(verdades);
-                cardLabel.innerHTML = '<span class="card-label label-verdad">💚 Verdad</span>';
-                cardDisplay.style.borderColor = '#c7f0db';
-                cardDisplay.style.background = '#f9fffc';
-            } else {
-                pregunta = getRandomItem(retos);
-                cardLabel.innerHTML = '<span class="card-label label-reto">🔥 Reto</span>';
-                cardDisplay.style.borderColor = '#ffb6c1';
-                cardDisplay.style.background = '#fff5f7';
-            }
-            
-            cardContent.textContent = pregunta;
-            state.currentCard = pregunta;
-            state.currentType = type;
-            state.playCount++;
-            
-            // Cambiar turno
-            state.currentPlayer = state.currentPlayer === 'nayelis' ? 'tu' : 'nayelis';
-            
-            updateUI();
-            
-            // Pequeña vibración visual
-            cardDisplay.style.transform = 'scale(1.03)';
-            setTimeout(() => {
-                cardDisplay.style.transform = 'scale(1)';
-            }, 200);
+        function formatTime(ts) {
+            const d = new Date(ts);
+            return `${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}`;
         }
 
-        function drawRandom() {
+        // Escuchar cambios en el juego desde Firebase
+        function listenGame() {
+            const gameRef = ref(db, 'verdadoreto/game');
+            onValue(gameRef, (snap) => {
+                if (!snap.exists()) return;
+                const game = snap.val();
+                
+                state.turnPlayer = game.turnPlayer || 'nayelys';
+                state.currentCard = game.currentCard || null;
+                state.currentType = game.currentType || null;
+                
+                updateTurnUI();
+                
+                if (game.currentCard) {
+                    cardContent.textContent = game.currentCard;
+                    if (game.currentType === 'verdad') {
+                        cardLabel.innerHTML = '<span class="card-label label-verdad">💚 Verdad</span>';
+                        cardDisplay.style.borderColor = 'rgba(72, 199, 142, 0.4)';
+                    } else {
+                        cardLabel.innerHTML = '<span class="card-label label-reto">🔥 Reto</span>';
+                        cardDisplay.style.borderColor = 'rgba(255, 107, 157, 0.4)';
+                    }
+                } else {
+                    cardContent.textContent = 'Presiona un botón\npara comenzar 💫';
+                    cardLabel.innerHTML = '';
+                    cardDisplay.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                }
+            });
+        }
+
+        // Escuchar chat
+        function listenChat() {
+            const chatRef = ref(db, 'verdadoreto/chat');
+            onValue(chatRef, (snap) => {
+                chatMessages.innerHTML = '';
+                if (!snap.exists()) {
+                    chatMessages.innerHTML = '<p style="color:rgba(255,255,255,0.3);text-align:center;font-size:0.8rem;">No hay mensajes aún...</p>';
+                    return;
+                }
+                
+                const messages = Object.values(snap.val()).sort((a, b) => a.timestamp - b.timestamp);
+                messages.forEach(msg => {
+                    const div = document.createElement('div');
+                    div.className = `chat-msg ${msg.from}`;
+                    div.innerHTML = `
+                        <span class="msg-sender">${msg.from === 'andrey' ? '💖 Andrey' : '🦋 Nayelys'}</span>
+                        ${msg.text}
+                        <span class="msg-time">${formatTime(msg.timestamp)}</span>
+                    `;
+                    chatMessages.appendChild(div);
+                });
+                
+                scrollChatToBottom();
+            });
+        }
+
+        // Escuchar presencia online
+        function listenPresence() {
+            const presenceRef = ref(db, 'verdadoreto/presence');
+            onValue(presenceRef, (snap) => {
+                if (!snap.exists()) {
+                    onlineStatus.innerHTML = '<span class="online-dot offline"></span> Nadie conectado';
+                    return;
+                }
+                const p = snap.val();
+                const andreyOnline = p.andrey && (Date.now() - p.andrey < 30000);
+                const nayelysOnline = p.nayelys && (Date.now() - p.nayelys < 30000);
+                
+                let html = '';
+                html += `<span class="online-dot ${andreyOnline ? 'online' : 'offline'}"></span> Andrey `;
+                html += `<span class="online-dot ${nayelysOnline ? 'online' : 'offline'}"></span> Nayelys`;
+                onlineStatus.innerHTML = html;
+            });
+        }
+
+        function updateTurnUI() {
+            currentPlayerText.textContent = state.turnPlayer === 'nayelys' ? 'Nayelys' : 'Andrey';
+            
+            // Habilitar/deshabilitar botones según quién elige
+            const canChoose = state.myPlayer !== state.turnPlayer;
+            btnVerdad.disabled = !canChoose;
+            btnReto.disabled = !canChoose;
+            btnRandom.disabled = !canChoose;
+            
+            if (!canChoose) {
+                turnMessage.innerHTML = '⏳ Espera que <strong>' + (state.turnPlayer === 'nayelys' ? 'Nayelys' : 'Andrey') + '</strong> responda...';
+            } else {
+                turnMessage.innerHTML = '🎯 Turno de: <strong>' + (state.turnPlayer === 'nayelys' ? 'Nayelys' : 'Andrey') + '</strong> (tú eliges)';
+            }
+        }
+
+        async function drawCard(type) {
+            const pregunta = type === 'verdad' ? getRandomItem(verdades) : getRandomItem(retos);
+            
+            // El que responde es el turnPlayer actual, luego se cambia
+            const nextPlayer = state.turnPlayer === 'nayelys' ? 'andrey' : 'nayelys';
+            
+            await set(ref(db, 'verdadoreto/game'), {
+                currentCard: pregunta,
+                currentType: type,
+                turnPlayer: nextPlayer,
+                timestamp: Date.now()
+            });
+        }
+
+        async function drawRandom() {
             const type = Math.random() < 0.5 ? 'verdad' : 'reto';
-            drawCard(type);
+            await drawCard(type);
+        }
+
+        async function sendMessage() {
+            const text = chatInput.value.trim();
+            if (!text) return;
+            
+            const msgRef = push(ref(db, 'verdadoreto/chat'));
+            await set(msgRef, {
+                from: state.myPlayer,
+                text: text,
+                timestamp: Date.now()
+            });
+            
+            chatInput.value = '';
+        }
+
+        async function setPresence() {
+            const myRef = ref(db, `verdadoreto/presence/${state.myPlayer}`);
+            await set(myRef, Date.now());
+            
+            // Actualizar cada 15 segundos
+            setInterval(async () => {
+                await set(myRef, Date.now());
+            }, 15000);
+            
+            // Limpiar al desconectar
+            onDisconnect(myRef).set(0);
+        }
+
+        function selectPlayer(player) {
+            state.myPlayer = player;
+            
+            btnSoyAndrey.classList.toggle('active', player === 'andrey');
+            btnSoyNayelys.classList.toggle('active', player === 'nayelys');
+            
+            // Guardar preferencia
+            localStorage.setItem('verdadoreto_player', player);
+            
+            // Reiniciar presencia
+            setPresence();
+            
+            updateTurnUI();
         }
 
         // ========== EVENT LISTENERS ==========
+        btnSoyAndrey.addEventListener('click', () => selectPlayer('andrey'));
+        btnSoyNayelys.addEventListener('click', () => selectPlayer('nayelys'));
         
         btnVerdad.addEventListener('click', () => drawCard('verdad'));
         btnReto.addEventListener('click', () => drawCard('reto'));
         btnRandom.addEventListener('click', drawRandom);
-
-        // También permitir cambiar turno manualmente tocando el badge
-        badgeTu.addEventListener('click', () => {
-            if (state.currentPlayer !== 'tu') {
-                state.currentPlayer = 'tu';
-                updateUI();
-            }
-        });
-
-        badgeNayelis.addEventListener('click', () => {
-            if (state.currentPlayer !== 'nayelis') {
-                state.currentPlayer = 'nayelis';
-                updateUI();
-            }
+        
+        chatSendBtn.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
         });
 
         // ========== INICIALIZACIÓN ==========
-        
         function init() {
-            // Comienza Nayelis
-            state.currentPlayer = 'nayelis';
-            state.playCount = 0;
-            updateUI();
+            // Cargar preferencia guardada
+            const saved = localStorage.getItem('verdadoreto_player');
+            if (saved === 'nayelys') {
+                selectPlayer('nayelys');
+            } else {
+                selectPlayer('andrey');
+            }
             
-            cardContent.textContent = 'Presiona un botón\npara comenzar 💫';
-            cardLabel.innerHTML = '';
-            cardDisplay.style.borderColor = '#ffe0e6';
-            cardDisplay.style.background = 'white';
+            listenGame();
+            listenChat();
+            listenPresence();
+            setPresence();
+            updateTurnUI();
             
-            console.log('💕 Verdad o Reto para Nayelis · ¡Listo para jugar!');
+            console.log('💕 Verdad o Reto · Andrey & Nayelys · Conectado');
         }
 
         init();
