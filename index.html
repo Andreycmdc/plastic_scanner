@@ -1,1992 +1,508 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>🌸 MARLEYS · red social emocional</title>
-  
-  <!-- Firebase Modular -->
-  <script type="importmap">
-    {
-      "imports": {
-        "firebase/app": "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js",
-        "firebase/database": "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js"
-      }
-    }
-  </script>
-  
-  <style>
-    /* ========== 🎨 SISTEMA DE DISEÑO ULTRA-DETALLADO ========== */
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>💕 Verdad o Reto · Nayelis</title>
     
-    /* ----- TOKENS DE DISEÑO ----- */
-    :root {
-      --color-primary: #ff7a8f;
-      --color-primary-dark: #b34e62;
-      --color-primary-light: #ffb6c1;
-      --color-secondary: #7ac9a0;
-      --color-secondary-dark: #4f8a6e;
-      --color-accent: #ffb800;
-      --color-background: linear-gradient(145deg, #fff5f8, #ffe4ec);
-      --color-surface: rgba(255, 255, 255, 0.85);
-      --color-surface-dark: rgba(255, 255, 255, 0.95);
-      --color-text: #4a3035;
-      --color-text-soft: #6a4e54;
-      --color-text-muted: #a8767e;
-      --color-border: #ffe2ec;
-      --color-border-strong: #ffced7;
-      --color-success: #c7f0db;
-      --color-warning: #fff1c1;
-      --color-danger: #ffe2e2;
-      --radius-sm: 20px;
-      --radius-md: 30px;
-      --radius-lg: 40px;
-      --radius-xl: 60px;
-      --shadow-sm: 0 10px 0 rgba(180, 80, 100, 0.1);
-      --shadow-md: 0 15px 0 rgba(180, 80, 100, 0.15);
-      --shadow-lg: 0 20px 0 rgba(180, 80, 100, 0.2);
-      --shadow-hover: 0 25px 0 rgba(180, 80, 100, 0.25);
-      --transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-    
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Quicksand', 'Inter', -apple-system, sans-serif;
-    }
-    
-    @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
-    
-    body {
-      background: var(--color-background);
-      color: var(--color-text);
-      padding: 20px;
-      min-height: 100vh;
-      position: relative;
-    }
-    
-    /* ----- FONDO ANIMADO ----- */
-    body::before {
-      content: "🌸✨🌸✨🌸✨🌸✨🌸";
-      position: fixed;
-      top: -50px;
-      left: -50px;
-      width: calc(100% + 100px);
-      height: calc(100% + 100px);
-      opacity: 0.05;
-      font-size: 60px;
-      letter-spacing: 30px;
-      pointer-events: none;
-      z-index: 0;
-      animation: floatBackground 60s linear infinite;
-      white-space: nowrap;
-    }
-    
-    @keyframes floatBackground {
-      0% { transform: translateY(0) rotate(0deg); }
-      100% { transform: translateY(-200px) rotate(10deg); }
-    }
-    
-    .app {
-      max-width: 1400px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 100;
-    }
-    
-    /* ===== 🏗️ COMPONENTES BASE ===== */
-    
-    /* ----- TARJETAS ----- */
-    .card {
-      background: var(--color-surface);
-      backdrop-filter: blur(16px) saturate(180%);
-      -webkit-backdrop-filter: blur(16px) saturate(180%);
-      border: 3px solid rgba(255, 255, 255, 0.9);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-md);
-      padding: 28px;
-      transition: var(--transition);
-    }
-    
-    .card:hover {
-      background: var(--color-surface-dark);
-      transform: translateY(-5px);
-      box-shadow: var(--shadow-hover);
-      border-color: white;
-    }
-    
-    .card-sm {
-      padding: 20px;
-      border-radius: var(--radius-md);
-    }
-    
-    .card-glass {
-      background: rgba(255, 255, 255, 0.7);
-      backdrop-filter: blur(20px);
-    }
-    
-    /* ----- HEADER MÁGICO ----- */
-    .magic-header {
-      background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
-      border-radius: var(--radius-xl);
-      padding: 35px 40px;
-      margin-bottom: 30px;
-      border: 6px solid white;
-      box-shadow: var(--shadow-lg);
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .magic-header::before {
-      content: "🦋";
-      position: absolute;
-      top: -30px;
-      left: -20px;
-      font-size: 150px;
-      opacity: 0.1;
-      transform: rotate(-15deg);
-    }
-    
-    .magic-header::after {
-      content: "✨";
-      position: absolute;
-      bottom: -40px;
-      right: -20px;
-      font-size: 180px;
-      opacity: 0.1;
-      transform: rotate(20deg);
-    }
-    
-    .header-title {
-      font-size: 3.5rem;
-      font-weight: 800;
-      color: white;
-      text-shadow: 0 10px 0 rgba(0,0,0,0.05);
-      letter-spacing: -1.5px;
-      line-height: 1.1;
-    }
-    
-    /* ----- BOTONES ----- */
-    .btn {
-      border: none;
-      padding: 14px 28px;
-      border-radius: 60px;
-      font-weight: 700;
-      font-size: 0.95rem;
-      cursor: pointer;
-      transition: var(--transition);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      background: white;
-      color: var(--color-text);
-      border: 3px solid transparent;
-      box-shadow: 0 6px 0 rgba(0,0,0,0.02);
-    }
-    
-    .btn-primary {
-      background: var(--color-primary);
-      color: white;
-      box-shadow: 0 8px 0 var(--color-primary-dark);
-    }
-    
-    .btn-primary:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 0 var(--color-primary-dark);
-    }
-    
-    .btn-primary:active {
-      transform: translateY(4px);
-      box-shadow: 0 4px 0 var(--color-primary-dark);
-    }
-    
-    .btn-secondary {
-      background: var(--color-secondary);
-      color: white;
-      box-shadow: 0 8px 0 var(--color-secondary-dark);
-    }
-    
-    .btn-outline {
-      background: transparent;
-      border: 3px solid var(--color-primary-light);
-      color: var(--color-primary-dark);
-    }
-    
-    .btn-outline:hover {
-      background: var(--color-primary-light);
-      color: white;
-      border-color: transparent;
-    }
-    
-    .btn-sm {
-      padding: 10px 20px;
-      font-size: 0.85rem;
-    }
-    
-    .btn:disabled {
-      opacity: 0.5;
-      transform: none;
-      box-shadow: 0 6px 0 rgba(0,0,0,0.02);
-      cursor: not-allowed;
-    }
-    
-    /* ----- INPUTS ----- */
-    .input {
-      background: white;
-      border: 4px solid var(--color-border);
-      border-radius: 60px;
-      padding: 16px 24px;
-      font-size: 1rem;
-      width: 100%;
-      transition: var(--transition);
-    }
-    
-    .input:focus {
-      border-color: var(--color-primary);
-      outline: none;
-      box-shadow: 0 0 0 8px rgba(255, 122, 143, 0.1);
-    }
-    
-    .input-sm {
-      padding: 12px 20px;
-      font-size: 0.9rem;
-    }
-    
-    .textarea {
-      border-radius: 30px;
-      resize: vertical;
-      min-height: 100px;
-    }
-    
-    /* ----- AVATARES ----- */
-    .avatar {
-      width: 70px;
-      height: 70px;
-      background: linear-gradient(145deg, #ffb8c9, #ff90a5);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-weight: 700;
-      font-size: 2rem;
-      border: 6px solid white;
-      box-shadow: var(--shadow-sm);
-    }
-    
-    .avatar-md {
-      width: 55px;
-      height: 55px;
-      font-size: 1.6rem;
-      border-width: 4px;
-    }
-    
-    .avatar-sm {
-      width: 45px;
-      height: 45px;
-      font-size: 1.3rem;
-      border-width: 3px;
-    }
-    
-    .avatar-xs {
-      width: 35px;
-      height: 35px;
-      font-size: 1rem;
-      border-width: 2px;
-    }
-    
-    /* ----- BADGES ----- */
-    .badge {
-      background: var(--color-border);
-      padding: 6px 16px;
-      border-radius: 60px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-    
-    .badge-online {
-      background: var(--color-success);
-      color: #1f8b4c;
-    }
-    
-    .badge-offline {
-      background: #e2e2e2;
-      color: #666;
-    }
-    
-    .badge-mood {
-      background: var(--color-warning);
-    }
-    
-    .badge-reward {
-      background: var(--color-accent);
-      color: white;
-    }
-    
-    /* ===== 🎯 LAYOUTS ===== */
-    
-    /* ----- GRID PRINCIPAL ----- */
-    .dashboard-grid {
-      display: grid;
-      grid-template-columns: 1.2fr 2fr 1.2fr;
-      gap: 25px;
-    }
-    
-    @media (max-width: 1100px) {
-      .dashboard-grid { grid-template-columns: 1fr 1.5fr; }
-    }
-    
-    @media (max-width: 800px) {
-      .dashboard-grid { grid-template-columns: 1fr; }
-    }
-    
-    /* ----- SECCIONES ORGANIZADAS ----- */
-    .section-title {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 25px;
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: var(--color-primary-dark);
-      border-bottom: 4px dashed var(--color-border-strong);
-      padding-bottom: 15px;
-    }
-    
-    .section-title i {
-      font-size: 1.8rem;
-    }
-    
-    /* ----- TARJETAS DE USUARIO ----- */
-    .user-card {
-      background: white;
-      border-radius: var(--radius-md);
-      padding: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 12px;
-      border: 3px solid var(--color-border);
-      transition: var(--transition);
-    }
-    
-    .user-card:hover {
-      border-color: var(--color-primary-light);
-      transform: translateX(5px);
-    }
-    
-    /* ----- BURBUJAS DE CHAT ----- */
-    .chat-bubble-mine {
-      background: var(--color-primary);
-      color: white;
-      padding: 16px 24px;
-      border-radius: 30px 30px 10px 30px;
-      max-width: 80%;
-      align-self: flex-end;
-      margin-left: auto;
-      border: 4px solid white;
-    }
-    
-    .chat-bubble-other {
-      background: white;
-      color: var(--color-text);
-      padding: 16px 24px;
-      border-radius: 30px 30px 30px 10px;
-      max-width: 80%;
-      align-self: flex-start;
-      border: 4px solid var(--color-border);
-    }
-    
-    /* ----- CONTENEDOR DE CHAT ----- */
-    .chat-container {
-      height: 450px;
-      overflow-y: auto;
-      padding: 20px;
-      background: #fff7f9;
-      border-radius: var(--radius-md);
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      border: 4px solid white;
-    }
-    
-    /* ----- POST DE FEED ----- */
-    .feed-post {
-      background: white;
-      border-radius: var(--radius-lg);
-      padding: 25px;
-      margin-bottom: 20px;
-      border: 4px solid var(--color-border);
-      transition: var(--transition);
-    }
-    
-    .feed-post:hover {
-      border-color: var(--color-primary-light);
-      transform: scale(1.01);
-    }
-    
-    /* ----- ENTRADA DE DIARIO ----- */
-    .diario-entry {
-      background: #fff9e6;
-      border-radius: var(--radius-md);
-      padding: 22px;
-      margin-bottom: 15px;
-      border-left: 15px solid var(--color-primary-light);
-      border-bottom: 4px solid white;
-    }
-    
-    /* ----- TARJETA DE JUEGO ----- */
-    .game-card {
-      background: linear-gradient(145deg, white, #fff5f8);
-      border-radius: var(--radius-lg);
-      padding: 25px;
-      text-align: center;
-      border: 4px solid white;
-      transition: var(--transition);
-    }
-    
-    .game-card:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--shadow-md);
-    }
-    
-    /* ----- COLECCIONABLES ----- */
-    .collectible {
-      background: linear-gradient(145deg, #ffe9ef, white);
-      border-radius: 30px;
-      padding: 12px 20px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      border: 3px solid white;
-      font-weight: 700;
-    }
-    
-    /* ----- NOTIFICACIÓN ----- */
-    .notification {
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      background: var(--color-primary);
-      color: white;
-      padding: 18px 32px;
-      border-radius: 80px;
-      font-weight: 700;
-      border: 6px solid white;
-      box-shadow: 0 15px 0 var(--color-primary-dark);
-      z-index: 9999;
-      animation: slideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    
-    @keyframes slideIn {
-      from { transform: translateX(100%) scale(0.8); opacity: 0; }
-      to { transform: translateX(0) scale(1); opacity: 1; }
-    }
-    
-    /* ----- MODAL ----- */
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(100, 60, 70, 0.3);
-      backdrop-filter: blur(15px);
-      align-items: center;
-      justify-content: center;
-      z-index: 9998;
-    }
-    
-    .modal.active {
-      display: flex;
-    }
-    
-    .modal-content {
-      background: white;
-      max-width: 600px;
-      width: 90%;
-      max-height: 80vh;
-      overflow-y: auto;
-      border-radius: var(--radius-xl);
-      padding: 35px;
-      border: 8px solid white;
-      box-shadow: 0 30px 0 rgba(180, 80, 100, 0.2);
-    }
-    
-    /* ----- UTILIDADES ----- */
-    .hidden { display: none !important; }
-    .flex { display: flex; }
-    .flex-col { flex-direction: column; }
-    .items-center { align-items: center; }
-    .justify-between { justify-content: space-between; }
-    .gap-sm { gap: 12px; }
-    .gap-md { gap: 20px; }
-    .gap-lg { gap: 30px; }
-    .mt-sm { margin-top: 12px; }
-    .mt-md { margin-top: 20px; }
-    .mt-lg { margin-top: 30px; }
-    .mb-sm { margin-bottom: 12px; }
-    .mb-md { margin-bottom: 20px; }
-    .mb-lg { margin-bottom: 30px; }
-    .w-full { width: 100%; }
-    
-    /* ----- SCROLL PERSONALIZADO ----- */
-    ::-webkit-scrollbar {
-      width: 12px;
-    }
-    ::-webkit-scrollbar-track {
-      background: var(--color-border);
-      border-radius: 20px;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: var(--color-primary-light);
-      border-radius: 20px;
-      border: 3px solid white;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--color-primary);
-    }
-  </style>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #ffecd2, #fcb69f, #ff9a9e);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            animation: gradientBG 12s ease infinite;
+            background-size: 300% 300%;
+        }
+
+        @keyframes gradientBG {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .game-container {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(20px);
+            border-radius: 40px;
+            padding: 30px 24px;
+            max-width: 480px;
+            width: 100%;
+            box-shadow: 0 25px 50px rgba(180, 60, 80, 0.25);
+            text-align: center;
+            border: 3px solid rgba(255, 255, 255, 0.8);
+            transition: all 0.3s ease;
+        }
+
+        .header-emoji {
+            font-size: 4rem;
+            display: block;
+            margin-bottom: 6px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #b3405a;
+            margin-bottom: 4px;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            color: #cc6b7a;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .card-display {
+            background: white;
+            border-radius: 30px;
+            padding: 32px 20px;
+            margin: 20px 0 24px;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #ffe0e6;
+            box-shadow: 0 10px 20px rgba(200, 80, 100, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            word-break: break-word;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-display::before {
+            content: "";
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 80px;
+            height: 80px;
+            background: #fff0f3;
+            border-radius: 50%;
+            opacity: 0.5;
+        }
+
+        .card-content {
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: #4a2c35;
+            line-height: 1.5;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-label {
+            display: inline-block;
+            background: #ff7a8f;
+            color: white;
+            padding: 6px 20px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+        }
+
+        .label-verdad {
+            background: #7ac9a0;
+        }
+
+        .label-reto {
+            background: #ff7a8f;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            border: none;
+            padding: 16px 26px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1.2);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex: 1 1 auto;
+            min-width: 130px;
+            letter-spacing: 0.3px;
+            border: 2px solid transparent;
+        }
+
+        .btn-verdad {
+            background: #c7f0db;
+            color: #1f5a3a;
+            box-shadow: 0 8px 0 #8ec9a8;
+        }
+
+        .btn-verdad:hover {
+            background: #b0e6ca;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 0 #8ec9a8;
+        }
+
+        .btn-verdad:active {
+            transform: translateY(4px);
+            box-shadow: 0 4px 0 #8ec9a8;
+        }
+
+        .btn-reto {
+            background: #ffb6c1;
+            color: #7a2e3b;
+            box-shadow: 0 8px 0 #e8939f;
+        }
+
+        .btn-reto:hover {
+            background: #ffa5b3;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 0 #e8939f;
+        }
+
+        .btn-reto:active {
+            transform: translateY(4px);
+            box-shadow: 0 4px 0 #e8939f;
+        }
+
+        .btn-random {
+            background: white;
+            color: #b3405a;
+            border: 3px solid #ffb6c1;
+            box-shadow: 0 8px 0 #ffe0e6;
+            font-size: 1.2rem;
+            padding: 18px 28px;
+            width: 100%;
+            margin-top: 6px;
+            justify-content: center;
+        }
+
+        .btn-random:hover {
+            background: #fff5f7;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 0 #ffe0e6;
+        }
+
+        .btn-random:active {
+            transform: translateY(4px);
+            box-shadow: 0 4px 0 #ffe0e6;
+        }
+
+        .player-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .player-badge {
+            background: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            border: 2px solid #ffe0e6;
+            transition: all 0.3s;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .player-badge.active {
+            background: #ff7a8f;
+            color: white;
+            border-color: #ff7a8f;
+            box-shadow: 0 6px 0 #b3405a;
+            transform: scale(1.05);
+        }
+
+        .turn-indicator {
+            font-size: 0.9rem;
+            color: #886060;
+            margin-top: 18px;
+            font-weight: 500;
+        }
+
+        .counter {
+            background: #fff0f3;
+            padding: 8px 18px;
+            border-radius: 40px;
+            display: inline-block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #b3405a;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 400px) {
+            .game-container {
+                padding: 22px 16px;
+            }
+            .btn {
+                padding: 14px 18px;
+                font-size: 0.9rem;
+            }
+            .card-content {
+                font-size: 1.15rem;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<div class="app">
+    <div class="game-container">
+        <span class="header-emoji">💘</span>
+        <h1>Verdad o Reto</h1>
+        <p class="subtitle">
+            <span>✨ para Nayelis ✨</span>
+        </p>
 
-  <!-- ===== 🦋 HEADER PRINCIPAL ===== -->
-  <header class="magic-header">
-    <div class="flex justify-between items-center">
-      <div>
-        <h1 class="header-title">🌸 marleys social</h1>
-        <div class="flex gap-sm" style="margin-top: 15px;">
-          <span class="badge" style="background: rgba(255,255,255,0.3); backdrop-filter: blur(5px); color: white; border: 2px solid white;">
-            <i class="fas fa-heart"></i> red emocional v2.0
-          </span>
-          <span class="badge" id="globalOnlineBadge" style="background: white; color: var(--color-primary-dark);">
-            <i class="fas fa-users"></i> <span id="onlineCount">0</span> conectados
-          </span>
+        <!-- Indicador de turno -->
+        <div class="player-indicator">
+            <span class="player-badge active" id="badgeTu">🌸 Tú</span>
+            <span style="font-size: 1.5rem;">💞</span>
+            <span class="player-badge" id="badgeNayelis">🦋 Nayelis</span>
         </div>
-      </div>
-      <div id="headerQuickStatus" class="flex gap-sm" style="background: rgba(255,255,255,0.2); padding: 12px 25px; border-radius: 60px; backdrop-filter: blur(5px); border: 2px solid white;">
-        <!-- Se llena dinámicamente -->
-      </div>
-    </div>
-  </header>
 
-  <!-- ===== 🎭 MÓDULO 1: IDENTIDAD Y ESTADO ===== -->
-  <section id="moduloIdentidad" class="card mb-lg">
-    <!-- VISTA NO REGISTRADA -->
-    <div id="viewNotRegistered" class="flex items-center gap-lg" style="flex-wrap: wrap;">
-      <span style="font-size: 5rem; animation: float 3s infinite;">🦋</span>
-      <div style="flex: 1;">
-        <h2 style="font-size: 2.2rem; color: var(--color-primary-dark); margin-bottom: 8px;">bienvenida, marleys</h2>
-        <p style="color: var(--color-text-soft); font-size: 1.1rem; margin-bottom: 25px;">crea tu identidad en esta red social emocional</p>
-        
-        <!-- FORMULARIO DE REGISTRO -->
-        <div style="display: flex; gap: 15px; flex-wrap: wrap; max-width: 600px;">
-          <input type="text" id="registerAliasInput" class="input" placeholder="elige tu alias" style="flex: 2;" value="marleys_">
-          <button class="btn btn-primary" id="registerBtn" style="flex: 1; padding: 16px 30px;">
-            <i class="fas fa-heart"></i> comenzar
-          </button>
+        <!-- Contador de preguntas -->
+        <div class="counter">
+            🎲 Jugadas: <span id="playCount">0</span>
         </div>
-        
-        <div style="margin-top: 20px; display: flex; gap: 20px; flex-wrap: wrap;">
-          <span class="badge"><i class="fas fa-shield-alt"></i> espacio seguro</span>
-          <span class="badge"><i class="fas fa-lock"></i> datos privados</span>
-          <span class="badge"><i class="fas fa-star"></i> coleccionables</span>
-        </div>
-      </div>
-    </div>
-    
-    <!-- VISTA REGISTRADA -->
-    <div id="viewRegistered" style="display: none;">
-      <div class="flex justify-between items-center" style="flex-wrap: wrap; gap: 25px;">
-        <!-- PERFIL DEL USUARIO -->
-        <div class="flex items-center gap-lg">
-          <div class="avatar" id="userAvatar">🌸</div>
-          <div>
-            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 8px;">
-              <h2 style="font-size: 2rem; font-weight: 700;" id="userNameDisplay">marleys</h2>
-              <span class="badge badge-online" id="userStatusBadge">
-                <i class="fas fa-circle"></i> conectada
-              </span>
-            </div>
-            
-            <!-- ESTADO EMOCIONAL -->
-            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
-              <span class="badge badge-mood" id="userMoodDisplay">
-                <i class="fas fa-smile"></i> feliz
-              </span>
-              <span class="badge" id="userJoinDate">
-                <i class="fas fa-calendar"></i> recién llegada
-              </span>
-            </div>
-          </div>
-        </div>
-        
-        <!-- ACCIONES DE USUARIO -->
-        <div class="flex gap-sm">
-          <button class="btn btn-outline" id="openDiarioModalBtn">
-            <i class="fas fa-book"></i> mi diario
-          </button>
-          <button class="btn" id="logoutBtn" style="background: #ffe2ec;">
-            <i class="fas fa-sign-out-alt"></i> salir
-          </button>
-        </div>
-      </div>
-      
-      <!-- SELECTOR DE ESTADO EMOCIONAL -->
-      <div style="margin-top: 30px; padding-top: 25px; border-top: 4px dashed var(--color-border-strong);">
-        <div class="flex items-center gap-md" style="flex-wrap: wrap;">
-          <span style="font-weight: 700; font-size: 1.1rem;"><i class="fas fa-heart" style="color: var(--color-primary);"></i> ¿cómo te sientes hoy?</span>
-          <div class="flex gap-sm" style="flex-wrap: wrap;">
-            <button class="btn btn-sm mood-btn" data-mood="feliz" style="background: #ffe87c;">😊 feliz</button>
-            <button class="btn btn-sm mood-btn" data-mood="tranquila" style="background: #a5d8d3;">😌 tranquila</button>
-            <button class="btn btn-sm mood-btn" data-mood="nostalgica" style="background: #e2cfeb;">🥺 nostálgica</button>
-            <button class="btn btn-sm mood-btn" data-mood="energetica" style="background: #ffb3b3;">⚡ energética</button>
-            <button class="btn btn-sm mood-btn" data-mood="amorosa" style="background: #ffc0cb;">💕 amorosa</button>
-            <button class="btn btn-sm mood-btn" data-mood="creativa" style="background: #b5e4ca;">🎨 creativa</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- ===== 📱 DASHBOARD PRINCIPAL (SOLO VISIBLE LOGEADO) ===== -->
-  <div id="mainDashboard" style="display: none;">
-    
-    <!-- ===== 🎯 GRID DE 3 COLUMNAS ORGANIZADO POR MÓDULOS ===== -->
-    <div class="dashboard-grid">
-      
-      <!-- ===== 🌟 COLUMNA 1: CONEXIONES SOCIALES ===== -->
-      <div class="flex flex-col gap-md">
-        
-        <!-- 📍 MÓDULO 2: USUARIOS ACTIVOS -->
-        <div class="card card-sm">
-          <div class="section-title">
-            <i class="fas fa-user-friends"></i>
-            <span>descubrir personas</span>
-          </div>
-          
-          <!-- BUSCADOR -->
-          <div style="margin-bottom: 20px;">
-            <input type="text" id="userSearchInput" class="input input-sm" placeholder="buscar por alias...">
-          </div>
-          
-          <!-- LISTA DE USUARIOS -->
-          <div id="usersListContainer" style="max-height: 350px; overflow-y: auto; padding-right: 8px;">
-            <div style="text-align: center; padding: 30px; color: var(--color-text-muted);">
-              <i class="fas fa-spinner fa-spin" style="font-size: 2rem;"></i>
-              <p style="margin-top: 12px;">cargando usuarios...</p>
+        <!-- Carta de pregunta/reto -->
+        <div class="card-display" id="cardDisplay">
+            <div class="card-content" id="cardContent">
+                Presiona un botón<br>para comenzar 💫
             </div>
-          </div>
         </div>
-        
-        <!-- 🤝 MÓDULO 3: SOLICITUDES DE CONEXIÓN -->
-        <div class="card card-sm">
-          <div class="section-title">
-            <i class="fas fa-bell"></i>
-            <span>solicitudes</span>
-            <span id="pendingRequestsBadge" style="background: var(--color-primary); color: white; padding: 4px 12px; border-radius: 60px; font-size: 0.8rem; margin-left: 10px;">0</span>
-          </div>
-          
-          <div id="pendingRequestsContainer" style="max-height: 250px; overflow-y: auto;">
-            <p style="color: var(--color-text-muted); text-align: center;">no hay solicitudes pendientes</p>
-          </div>
-        </div>
-        
-        <!-- 🎮 MÓDULO 6: JUEGOS Y RECOMPENSAS (VISTA COMPACTA) -->
-        <div class="card card-sm">
-          <div class="section-title">
-            <i class="fas fa-gamepad"></i>
-            <span>mini-juegos</span>
-          </div>
-          
-          <!-- JUEGO DE REFLEJOS -->
-          <div style="margin-bottom: 25px;">
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
-              <span style="font-weight: 700;">⚡ prueba de reflejos</span>
-              <span class="badge">mejor: <span id="reactionBestTime">-</span> ms</span>
-            </div>
-            <div id="reactionGameBox" style="background: #ffdbe4; border-radius: 60px; padding: 30px; text-align: center; font-size: 1.8rem; font-weight: 700; border: 6px solid white; cursor: pointer; margin-bottom: 12px;">
-              💖 toca aquí
-            </div>
-            <button class="btn btn-primary w-full" id="startReactionBtn">
-              <i class="fas fa-play"></i> comenzar
+        <div id="cardLabel" style="min-height: 28px;"></div>
+
+        <!-- Botones principales -->
+        <div class="button-group">
+            <button class="btn btn-verdad" id="btnVerdad">
+                💚 Verdad
             </button>
-          </div>
-          
-          <!-- RECOMPENSA DIARIA -->
-          <div style="background: linear-gradient(145deg, #fff9e6, white); border-radius: 30px; padding: 20px; border: 4px solid white;">
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-sm">
-                <span style="font-size: 2rem;" id="dailyRewardEmoji">🎁</span>
-                <div>
-                  <span style="font-weight: 700;">recompensa diaria</span>
-                  <p style="font-size: 0.8rem; color: var(--color-text-muted);" id="dailyRewardMessage">¡reclama tu regalo!</p>
-                </div>
-              </div>
-              <button class="btn btn-secondary btn-sm" id="claimDailyRewardBtn">reclamar</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- ===== 💬 COLUMNA 2: CHAT PRIVADO Y FEED ===== -->
-      <div class="flex flex-col gap-md">
-        
-        <!-- 💌 MÓDULO 4: CHAT PRIVADO 1a1 -->
-        <div class="card">
-          <div class="section-title">
-            <i class="fas fa-comments"></i>
-            <span>chat privado</span>
-            <span style="font-size: 0.8rem; color: var(--color-text-muted); margin-left: 10px;">solo con conexiones</span>
-          </div>
-          
-          <!-- SELECTOR DE CONTACTOS -->
-          <div style="margin-bottom: 20px;">
-            <select id="chatContactSelect" class="input input-sm" style="background: white; cursor: pointer;">
-              <option value="">selecciona un contacto</option>
-            </select>
-          </div>
-          
-          <!-- CONTENEDOR DE MENSAJES -->
-          <div id="chatMessagesContainer" class="chat-container" style="margin-bottom: 15px;">
-            <p style="color: var(--color-text-muted); text-align: center;">selecciona un contacto para chatear</p>
-          </div>
-          
-          <!-- FORMULARIO DE MENSAJE -->
-          <div style="display: flex; gap: 12px;">
-            <input type="text" id="chatMessageInput" class="input input-sm" placeholder="escribe tu mensaje..." style="flex: 1;">
-            <button class="btn btn-primary" id="sendMessageBtn" style="padding: 12px 24px;">
-              <i class="fas fa-paper-plane"></i>
+            <button class="btn btn-reto" id="btnReto">
+                🔥 Reto
             </button>
-          </div>
-          
-          <!-- INDICADOR DE CONEXIÓN -->
-          <p style="margin-top: 12px; font-size: 0.8rem; color: var(--color-text-muted);">
-            <i class="fas fa-lock"></i> conversaciones privadas y cifradas emocionalmente
-          </p>
         </div>
+
+        <button class="btn btn-random" id="btnRandom">
+            🎲 ¡Sorpresa!
+        </button>
+
+        <p class="turn-indicator" id="turnMessage">
+            👆 Es turno de <strong id="currentPlayerText">Nayelis</strong>
+        </p>
+    </div>
+
+    <script>
+        // ========== PREGUNTAS PERSONALIZADAS PARA NAYELIS ==========
         
-        <!-- 📰 MÓDULO 5: FEED SOCIAL -->
-        <div class="card">
-          <div class="section-title">
-            <i class="fas fa-newspaper"></i>
-            <span>feed de pensamientos</span>
-          </div>
-          
-          <!-- PUBLICAR EN FEED -->
-          <div style="margin-bottom: 30px;">
-            <textarea id="feedPostInput" class="input textarea" placeholder="comparte algo con todos..." rows="2" style="margin-bottom: 12px;"></textarea>
-            <div style="display: flex; justify-content: flex-end;">
-              <button class="btn btn-primary" id="publishFeedBtn">
-                <i class="fas fa-feather"></i> publicar
-              </button>
-            </div>
-          </div>
-          
-          <!-- LISTA DE POSTS -->
-          <div id="feedPostsContainer" style="max-height: 500px; overflow-y: auto; padding-right: 8px;">
-            <!-- Se llena dinámicamente -->
-          </div>
-        </div>
-      </div>
-      
-      <!-- ===== 🌙 COLUMNA 3: ESPACIO PERSONAL Y RECOMPENSAS ===== -->
-      <div class="flex flex-col gap-md">
+        const verdades = [
+            "¿Cuál fue el primer pensamiento que tuviste al despertar hoy?",
+            "¿Qué canción te recuerda a nosotros y por qué?",
+            "¿Cuál ha sido el momento más feliz que has vivido conmigo?",
+            "Si pudieras viajar a cualquier lugar conmigo, ¿a dónde irías?",
+            "¿Qué es lo que más te gusta de nuestra relación?",
+            "¿Cuál fue la primera cosa que notaste de mí cuando nos conocimos?",
+            "¿Tienes algún sueño que aún no me hayas contado?",
+            "¿Qué es algo que siempre has querido hacer pero no te has atrevido?",
+            "¿Cuál es tu recuerdo favorito de nuestra infancia juntos?",
+            "¿Qué cualidad mía valoras más?",
+            "Si pudieras cambiar algo de mí, ¿qué sería?",
+            "¿Cuál fue el momento exacto en que supiste que me querías?",
+            "¿Qué es algo que te da miedo contarme?",
+            "¿Cuál es tu forma favorita de demostrar amor?",
+            "¿Qué plan te haría más ilusión hacer conmigo este fin de semana?",
+            "¿Alguna vez has sentido celos? ¿De qué?",
+            "¿Qué palabra te gustaría que te dedicara ahora mismo?",
+            "Si tuvieras que describirme con tres palabras, ¿cuáles serían?",
+            "¿Cuál es el mejor cumplido que recuerdas haber recibido?",
+            "¿Hay algo que te gustaría que hiciéramos más a menudo?",
+            "¿Qué es lo más loco que harías por amor?",
+            "¿Qué parte de mi personalidad te hace reír más?",
+            "¿Cómo te imaginas dentro de 10 años a mi lado?",
+            "¿Cuál ha sido el día más especial que hemos pasado juntos?",
+            "¿Qué secreto guardas que crees que nunca descubriré?"
+        ];
+
+        const retos = [
+            "📸 Tómate un selfie con la cara más divertida que puedas",
+            "🎤 Canta el coro de tu canción favorita",
+            "💃 Baila 15 segundos sin música y grábate",
+            "📝 Escribe un pequeño poema de 4 líneas para mí",
+            "🗣️ Di 'te quiero' en 5 idiomas diferentes",
+            "🐱 Imita a un animal durante 10 segundos",
+            "👀 Mantén contacto visual con la cámara por 20 segundos sin reírte",
+            "🤗 Manda un audio diciendo lo primero que se te venga a la mente sobre nosotros",
+            "🎨 Dibuja algo rápido que nos represente y enséñamelo",
+            "📖 Cuenta una anécdota graciosa tuya en 1 minuto",
+            "🪞 Haz una mueca frente al espejo y manda foto",
+            "🎵 Tararea una canción y haz que la adivine",
+            "💌 Escribe una carta corta de amor en 2 minutos y léela",
+            "🤸 Haz 5 saltos de tijera (jumping jacks) ahora mismo",
+            "📱 Enséñame la última foto que tomaste con el celular",
+            "🗓️ Planea nuestra próxima cita virtual en 30 segundos",
+            "🎭 Actúa una escena romántica de película (tú eliges cuál)",
+            "💬 Manda un mensaje a un amigo diciendo que me amas",
+            "🖐️ Toca tu nariz con la lengua (inténtalo)",
+            "📢 Grita '¡Nayelis es increíble!' (si puedes)",
+            "🤫 Quédate en silencio absoluto por 15 segundos mirando la pantalla",
+            "🎁 Ofréceme un 'vale' por algo que harás por mí mañana",
+            "🧸 Abraza algo suave y di que soy yo",
+            "🎤 Haz tu mejor imitación de un personaje famoso",
+            "💖 Di tres cosas que amas de ti misma en voz alta"
+        ];
+
+        // ========== ESTADO DEL JUEGO ==========
         
-        <!-- 📔 MÓDULO 7: MODO SOLITARIO - DIARIO PRIVADO -->
-        <div class="card" style="background: #fff9f0;">
-          <div class="section-title">
-            <i class="fas fa-moon"></i>
-            <span>modo solitario · diario</span>
-            <span class="badge" style="background: var(--color-primary); color: white;">solo tú</span>
-          </div>
-          
-          <!-- NUEVA ENTRADA -->
-          <div style="margin-bottom: 25px;">
-            <textarea id="diarioEntryInput" class="input textarea" placeholder="escribe lo que sientes, solo tú lo verás..." rows="2" style="margin-bottom: 12px;"></textarea>
-            <div style="display: flex; justify-content: flex-end;">
-              <button class="btn btn-secondary" id="saveDiarioBtn">
-                <i class="fas fa-save"></i> guardar en mi diario
-              </button>
-            </div>
-          </div>
-          
-          <!-- ÚLTIMAS ENTRADAS -->
-          <div>
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
-              <span style="font-weight: 700;"><i class="fas fa-history"></i> últimas entradas</span>
-              <button class="btn btn-sm btn-outline" id="viewFullDiarioBtn">ver todas</button>
-            </div>
-            <div id="diarioEntriesPreview" style="max-height: 300px; overflow-y: auto;">
-              <!-- Se llena dinámicamente -->
-            </div>
-          </div>
-        </div>
+        const state = {
+            currentPlayer: 'nayelis', // nayelis o tu
+            playCount: 0,
+            currentCard: null,
+            currentType: null // 'verdad' o 'reto'
+        };
+
+        // ========== ELEMENTOS DEL DOM ==========
         
-        <!-- 🏆 MÓDULO 8: COLECCIONABLES Y LOGROS -->
-        <div class="card">
-          <div class="section-title">
-            <i class="fas fa-star"></i>
-            <span>coleccionables</span>
-          </div>
-          
-          <!-- COLECCIONABLES DEL USUARIO -->
-          <div style="margin-bottom: 25px;">
-            <div style="display: flex; flex-wrap: wrap; gap: 12px;" id="collectiblesContainer">
-              <!-- Se llena dinámicamente -->
-            </div>
-          </div>
-          
-          <!-- PROGRESO Y LOGROS -->
-          <div style="background: #fff7f9; border-radius: 30px; padding: 20px; border: 4px solid white;">
-            <div class="flex items-center gap-sm" style="margin-bottom: 15px;">
-              <i class="fas fa-trophy" style="color: #ffb800;"></i>
-              <span style="font-weight: 700;">tus logros</span>
-            </div>
-            <div id="achievementsContainer">
-              <span class="badge" style="background: #ffe2ec;"><i class="fas fa-check-circle"></i> primer mensaje</span>
-              <span class="badge" style="background: #ffe2ec;"><i class="fas fa-check-circle"></i> primera conexión</span>
-              <span class="badge" style="background: #ffe2ec;"><i class="fas fa-check-circle"></i> diario activo</span>
-            </div>
-          </div>
-        </div>
+        const badgeTu = document.getElementById('badgeTu');
+        const badgeNayelis = document.getElementById('badgeNayelis');
+        const cardDisplay = document.getElementById('cardDisplay');
+        const cardContent = document.getElementById('cardContent');
+        const cardLabel = document.getElementById('cardLabel');
+        const playCountSpan = document.getElementById('playCount');
+        const currentPlayerText = document.getElementById('currentPlayerText');
+        const turnMessage = document.getElementById('turnMessage');
+
+        const btnVerdad = document.getElementById('btnVerdad');
+        const btnReto = document.getElementById('btnReto');
+        const btnRandom = document.getElementById('btnRandom');
+
+        // ========== FUNCIONES DEL JUEGO ==========
         
-        <!-- 📊 ESTADÍSTICAS PERSONALES -->
-        <div class="card card-sm">
-          <div class="section-title">
-            <i class="fas fa-chart-line"></i>
-            <span>tu actividad</span>
-          </div>
-          
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-            <div style="background: white; border-radius: 30px; padding: 15px; text-align: center; border: 3px solid var(--color-border);">
-              <span style="font-size: 1.8rem;">💬</span>
-              <p style="font-weight: 700; margin-top: 5px;" id="statsMessages">0</p>
-              <p style="font-size: 0.8rem;">mensajes</p>
-            </div>
-            <div style="background: white; border-radius: 30px; padding: 15px; text-align: center; border: 3px solid var(--color-border);">
-              <span style="font-size: 1.8rem;">🤝</span>
-              <p style="font-weight: 700; margin-top: 5px;" id="statsConnections">0</p>
-              <p style="font-size: 0.8rem;">conexiones</p>
-            </div>
-            <div style="background: white; border-radius: 30px; padding: 15px; text-align: center; border: 3px solid var(--color-border);">
-              <span style="font-size: 1.8rem;">📔</span>
-              <p style="font-weight: 700; margin-top: 5px;" id="statsDiario">0</p>
-              <p style="font-size: 0.8rem;">entradas</p>
-            </div>
-            <div style="background: white; border-radius: 30px; padding: 15px; text-align: center; border: 3px solid var(--color-border);">
-              <span style="font-size: 1.8rem;">🎁</span>
-              <p style="font-weight: 700; margin-top: 5px;" id="statsCollectibles">0</p>
-              <p style="font-size: 0.8rem;">coleccionables</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <!-- ===== 📌 FOOTER ===== -->
-  <footer style="margin-top: 50px; text-align: center; border-top: 4px dashed var(--color-border-strong); padding-top: 30px;">
-    <p style="font-size: 1.2rem; font-weight: 600; color: var(--color-text-soft);">
-      ✨ red social emocional · diseñada con infinito cariño para marleys ✨
-    </p>
-    <p style="margin-top: 12px; color: var(--color-text-muted);" id="globalFooterStatus">
-      🌙 modo solitario · tus recuerdos están a salvo
-    </p>
-    <p style="margin-top: 8px; font-size: 0.8rem; color: var(--color-text-muted);">
-      <i class="fas fa-heart" style="color: var(--color-primary);"></i> 8 módulos · 100% funcional · tiempo real
-    </p>
-  </footer>
-
-</div>
-
-<!-- ===== 🎭 MODAL: DIARIO COMPLETO ===== -->
-<div id="diarioFullModal" class="modal">
-  <div class="modal-content">
-    <div class="flex justify-between items-center" style="margin-bottom: 25px;">
-      <h2 style="font-size: 2rem; color: var(--color-primary-dark);">📔 mi diario íntimo</h2>
-      <button class="btn btn-sm" id="closeDiarioModalBtn" style="background: #ffe2ec;">
-        <i class="fas fa-times"></i> cerrar
-      </button>
-    </div>
-    <div id="diarioFullEntries" style="max-height: 500px; overflow-y: auto; padding-right: 12px;">
-      <!-- Se llena dinámicamente -->
-    </div>
-  </div>
-</div>
-
-<!-- ===== 🎭 MODAL: LOGROS DETALLADOS ===== -->
-<div id="achievementsModal" class="modal">
-  <div class="modal-content">
-    <div class="flex justify-between items-center" style="margin-bottom: 25px;">
-      <h2 style="font-size: 2rem; color: var(--color-primary-dark);">🏆 todos tus logros</h2>
-      <button class="btn btn-sm" id="closeAchievementsModalBtn" style="background: #ffe2ec;">
-        <i class="fas fa-times"></i> cerrar
-      </button>
-    </div>
-    <div id="achievementsFullContainer">
-      <!-- Se llena dinámicamente -->
-    </div>
-  </div>
-</div>
-
-<script type="module">
-  // ========== 🔥 FIREBASE CONFIGURACIÓN ==========
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getDatabase, ref, set, onValue, push, update, get, onDisconnect, query, orderByChild, equalTo, remove, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyByB_5gP3sDwbCmVWbiB5CQXHzsKhcDvoo",
-    authDomain: "chist-4aac2.firebaseapp.com",
-    databaseURL: "https://chist-4aac2-default-rtdb.firebaseio.com",
-    projectId: "chist-4aac2",
-    storageBucket: "chist-4aac2.firebasestorage.app",
-    messagingSenderId: "64011595640",
-    appId: "1:64011595640:web:8fa8b005b916cf2af7628d"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
-  
-  console.log("🔥 Firebase conectado - Red Social Emocional v2.0");
-
-  // ========== 🌸 ESTADO GLOBAL ULTRA-DETALLADO ==========
-  const AppState = {
-    user: {
-      id: null,
-      alias: null,
-      isLoggedIn: false,
-      mood: 'feliz',
-      registeredAt: null,
-      lastActive: null
-    },
-    stats: {
-      messagesCount: 0,
-      connectionsCount: 0,
-      diarioCount: 0,
-      collectiblesCount: 0
-    },
-    game: {
-      reactionActive: false,
-      reactionStartTime: null,
-      bestTime: localStorage.getItem('marleysBestReaction') || null
-    },
-    ui: {
-      currentChat: null,
-      dailyRewardClaimed: false,
-      lastRewardDate: null
-    }
-  };
-
-  // ========== 🎯 UTILIDADES AVANZADAS ==========
-  
-  // Notificaciones con emojis dinámicos
-  function showNotification(message, type = 'info', emoji = '🌸') {
-    const notif = document.createElement('div');
-    notif.className = 'notification';
-    notif.innerHTML = `<span style="font-size: 1.5rem;">${emoji}</span> ${message}`;
-    
-    if (type === 'success') notif.style.background = 'var(--color-secondary)';
-    if (type === 'reward') notif.style.background = 'var(--color-accent)';
-    if (type === 'love') notif.style.background = 'var(--color-primary)';
-    
-    document.body.appendChild(notif);
-    setTimeout(() => notif.remove(), 3500);
-  }
-
-  // Formato de tiempo humanizado
-  function formatTimeAgo(timestamp) {
-    if (!timestamp) return 'recién';
-    const diff = Date.now() - timestamp;
-    if (diff < 60000) return 'ahora mismo';
-    if (diff < 3600000) return `${Math.floor(diff/60000)} min`;
-    if (diff < 86400000) return `${Math.floor(diff/3600000)} h`;
-    if (diff < 604800000) return `${Math.floor(diff/86400000)} d`;
-    return new Date(timestamp).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
-  }
-
-  // Formato de hora para chat
-  function formatChatTime(timestamp) {
-    const date = new Date(timestamp);
-    return `${date.getHours().toString().padStart(2,'0')}:${date.getMinutes().toString().padStart(2,'0')}`;
-  }
-
-  // ========== 🦋 MÓDULO 1: USUARIOS - REGISTRO Y AUTENTICACIÓN ==========
-  
-  async function registerUser(alias) {
-    if (!alias || alias.trim().length < 2) {
-      showNotification('elige un alias bonito', 'info', '💕');
-      return;
-    }
-    
-    const cleanAlias = alias.trim();
-    const userId = 'user_' + Date.now() + '_' + Math.random().toString(36).substring(2, 10);
-    
-    AppState.user = {
-      id: userId,
-      alias: cleanAlias,
-      isLoggedIn: true,
-      mood: 'feliz',
-      registeredAt: Date.now(),
-      lastActive: Date.now()
-    };
-    
-    // Guardar en localStorage
-    localStorage.setItem('marleysSocialUser', JSON.stringify({
-      id: userId,
-      alias: cleanAlias
-    }));
-    
-    try {
-      // Crear perfil de usuario
-      await set(ref(db, `users/${userId}`), {
-        id: userId,
-        alias: cleanAlias,
-        online: true,
-        mood: 'feliz',
-        registeredAt: Date.now(),
-        lastActive: Date.now(),
-        collectibles: {
-          flowers: 1,
-          stars: 0,
-          hearts: 0,
-          lightning: 0
+        function getRandomItem(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
         }
-      });
-      
-      // Configurar desconexión automática
-      onDisconnect(ref(db, `users/${userId}`)).update({
-        online: false,
-        lastActive: Date.now()
-      });
-      
-      // Inicializar diario privado
-      await set(ref(db, `diario/${userId}`), {});
-      
-      // Inicializar coleccionables
-      await set(ref(db, `collectibles/${userId}`), {
-        flowers: 1,
-        stars: 0,
-        hearts: 0,
-        lightning: 0
-      });
-      
-      // Inicializar estadísticas
-      await set(ref(db, `stats/${userId}`), {
-        messages: 0,
-        connections: 0,
-        diarioEntries: 0,
-        reactions: 0
-      });
-      
-      updateUIBeforeLogin();
-      showNotification(`✨ bienvenida, ${cleanAlias}`, 'love', '🦋');
-      
-      // Cargar todos los módulos
-      loadAllModules();
-      
-    } catch (error) {
-      console.error('Error en registro:', error);
-      showNotification('error de conexión', 'error', '😢');
-    }
-  }
 
-  async function logoutUser() {
-    if (AppState.user.isLoggedIn) {
-      await update(ref(db, `users/${AppState.user.id}`), {
-        online: false,
-        lastActive: Date.now()
-      });
-    }
-    
-    localStorage.removeItem('marleysSocialUser');
-    AppState.user = { id: null, alias: null, isLoggedIn: false };
-    AppState.stats = { messagesCount: 0, connectionsCount: 0, diarioCount: 0, collectiblesCount: 0 };
-    
-    document.getElementById('viewRegistered').style.display = 'none';
-    document.getElementById('viewNotRegistered').style.display = 'flex';
-    document.getElementById('mainDashboard').style.display = 'none';
-    
-    showNotification('🌙 sesión cerrada', 'info', '💤');
-  }
-
-  function updateUIBeforeLogin() {
-    document.getElementById('viewNotRegistered').style.display = 'none';
-    document.getElementById('viewRegistered').style.display = 'block';
-    document.getElementById('mainDashboard').style.display = 'block';
-    
-    document.getElementById('userNameDisplay').textContent = AppState.user.alias;
-    document.getElementById('userAvatar').innerHTML = AppState.user.alias.substring(0,2).toUpperCase();
-    document.getElementById('userMoodDisplay').innerHTML = `<i class="fas fa-smile"></i> ${AppState.user.mood}`;
-    document.getElementById('userJoinDate').innerHTML = `<i class="fas fa-calendar"></i> ${formatTimeAgo(AppState.user.registeredAt)}`;
-  }
-
-  // ========== 🤝 MÓDULO 2: CONEXIONES Y SOLICITUDES ==========
-  
-  // Enviar solicitud de amistad
-  async function sendFriendRequest(toUserId, toAlias) {
-    if (!AppState.user.isLoggedIn) return;
-    
-    const requestId = `${AppState.user.id}_${toUserId}`;
-    const requestRef = ref(db, `friendRequests/${requestId}`);
-    
-    const snapshot = await get(requestRef);
-    if (snapshot.exists()) {
-      showNotification('solicitud ya enviada', 'info', '💌');
-      return;
-    }
-    
-    await set(requestRef, {
-      from: AppState.user.id,
-      fromAlias: AppState.user.alias,
-      to: toUserId,
-      toAlias: toAlias,
-      status: 'pending',
-      timestamp: Date.now()
-    });
-    
-    showNotification(`solicitud enviada a ${toAlias}`, 'success', '💕');
-  }
-
-  // Aceptar solicitud
-  async function acceptFriendRequest(fromUserId) {
-    const requestId = `${fromUserId}_${AppState.user.id}`;
-    
-    // Crear conexión bidireccional
-    await set(ref(db, `connections/${AppState.user.id}/${fromUserId}`), {
-      userId: fromUserId,
-      connectedAt: Date.now()
-    });
-    
-    await set(ref(db, `connections/${fromUserId}/${AppState.user.id}`), {
-      userId: AppState.user.id,
-      connectedAt: Date.now()
-    });
-    
-    // Eliminar solicitud
-    await remove(ref(db, `friendRequests/${requestId}`));
-    
-    // Actualizar estadísticas
-    await runTransaction(ref(db, `stats/${AppState.user.id}/connections`), (v) => (v || 0) + 1);
-    
-    showNotification('solicitud aceptada 💕', 'success', '🤝');
-    loadPendingRequests();
-    loadChatContacts();
-    loadUserStats();
-  }
-
-  // Rechazar solicitud
-  async function rejectFriendRequest(fromUserId) {
-    const requestId = `${fromUserId}_${AppState.user.id}`;
-    await remove(ref(db, `friendRequests/${requestId}`));
-    showNotification('solicitud rechazada', 'info', '💔');
-    loadPendingRequests();
-  }
-
-  // Cargar solicitudes pendientes
-  async function loadPendingRequests() {
-    if (!AppState.user.isLoggedIn) return;
-    
-    const snapshot = await get(ref(db, 'friendRequests'));
-    
-    if (!snapshot.exists()) {
-      document.getElementById('pendingRequestsContainer').innerHTML = '<p style="color: var(--color-text-muted); text-align: center;">no hay solicitudes pendientes</p>';
-      document.getElementById('pendingRequestsBadge').textContent = '0';
-      return;
-    }
-    
-    const requests = snapshot.val();
-    const pendingToMe = Object.entries(requests)
-      .filter(([id, req]) => req.to === AppState.user.id && req.status === 'pending')
-      .map(([id, req]) => req);
-    
-    document.getElementById('pendingRequestsBadge').textContent = pendingToMe.length;
-    
-    if (pendingToMe.length === 0) {
-      document.getElementById('pendingRequestsContainer').innerHTML = '<p style="color: var(--color-text-muted); text-align: center;">no hay solicitudes pendientes</p>';
-      return;
-    }
-    
-    let html = '';
-    pendingToMe.forEach(req => {
-      html += `
-        <div class="user-card" style="margin-bottom: 12px;">
-          <div style="display: flex; align-items: center; gap: 15px;">
-            <div class="avatar avatar-xs" style="background: linear-gradient(145deg, #ffb8c9, #ff90a5);">
-              ${req.fromAlias.substring(0,2).toUpperCase()}
-            </div>
-            <div>
-              <div style="font-weight: 700;">${req.fromAlias}</div>
-              <div style="font-size: 0.7rem; color: var(--color-text-muted);">quiere conectarse</div>
-            </div>
-          </div>
-          <div style="display: flex; gap: 8px;">
-            <button class="btn btn-sm btn-success accept-request" data-from="${req.from}" style="padding: 8px 16px;">
-              <i class="fas fa-check"></i>
-            </button>
-            <button class="btn btn-sm reject-request" data-from="${req.from}" style="background: #ffe2ec; padding: 8px 16px;">
-              <i class="fas fa-times"></i>
-            </button>
-          </div>
-        </div>
-      `;
-    });
-    
-    document.getElementById('pendingRequestsContainer').innerHTML = html;
-    
-    // Event listeners
-    document.querySelectorAll('.accept-request').forEach(btn => {
-      btn.addEventListener('click', () => acceptFriendRequest(btn.dataset.from));
-    });
-    
-    document.querySelectorAll('.reject-request').forEach(btn => {
-      btn.addEventListener('click', () => rejectFriendRequest(btn.dataset.from));
-    });
-  }
-
-  // Cargar lista de conexiones
-  async function loadConnections() {
-    if (!AppState.user.isLoggedIn) return [];
-    
-    const snapshot = await get(ref(db, `connections/${AppState.user.id}`));
-    if (!snapshot.exists()) return [];
-    
-    return Object.keys(snapshot.val());
-  }
-
-  // ========== 💬 MÓDULO 3: CHAT PRIVADO EN TIEMPO REAL ==========
-  
-  // Cargar contactos para chat
-  async function loadChatContacts() {
-    if (!AppState.user.isLoggedIn) return;
-    
-    const connections = await loadConnections();
-    const select = document.getElementById('chatContactSelect');
-    
-    let options = '<option value="">💬 selecciona un contacto</option>';
-    
-    for (const userId of connections) {
-      const snapshot = await get(ref(db, `users/${userId}`));
-      if (snapshot.exists()) {
-        const user = snapshot.val();
-        const online = user.online ? '🟢' : '⚪';
-        options += `<option value="${userId}">${online} ${user.alias}</option>`;
-      }
-    }
-    
-    select.innerHTML = options;
-    AppState.stats.connectionsCount = connections.length;
-    document.getElementById('statsConnections').textContent = connections.length;
-  }
-
-  // Cargar mensajes de chat
-  function loadChatMessages(otherUserId) {
-    if (!otherUserId) {
-      document.getElementById('chatMessagesContainer').innerHTML = '<p style="color: var(--color-text-muted); text-align: center;">selecciona un contacto para chatear</p>';
-      return;
-    }
-    
-    AppState.ui.currentChat = otherUserId;
-    const chatId = [AppState.user.id, otherUserId].sort().join('_');
-    const messagesRef = ref(db, `chats/${chatId}`);
-    
-    onValue(messagesRef, (snapshot) => {
-      const messages = snapshot.val();
-      const container = document.getElementById('chatMessagesContainer');
-      
-      if (!messages) {
-        container.innerHTML = '<p style="color: var(--color-text-muted); text-align: center;">no hay mensajes aún ✨</p>';
-        return;
-      }
-      
-      const messagesArray = Object.entries(messages)
-        .sort((a,b) => a[1].timestamp - b[1].timestamp)
-        .map(([id, msg]) => msg);
-      
-      AppState.stats.messagesCount = messagesArray.length;
-      document.getElementById('statsMessages').textContent = messagesArray.length;
-      
-      let html = '';
-      messagesArray.forEach(msg => {
-        const isMine = msg.from === AppState.user.id;
-        html += `
-          <div style="display: flex; flex-direction: column; ${isMine ? 'align-items: flex-end;' : 'align-items: flex-start;'}">
-            <div class="${isMine ? 'chat-bubble-mine' : 'chat-bubble-other'}">
-              <div style="display: flex; justify-content: space-between; gap: 15px; margin-bottom: 5px;">
-                <span style="font-size: 0.7rem; ${isMine ? 'color: rgba(255,255,255,0.9);' : 'color: var(--color-text-muted);'}">
-                  ${isMine ? 'tú' : msg.fromAlias}
-                </span>
-                <span style="font-size: 0.6rem; ${isMine ? 'color: rgba(255,255,255,0.7);' : 'color: var(--color-text-muted);'}">
-                  ${formatChatTime(msg.timestamp)}
-                </span>
-              </div>
-              <div style="font-size: 0.95rem;">${msg.text}</div>
-            </div>
-          </div>
-        `;
-      });
-      
-      container.innerHTML = html;
-      container.scrollTop = container.scrollHeight;
-    });
-  }
-
-  // Enviar mensaje
-  async function sendMessage() {
-    if (!AppState.user.isLoggedIn) {
-      showNotification('inicia sesión para chatear', 'info', '💬');
-      return;
-    }
-    
-    const otherUserId = document.getElementById('chatContactSelect').value;
-    if (!otherUserId) {
-      showNotification('selecciona un contacto', 'info', '💭');
-      return;
-    }
-    
-    const text = document.getElementById('chatMessageInput').value.trim();
-    if (!text) return;
-    
-    const chatId = [AppState.user.id, otherUserId].sort().join('_');
-    const messageRef = push(ref(db, `chats/${chatId}`));
-    
-    await set(messageRef, {
-      from: AppState.user.id,
-      fromAlias: AppState.user.alias,
-      to: otherUserId,
-      text: text,
-      timestamp: Date.now()
-    });
-    
-    document.getElementById('chatMessageInput').value = '';
-    
-    // Actualizar estadísticas
-    await runTransaction(ref(db, `stats/${AppState.user.id}/messages`), (v) => (v || 0) + 1);
-  }
-
-  // ========== 📰 MÓDULO 4: FEED SOCIAL CON LIKES ==========
-  
-  // Publicar en feed
-  async function publishFeedPost() {
-    if (!AppState.user.isLoggedIn) {
-      showNotification('inicia sesión para publicar', 'info', '📝');
-      return;
-    }
-    
-    const text = document.getElementById('feedPostInput').value.trim();
-    if (!text) {
-      showNotification('escribe algo bonito', 'info', '💭');
-      return;
-    }
-    
-    const postRef = push(ref(db, 'feed'));
-    await set(postRef, {
-      alias: AppState.user.alias,
-      userId: AppState.user.id,
-      text: text,
-      timestamp: Date.now(),
-      likes: 0,
-      likedBy: {}
-    });
-    
-    document.getElementById('feedPostInput').value = '';
-    showNotification('pensamiento compartido ✨', 'success', '📰');
-  }
-
-  // Dar/quitar like
-  async function toggleLike(postId) {
-    if (!AppState.user.isLoggedIn) {
-      showNotification('inicia sesión para dar like', 'info', '❤️');
-      return;
-    }
-    
-    const postRef = ref(db, `feed/${postId}`);
-    const snapshot = await get(postRef);
-    
-    if (snapshot.exists()) {
-      const post = snapshot.val();
-      const likedBy = post.likedBy || {};
-      
-      if (likedBy[AppState.user.id]) {
-        // Unlike
-        delete likedBy[AppState.user.id];
-        await update(postRef, {
-          likes: (post.likes || 0) - 1,
-          likedBy: likedBy
-        });
-      } else {
-        // Like
-        likedBy[AppState.user.id] = true;
-        await update(postRef, {
-          likes: (post.likes || 0) + 1,
-          likedBy: likedBy
-        });
-        showNotification('❤️', 'love', '💖');
-      }
-    }
-  }
-
-  // Cargar feed
-  function loadFeedPosts() {
-    const feedRef = ref(db, 'feed');
-    
-    onValue(feedRef, (snapshot) => {
-      if (!snapshot.exists()) {
-        document.getElementById('feedPostsContainer').innerHTML = `
-          <div style="text-align: center; padding: 40px; background: white; border-radius: 40px; border: 4px solid var(--color-border);">
-            <span style="font-size: 3rem;">🌸</span>
-            <p style="margin-top: 15px; color: var(--color-text-muted);">aún no hay pensamientos</p>
-            <p style="font-size: 0.9rem; margin-top: 8px;">sé la primera en compartir algo</p>
-          </div>
-        `;
-        return;
-      }
-      
-      const posts = Object.entries(snapshot.val())
-        .sort((a,b) => b[1].timestamp - a[1].timestamp)
-        .slice(0, 15);
-      
-      if (posts.length === 0) {
-        document.getElementById('feedPostsContainer').innerHTML = '<p style="color: var(--color-text-muted); text-align: center;">no hay posts</p>';
-        return;
-      }
-      
-      let html = '';
-      posts.forEach(([id, post]) => {
-        const userLiked = post.likedBy && post.likedBy[AppState.user.id];
-        const timeAgo = formatTimeAgo(post.timestamp);
-        
-        html += `
-          <div class="feed-post">
-            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
-              <div class="avatar avatar-xs" style="background: linear-gradient(145deg, #ffb8c9, #ff90a5);">
-                ${post.alias.substring(0,2).toUpperCase()}
-              </div>
-              <div>
-                <span style="font-weight: 700; font-size: 1rem;">${post.alias}</span>
-                <span style="display: block; font-size: 0.65rem; color: var(--color-text-muted);">${timeAgo}</span>
-              </div>
-            </div>
+        function updateUI() {
+            // Actualizar badges de jugador activo
+            if (state.currentPlayer === 'tu') {
+                badgeTu.classList.add('active');
+                badgeNayelis.classList.remove('active');
+                currentPlayerText.textContent = 'Tú';
+            } else {
+                badgeNayelis.classList.add('active');
+                badgeTu.classList.remove('active');
+                currentPlayerText.textContent = 'Nayelis';
+            }
             
-            <p style="margin: 12px 0 20px 8px; font-size: 1.05rem; line-height: 1.5;">${post.text}</p>
+            // Actualizar contador
+            playCountSpan.textContent = state.playCount;
+        }
+
+        function drawCard(type) {
+            let pregunta;
             
-            <div style="display: flex; align-items: center; gap: 15px;">
-              <button class="btn btn-sm like-btn" data-postid="${id}" style="background: ${userLiked ? 'var(--color-primary)' : '#ffe2ec'}; color: ${userLiked ? 'white' : 'var(--color-text)'};">
-                <i class="fas fa-heart"></i> ${post.likes || 0}
-              </button>
-            </div>
-          </div>
-        `;
-      });
-      
-      document.getElementById('feedPostsContainer').innerHTML = html;
-      
-      // Event listeners para likes
-      document.querySelectorAll('.like-btn').forEach(btn => {
-        btn.addEventListener('click', () => toggleLike(btn.dataset.postid));
-      });
-    });
-  }
-
-  // ========== 🌙 MÓDULO 5: MODO SOLITARIO - DIARIO PRIVADO ==========
-  
-  // Guardar entrada en diario
-  async function saveDiarioEntry() {
-    if (!AppState.user.isLoggedIn) return;
-    
-    const text = document.getElementById('diarioEntryInput').value.trim();
-    if (!text) {
-      showNotification('escribe algo en tu diario', 'info', '📔');
-      return;
-    }
-    
-    const entryRef = push(ref(db, `diario/${AppState.user.id}`));
-    await set(entryRef, {
-      text: text,
-      timestamp: Date.now()
-    });
-    
-    document.getElementById('diarioEntryInput').value = '';
-    showNotification('guardado en tu diario 📔', 'success', '🌙');
-    
-    // Actualizar estadísticas
-    const snapshot = await get(ref(db, `diario/${AppState.user.id}`));
-    const count = snapshot.exists() ? Object.keys(snapshot.val()).length : 0;
-    await set(ref(db, `stats/${AppState.user.id}/diarioEntries`), count);
-    
-    loadDiarioEntries();
-  }
-
-  // Cargar entradas del diario
-  async function loadDiarioEntries() {
-    if (!AppState.user.isLoggedIn) return;
-    
-    const snapshot = await get(ref(db, `diario/${AppState.user.id}`));
-    
-    if (!snapshot.exists()) {
-      document.getElementById('diarioEntriesPreview').innerHTML = '<p style="color: var(--color-text-muted); text-align: center; padding: 20px;">aún no hay entradas en tu diario</p>';
-      document.getElementById('diarioFullEntries').innerHTML = '<p style="color: var(--color-text-muted); text-align: center;">aún no has escrito nada</p>';
-      document.getElementById('statsDiario').textContent = '0';
-      return;
-    }
-    
-    const entries = Object.entries(snapshot.val())
-      .sort((a,b) => b[1].timestamp - a[1].timestamp);
-    
-    AppState.stats.diarioCount = entries.length;
-    document.getElementById('statsDiario').textContent = entries.length;
-    
-    // Preview (últimas 3)
-    let previewHtml = '';
-    entries.slice(0, 3).forEach(([id, entry]) => {
-      previewHtml += `
-        <div class="diario-entry" style="padding: 15px;">
-          <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-            <span style="font-size: 0.7rem; color: var(--color-text-muted);">
-              <i class="fas fa-clock"></i> ${formatTimeAgo(entry.timestamp)}
-            </span>
-          </div>
-          <p style="font-size: 0.95rem;">${entry.text}</p>
-        </div>
-      `;
-    });
-    
-    // Vista completa
-    let fullHtml = '';
-    entries.forEach(([id, entry]) => {
-      const date = new Date(entry.timestamp).toLocaleString('es-ES', {
-        day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit'
-      });
-      fullHtml += `
-        <div class="diario-entry" style="margin-bottom: 20px;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-            <span style="font-size: 0.8rem; color: var(--color-text-muted);">
-              <i class="fas fa-calendar-alt"></i> ${date}
-            </span>
-          </div>
-          <p style="font-size: 1.1rem; line-height: 1.6;">${entry.text}</p>
-        </div>
-      `;
-    });
-    
-    document.getElementById('diarioEntriesPreview').innerHTML = previewHtml || '<p style="color: var(--color-text-muted);">no hay entradas</p>';
-    document.getElementById('diarioFullEntries').innerHTML = fullHtml || '<p style="color: var(--color-text-muted);">no hay entradas</p>';
-  }
-
-  // ========== 🎮 MÓDULO 6: JUEGOS Y RECOMPENSAS ==========
-  
-  // Juego de reflejos
-  function startReactionGame() {
-    if (!AppState.user.isLoggedIn) {
-      showNotification('inicia sesión para jugar', 'info', '⚡');
-      return;
-    }
-    
-    if (AppState.game.reactionActive) return;
-    
-    AppState.game.reactionActive = true;
-    const box = document.getElementById('reactionGameBox');
-    const btn = document.getElementById('startReactionBtn');
-    
-    box.innerText = '🌸 espera...';
-    box.style.background = '#ffccd5';
-    box.style.cursor = 'default';
-    btn.disabled = true;
-    
-    const delay = Math.random() * 2500 + 1500;
-    
-    setTimeout(() => {
-      if (!AppState.game.reactionActive) return;
-      
-      AppState.game.reactionStartTime = Date.now();
-      box.innerText = '💥 TOCA AHORA!';
-      box.style.background = '#ffa5b6';
-      box.style.cursor = 'pointer';
-      
-      box.onclick = () => {
-        const time = Date.now() - AppState.game.reactionStartTime;
-        AppState.game.reactionActive = false;
-        box.innerText = `⚡ ${time} ms`;
-        box.onclick = null;
-        btn.disabled = false;
-        
-        if (!AppState.game.bestTime || time < parseInt(AppState.game.bestTime)) {
-          AppState.game.bestTime = time;
-          localStorage.setItem('marleysBestReaction', time);
-          document.getElementById('reactionBestTime').textContent = time;
-          
-          // Recompensa por récord
-          addCollectible('⚡', 1);
-          showNotification('🏆 ¡nuevo récord! +⚡', 'reward', '🏆');
+            if (type === 'verdad') {
+                pregunta = getRandomItem(verdades);
+                cardLabel.innerHTML = '<span class="card-label label-verdad">💚 Verdad</span>';
+                cardDisplay.style.borderColor = '#c7f0db';
+                cardDisplay.style.background = '#f9fffc';
+            } else {
+                pregunta = getRandomItem(retos);
+                cardLabel.innerHTML = '<span class="card-label label-reto">🔥 Reto</span>';
+                cardDisplay.style.borderColor = '#ffb6c1';
+                cardDisplay.style.background = '#fff5f7';
+            }
+            
+            cardContent.textContent = pregunta;
+            state.currentCard = pregunta;
+            state.currentType = type;
+            state.playCount++;
+            
+            // Cambiar turno
+            state.currentPlayer = state.currentPlayer === 'nayelis' ? 'tu' : 'nayelis';
+            
+            updateUI();
+            
+            // Pequeña vibración visual
+            cardDisplay.style.transform = 'scale(1.03)';
+            setTimeout(() => {
+                cardDisplay.style.transform = 'scale(1)';
+            }, 200);
         }
+
+        function drawRandom() {
+            const type = Math.random() < 0.5 ? 'verdad' : 'reto';
+            drawCard(type);
+        }
+
+        // ========== EVENT LISTENERS ==========
         
-        // Actualizar estadísticas
-        runTransaction(ref(db, `stats/${AppState.user.id}/reactions`), (v) => (v || 0) + 1);
-      };
-    }, delay);
-  }
+        btnVerdad.addEventListener('click', () => drawCard('verdad'));
+        btnReto.addEventListener('click', () => drawCard('reto'));
+        btnRandom.addEventListener('click', drawRandom);
 
-  // Recompensa diaria
-  async function claimDailyReward() {
-    if (!AppState.user.isLoggedIn) {
-      showNotification('inicia sesión', 'info', '🎁');
-      return;
-    }
-    
-    const today = new Date().toDateString();
-    const lastClaim = localStorage.getItem('marleysLastReward');
-    
-    if (lastClaim === today) {
-      showNotification('ya reclamaste hoy', 'info', '✅');
-      return;
-    }
-    
-    localStorage.setItem('marleysLastReward', today);
-    
-    // Recompensa aleatoria
-    const rewards = [
-      { emoji: '🌸', name: 'flor', amount: 1 },
-      { emoji: '✨', name: 'estrella', amount: 1 },
-      { emoji: '💖', name: 'corazón', amount: 1 },
-      { emoji: '🦋', name: 'mariposa', amount: 1 }
-    ];
-    
-    const reward = rewards[Math.floor(Math.random() * rewards.length)];
-    await addCollectible(reward.emoji, reward.amount);
-    
-    document.getElementById('dailyRewardEmoji').textContent = '✅';
-    document.getElementById('dailyRewardMessage').textContent = '¡reclamada hoy!';
-    document.getElementById('claimDailyRewardBtn').disabled = true;
-    
-    showNotification(`🎁 recompensa: ${reward.emoji} x${reward.amount}`, 'reward', '🎁');
-  }
-
-  // Verificar estado de recompensa diaria
-  function checkDailyRewardStatus() {
-    const today = new Date().toDateString();
-    const lastClaim = localStorage.getItem('marleysLastReward');
-    
-    if (lastClaim === today) {
-      document.getElementById('dailyRewardEmoji').textContent = '✅';
-      document.getElementById('dailyRewardMessage').textContent = 'reclamada hoy';
-      document.getElementById('claimDailyRewardBtn').disabled = true;
-    } else {
-      document.getElementById('dailyRewardEmoji').textContent = '🎁';
-      document.getElementById('dailyRewardMessage').textContent = '¡reclama tu regalo!';
-      document.getElementById('claimDailyRewardBtn').disabled = false;
-    }
-  }
-
-  // ========== 🏆 MÓDULO 7: COLECCIONABLES Y LOGROS ==========
-  
-  // Añadir coleccionable
-  async function addCollectible(type, amount = 1) {
-    if (!AppState.user.isLoggedIn) return;
-    
-    const collectibleRef = ref(db, `collectibles/${AppState.user.id}`);
-    const snapshot = await get(collectibleRef);
-    
-    let collectibles = snapshot.exists() ? snapshot.val() : {
-      flowers: 0,
-      stars: 0,
-      hearts: 0,
-      lightning: 0
-    };
-    
-    if (type === '🌸') collectibles.flowers = (collectibles.flowers || 0) + amount;
-    if (type === '✨') collectibles.stars = (collectibles.stars || 0) + amount;
-    if (type === '💖') collectibles.hearts = (collectibles.hearts || 0) + amount;
-    if (type === '⚡') collectibles.lightning = (collectibles.lightning || 0) + amount;
-    if (type === '🦋') collectibles.butterflies = (collectibles.butterflies || 0) + amount;
-    
-    await set(collectibleRef, collectibles);
-    loadCollectibles();
-  }
-
-  // Cargar coleccionables
-  async function loadCollectibles() {
-    if (!AppState.user.isLoggedIn) return;
-    
-    const snapshot = await get(ref(db, `collectibles/${AppState.user.id}`));
-    
-    if (!snapshot.exists()) {
-      document.getElementById('collectiblesContainer').innerHTML = `
-        <span class="collectible"><span style="font-size: 1.5rem;">🌸</span> 0</span>
-      `;
-      return;
-    }
-    
-    const cols = snapshot.val();
-    let total = 0;
-    let html = '';
-    
-    if (cols.flowers) {
-      html += `<span class="collectible"><span style="font-size: 1.5rem;">🌸</span> ${cols.flowers}</span>`;
-      total += cols.flowers;
-    }
-    if (cols.stars) {
-      html += `<span class="collectible"><span style="font-size: 1.5rem;">✨</span> ${cols.stars}</span>`;
-      total += cols.stars;
-    }
-    if (cols.hearts) {
-      html += `<span class="collectible"><span style="font-size: 1.5rem;">💖</span> ${cols.hearts}</span>`;
-      total += cols.hearts;
-    }
-    if (cols.lightning) {
-      html += `<span class="collectible"><span style="font-size: 1.5rem;">⚡</span> ${cols.lightning}</span>`;
-      total += cols.lightning;
-    }
-    if (cols.butterflies) {
-      html += `<span class="collectible"><span style="font-size: 1.5rem;">🦋</span> ${cols.butterflies}</span>`;
-      total += cols.butterflies;
-    }
-    
-    AppState.stats.collectiblesCount = total;
-    document.getElementById('statsCollectibles').textContent = total;
-    document.getElementById('collectiblesContainer').innerHTML = html || '<span class="collectible">🌸 0</span>';
-  }
-
-  // ========== 📊 MÓDULO 8: ESTADÍSTICAS Y PROGRESO ==========
-  
-  async function loadUserStats() {
-    if (!AppState.user.isLoggedIn) return;
-    
-    const snapshot = await get(ref(db, `stats/${AppState.user.id}`));
-    
-    if (snapshot.exists()) {
-      const stats = snapshot.val();
-      document.getElementById('statsMessages').textContent = stats.messages || 0;
-      document.getElementById('statsConnections').textContent = stats.connections || 0;
-      document.getElementById('statsDiario').textContent = stats.diaryEntries || 0;
-    }
-  }
-
-  // ========== 🚀 CARGA DE TODOS LOS MÓDULOS ==========
-  
-  function loadAllModules() {
-    if (!AppState.user.isLoggedIn) return;
-    
-    // Módulo 1: Usuarios
-    loadUsers();
-    
-    // Módulo 2: Solicitudes
-    loadPendingRequests();
-    
-    // Módulo 3: Chat
-    loadChatContacts();
-    
-    // Módulo 4: Feed
-    loadFeedPosts();
-    
-    // Módulo 5: Diario
-    loadDiarioEntries();
-    
-    // Módulo 6: Juegos
-    checkDailyRewardStatus();
-    if (AppState.game.bestTime) {
-      document.getElementById('reactionBestTime').textContent = AppState.game.bestTime;
-    }
-    
-    // Módulo 7: Coleccionables
-    loadCollectibles();
-    
-    // Módulo 8: Estadísticas
-    loadUserStats();
-    
-    // Usuarios online
-    setupUsersOnlineListener();
-  }
-
-  // Listener de usuarios online
-  function setupUsersOnlineListener() {
-    onValue(ref(db, 'users'), (snapshot) => {
-      if (snapshot.exists()) {
-        const users = Object.values(snapshot.val()).filter(u => u.online).length;
-        document.getElementById('onlineCount').textContent = users;
-      }
-    });
-  }
-
-  // Cargar lista de usuarios
-  function loadUsers() {
-    const usersRef = ref(db, 'users');
-    
-    onValue(usersRef, (snapshot) => {
-      if (!snapshot.exists()) return;
-      
-      const users = snapshot.val();
-      const searchTerm = document.getElementById('userSearchInput')?.value?.toLowerCase() || '';
-      
-      let html = '';
-      
-      Object.entries(users).forEach(([id, user]) => {
-        if (id === AppState.user.id) return;
-        
-        const alias = user.alias || 'usuario';
-        if (searchTerm && !alias.toLowerCase().includes(searchTerm)) return;
-        
-        html += `
-          <div class="user-card">
-            <div style="display: flex; align-items: center; gap: 15px;">
-              <div class="avatar avatar-xs" style="background: linear-gradient(145deg, #ffb8c9, #ff90a5);">
-                ${alias.substring(0,2).toUpperCase()}
-              </div>
-              <div>
-                <div style="font-weight: 700; font-size: 0.95rem;">${alias}</div>
-                <div style="display: flex; align-items: center; gap: 8px; margin-top: 5px;">
-                  <span class="badge ${user.online ? 'badge-online' : 'badge-offline'}" style="padding: 4px 12px;">
-                    <i class="fas fa-circle" style="font-size: 0.5rem;"></i> ${user.online ? 'conectada' : 'desconectada'}
-                  </span>
-                  <span class="badge" style="padding: 4px 12px;">
-                    <i class="fas fa-smile"></i> ${user.mood || 'feliz'}
-                  </span>
-                </div>
-              </div>
-            </div>
-            <button class="btn btn-sm btn-outline send-request-btn" data-userid="${id}" data-alias="${alias}" style="padding: 8px 16px;">
-              <i class="fas fa-user-plus"></i>
-            </button>
-          </div>
-        `;
-      });
-      
-      document.getElementById('usersListContainer').innerHTML = html || '<p style="color: var(--color-text-muted); text-align: center;">no hay usuarios</p>';
-      
-      // Event listeners para solicitudes
-      document.querySelectorAll('.send-request-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          sendFriendRequest(btn.dataset.userid, btn.dataset.alias);
+        // También permitir cambiar turno manualmente tocando el badge
+        badgeTu.addEventListener('click', () => {
+            if (state.currentPlayer !== 'tu') {
+                state.currentPlayer = 'tu';
+                updateUI();
+            }
         });
-      });
-    });
-  }
 
-  // ========== 🎯 INICIALIZACIÓN ==========
-  
-  async function initApp() {
-    console.log("🌸 Inicializando Red Social Emocional...");
-    
-    // Cargar usuario guardado
-    const saved = localStorage.getItem('marleysSocialUser');
-    if (saved) {
-      try {
-        const u = JSON.parse(saved);
-        if (u && u.id && u.alias) {
-          AppState.user = {
-            id: u.id,
-            alias: u.alias,
-            isLoggedIn: true,
-            mood: 'feliz',
-            registeredAt: Date.now(),
-            lastActive: Date.now()
-          };
-          
-          await set(ref(db, `users/${u.id}`), {
-            id: u.id,
-            alias: u.alias,
-            online: true,
-            mood: 'feliz',
-            lastActive: Date.now()
-          });
-          
-          onDisconnect(ref(db, `users/${u.id}`)).update({
-            online: false,
-            lastActive: Date.now()
-          });
-          
-          updateUIBeforeLogin();
-          loadAllModules();
+        badgeNayelis.addEventListener('click', () => {
+            if (state.currentPlayer !== 'nayelis') {
+                state.currentPlayer = 'nayelis';
+                updateUI();
+            }
+        });
+
+        // ========== INICIALIZACIÓN ==========
+        
+        function init() {
+            // Comienza Nayelis
+            state.currentPlayer = 'nayelis';
+            state.playCount = 0;
+            updateUI();
+            
+            cardContent.textContent = 'Presiona un botón\npara comenzar 💫';
+            cardLabel.innerHTML = '';
+            cardDisplay.style.borderColor = '#ffe0e6';
+            cardDisplay.style.background = 'white';
+            
+            console.log('💕 Verdad o Reto para Nayelis · ¡Listo para jugar!');
         }
-      } catch (e) {
-        console.error("Error cargando usuario:", e);
-        localStorage.removeItem('marleysSocialUser');
-      }
-    }
-    
-    // Event Listeners
-    setupEventListeners();
-  }
 
-  function setupEventListeners() {
-    // Registro
-    document.getElementById('registerBtn').addEventListener('click', () => {
-      registerUser(document.getElementById('registerAliasInput').value);
-    });
-    
-    // Logout
-    document.getElementById('logoutBtn').addEventListener('click', logoutUser);
-    
-    // Búsqueda de usuarios
-    document.getElementById('userSearchInput').addEventListener('input', loadUsers);
-    
-    // Chat
-    document.getElementById('chatContactSelect').addEventListener('change', (e) => {
-      loadChatMessages(e.target.value);
-    });
-    
-    document.getElementById('sendMessageBtn').addEventListener('click', sendMessage);
-    
-    document.getElementById('chatMessageInput').addEventListener('keypress', (e) => {
-      if (e.key === 'Enter' && !e.shiftKey) {
-        e.preventDefault();
-        sendMessage();
-      }
-    });
-    
-    // Feed
-    document.getElementById('publishFeedBtn').addEventListener('click', publishFeedPost);
-    
-    // Diario
-    document.getElementById('saveDiarioBtn').addEventListener('click', saveDiarioEntry);
-    
-    document.getElementById('openDiarioModalBtn').addEventListener('click', () => {
-      document.getElementById('diarioFullModal').classList.add('active');
-      loadDiarioEntries();
-    });
-    
-    document.getElementById('viewFullDiarioBtn').addEventListener('click', () => {
-      document.getElementById('diarioFullModal').classList.add('active');
-      loadDiarioEntries();
-    });
-    
-    document.getElementById('closeDiarioModalBtn').addEventListener('click', () => {
-      document.getElementById('diarioFullModal').classList.remove('active');
-    });
-    
-    // Juegos
-    document.getElementById('startReactionBtn').addEventListener('click', startReactionGame);
-    document.getElementById('claimDailyRewardBtn').addEventListener('click', claimDailyReward);
-    
-    // Estados de ánimo
-    document.querySelectorAll('.mood-btn').forEach(btn => {
-      btn.addEventListener('click', async () => {
-        const mood = btn.dataset.mood;
-        AppState.user.mood = mood;
-        await update(ref(db, `users/${AppState.user.id}`), { mood });
-        document.getElementById('userMoodDisplay').innerHTML = `<i class="fas fa-smile"></i> ${mood}`;
-        showNotification(`estado: ${mood}`, 'success', '💗');
-      });
-    });
-    
-    // Cerrar modales al hacer click fuera
-    document.getElementById('diarioFullModal').addEventListener('click', (e) => {
-      if (e.target === document.getElementById('diarioFullModal')) {
-        document.getElementById('diarioFullModal').classList.remove('active');
-      }
-    });
-  }
-
-  // Iniciar la aplicación
-  initApp();
-
-</script>
-
+        init();
+    </script>
 </body>
 </html>
